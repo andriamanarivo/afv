@@ -1,0 +1,595 @@
+
+<div class="user_profile detail col-lg-10" >
+       <div class="loading-admin"  *ngIf="loadingPage">
+    <app-loader [load]="loadingPage"></app-loader>
+</div>
+    <div class="row"  *ngIf="!loadingPage">
+        <p-growl [(value)]="msgs"></p-growl>     
+        <div class="tab_container">
+            <!-- <form [formGroup]="modifForm"> -->
+            <div class="mobile" *ngIf="userDetail">
+                <div class="middle">
+                    <h4 class="user_name">
+                        <a href="#" class="linkBack"></a>
+                        {{userDetail.pseudo}}
+                        <i class="user-status">
+                            <img src="assets/img/connect.png" align="" alt="">
+                        </i>
+                    </h4>
+                    <div class="img_container">
+                        <div class="img_wrapper">
+                            <!-- <img  *ngIf="userDetail.photo" src="{{baseUrl+userDetail.photo}}">
+                        <img *ngIf="!userDetail.photo" src = "assets/img/profil-default.png"> -->
+                            <img *ngIf="userDetail.photo" class="" src="{{baseUrl+userDetail.photo.replace('file_uploaded/','file_uploaded/square_320_')}}">
+                            <img *ngIf="!userDetail.photo" class="" src="{{ userDetail.defaultpdp }}">
+                        </div>
+
+
+                    </div>
+                    <div class="text_wrapper">
+                        <label>
+                            <span class="user_age">{{userDetail.age}} ans{{userDetail.vsetes ? ', ': ''}}   </span>                                                                     
+                            <span class="user_age" *ngIf="userDetail.vsetes">{{userDetail.vsetes}}{{orientation ? ', ': ''}}  </span>                                                        
+                            <span class="user_orientation" *ngIf="orientation">{{orientation}}{{utilisateur.labelStatut ? ', ': ''}}  </span>                            
+                            <span class="user_orientation" *ngIf="utilisateur.labelStatut">{{utilisateur.labelStatut}}{{userDetail.ville ? ', ': ''}}  </span>                            
+                            <span class="user_localisation" *ngIf="userDetail.ville">{{userDetail.ville}}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <md-tab-group class="myProfil" [selectedIndex]="currentIndex" *ngIf="!(currentIndex === 2 && innerWidth > 1024) ">
+                
+                <md-tab *ngIf="(currentIndex !== 1 && innerWidth <= 1024) || (!settingIsChecked && innerWidth > 1024)">
+                    <ng-template md-tab-label>
+                        <div class="mat-mobile" (click)="settingIsChecked=false">
+                            <h2 class="mobil-1"><label>{{'ma description'|translate}}</label></h2>
+                        </div>
+                    </ng-template> 
+                    <div class="tab_wrapper" *ngIf="userDetail">
+                        <div class="profile_top">
+                            <div class="profile_top_wrapper">
+                                <div class="left">
+                                    <div class="img_container">
+                                        <div class="img_wrapper">
+                                            <!-- <img  *ngIf="userDetail.photo" src="{{baseUrl+userDetail.photo}}">
+                                    <img *ngIf="!userDetail.photo" src = "assets/img/profil-default.png"> -->
+                                            <img *ngIf="userDetail.photo" class="" src="{{baseUrl+userDetail.photo.replace('file_uploaded/','file_uploaded/square_320_')}}">
+                                            <img *ngIf="!userDetail.photo" class="" src="{{ userDetail.defaultpdp }}">
+                                        </div>
+                                        <!--<span class="user_tendance">
+                                         <img  *ngIf="tendance!='ne sait pas encore'" src="assets/img/tendance-{{tendance}}.png" />
+                                        </span>-->
+                                        <!--<div class="add_photo modif">
+                                <div class="img_wrapper">
+                                    <label for="addfiles"> <img src="assets/img/edit.png"></label>
+                                    <input id="addfiles" #myInput type="file"  name="filename" (change)="changerProfil($event)">
+                                </div>
+                            </div>-->
+
+                                    </div>
+                                    <div class="text_wrapper">
+                                        <label class="user_name">
+                                            {{userDetail.pseudo}}{{userDetail.age ? ', ': ''}} 
+                                            <span class="user_age"> {{userDetail.age}} ans{{orientation ? ', ': ''}}</span>
+                                        </label>
+                                        <label>                                                                                    
+                                            <span *ngIf="orientation" class="user_orientation"> {{orientation}}{{utilisateur.labelStatut ? ', ': ''}}</span>                                            
+                                        </label>
+                                        <label *ngIf="utilisateur.labelStatut">{{utilisateur.labelStatut}}{{userDetail.ville ? ', ': ''}}</label>                                       
+                                        <label>
+                                            <span class="user_localisation" *ngIf="userDetail.ville">{{userDetail.ville}}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="edit_container">
+                                        <p class="progress">
+                                            <!--<label>profil completé à <span class = "progress_value">80%</span></label>
+                                    <progress id="avancement_profile" value="80" max="100"></progress>-->
+                                            <md-card>
+                                                <md-card-content>
+                                                    <span>{{'Profil complété à'|translate}} {{percent}}%</span>
+                                                    <section>
+                                                        <md-progress-bar class="bar-progr" [color]="Warn" [mode]="mode" [value]="percent" [bufferValue]="100">
+                                                        </md-progress-bar>
+                                                    </section>
+                                                </md-card-content>
+                                            </md-card>
+                                        </p>
+                                        <div class="text_area_wrapper"  >
+
+                                            <div class="item">
+                                                <label>{{'A propos de moi'|translate}} :</label>
+                                                <textarea  #apropos  (blur)="blurAboutMe = true; isProfilExcluded(apropos.value);" [disabled]="!autorisation['PROFIL_1'] || !editAboutMe " [(ngModel)]="utilisateur.libelleDescription" (change)="changeStatut('propo')"></textarea>
+                                                <div style="font-size: 14px;" class="control-messages" *ngIf="errorProfilMessage && errorProfilMessage.length > 0">{{errorProfilMessage}}</div>
+                                            </div>
+                                            <div class="item" *ngIf="userDetail?.value">
+                                                <label>{{'Ce que je recherche'|translate}} :</label>
+                                                <label>{{searchText}}</label>
+
+                                            </div>                                           
+                                            <div class="bouton_wrapper" *ngIf="autorisation['PROFIL_1']" >
+                                                <button *ngIf="blurAboutMe && currentField !== 'propo' && !errorProfilMessage" class="btn btn_edit editfield" [ngStyle]="{opacity : ''+opacityPropo+''}" [ngClass]="{disabled : !disabledPropo}"
+                                                    (click)="updateProfil('propo')">edit</button>
+
+                                                <button *ngIf="!blurAboutMe"  class="pen btn btn_edit" [ngStyle]="{opacity : ''+opacityPropo+''}" 
+                                                (click)="setFocus('apropos');">edit</button>
+                                                <md-progress-spinner *ngIf="currentField === 'propo'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile_bottom"> 
+                            <div class="profile_bottom_wrapper">
+                                <div class="left">
+
+                                    <div class="edit_container">
+                                        <h3>{{'J’en dis plus sur moi'|translate}}</h3>
+                                        <ul class="editable_list">
+                                            <li>
+                                                <div class="item">
+                                                    <label>{{'Statut'|translate}} : </label>
+                                                    <div class="item_content" *ngIf="userDetail && userDetail.value">
+                                                        <input title="{{utilisateur.labelStatut}}" *ngIf="!editStatut"  class="disableInput" [disabled]="true" type="text" id="statut" [(ngModel)]="utilisateur.labelStatut"/>
+                                                        <md-select #statut class="activeinput"  *ngIf="editStatut" [(ngModel)]="utilisateur.id_statut" (ngModelChange)="changeStatut('statut')">
+                                                            <md-option *ngFor="let x of userDetail.value[1].value" [value]="x.id">
+                                                                {{x.label}}
+                                                            </md-option>
+                                                        </md-select>
+                                                    </div>
+                                                    <div class="bouton_wrapper">                                                     
+                                                        <button *ngIf="editStatut && currentField !== 'statut' && selectStatut" style="opacity:1;" class="btn btn_edit btn_edit_orientatio editfield"
+                                                            (click)="updateProfil('statut');">edit</button>
+                                                        <button *ngIf="!editStatut || !selectStatut" style="opacity:1.0;" class="pen btn btn_edit btn_edit_orientatio"
+                                                        (click)="setFocus('statut');">edit</button>
+                                                        <md-progress-spinner *ngIf="currentField === 'statut'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item">
+                                                    <label>{{'Orientation'|translate}} : </label>
+                                                    <div class="item_content" *ngIf="userDetail && userDetail.value">
+                                                        <input title="{{utilisateur.labelOrientation}}" *ngIf="!editOrientation" class="disableInput" [disabled]="true" type="text" id="statut" [(ngModel)]="utilisateur.labelOrientation"/>
+                                                        <md-select  #orientation class="activeinput"  *ngIf="editOrientation" [(ngModel)]="utilisateur.id_orientation" (ngModelChange)="changeStatut('orientation')">
+                                                            <md-option *ngFor="let x of userDetail.value[2].value" [value]="x.id">
+                                                                {{x.label}}
+                                                            </md-option>
+                                                        </md-select>
+                                                    </div>                                                   
+                                                    <div class="bouton_wrapper">
+                                                       
+                                                        <button *ngIf="editOrientation && currentField !== 'orientation' && selectOrientation"  style="opacity:1;" class="btn btn_edit btn_edit_orientatio editfield" 
+                                                             (click)="updateProfil('orientation');">edit</button>
+                                                        <button  *ngIf="!editOrientation || !selectOrientation" style="opacity:1.0;" class="pen btn btn_edit btn_edit_orientatio" 
+                                                        (click)="setFocus('orientation')">edit</button>
+                                                        <md-progress-spinner *ngIf="currentField === 'orientation'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item">
+                                                    <label>{{'Situation'|translate}} :</label>
+                                                    <div class="item_content" *ngIf="userDetail && userDetail.value">
+                                                        <input title="{{utilisateur.labelSituation}}" *ngIf="!editSituation" class="disableInput" [disabled]="true" type="text" id="situation" [(ngModel)]="utilisateur.labelSituation"/>
+                                                        <md-select  #situation class="activeinput" *ngIf="editSituation" [(ngModel)]="utilisateur.id_situation" (ngModelChange)="changeStatut('situation')">
+                                                            <md-option *ngFor="let x of userDetail.value[3].value" [value]="x.id">
+                                                                {{x.label}}
+                                                            </md-option>
+                                                        </md-select>
+                                                    </div>
+                                                    <div class="bouton_wrapper">
+                                                        <button  *ngIf="editSituation && currentField !== 'situation' && selectSituation" style="opacity:1;" class="btn btn_edit btn_edit_situation editfield" 
+                                                            [ngClass]="{disabled : !disabledSituation}" (click)="updateProfil('situation')">edit</button>
+                                                        <button  *ngIf="!editSituation || !selectSituation" style="opacity:1.0;" class="pen btn btn_edit btn_edit_situatio" 
+                                                        (click)="setFocus('situation')">edit</button>
+                                                        <md-progress-spinner *ngIf="currentField === 'situation'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item withChild">
+                                                    <label>{{'Apparence'|translate}} : </label>
+                                                    <ul class="editable_list">
+                                                        <li>
+                                                            <div class="item">
+                                                                <label>{{'Taille'|translate}} (cm) : </label>
+                                                                <div class="item_content">
+                                                                    <input title="{{utilisateur.taille}}"  *ngIf="!editTaille" class="disableInput" [disabled]="true" type="text" id="taille" [(ngModel)]="utilisateur.taille"/>
+                                                                    <input #taille class="activeinput" *ngIf="editTaille" (blur)="blurTaille = true"   type="text" (keypress)="keyPress($event)" id="taille" [(ngModel)]="utilisateur.taille" (ngModelChange)="changeStatut('taille')">
+                                                                </div>
+                                                                <div class="bouton_wrapper">                                                   
+                                                                    <button *ngIf="blurTaille && currentField !== 'taille'" style="opacity:1;" class="btn btn_edit btn_edit_taille editfield"
+                                                                        (click)="updateProfil('taille');">edit</button>
+                                                                    <button *ngIf="!blurTaille" style="opacity:1.0;" class="pen btn btn_edit btn_edit_orientatio"
+                                                                        (click)="setFocus('taille')">edit</button>
+                                                                    <md-progress-spinner *ngIf="currentField === 'taille'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="item">
+                                                                <label>{{'Poids'|translate}} (kg) : </label>
+                                                                <div class="item_content" >
+                                                                    <input title="{{utilisateur.poids}}"  *ngIf="!editPoid" class="disableInput" [disabled]="true" type="text" id="statut" [(ngModel)]="utilisateur.poids"/>
+                                                                    <input #poids class="activeinput" *ngIf="editPoid" (blur)="blurPoid = true"    type="text" (keypress)="keyPress($event)"  id="poids" [(ngModel)]="utilisateur.poids" (ngModelChange)="changeStatut('poids')">
+                                                                </div>
+                                                                <div class="bouton_wrapper">                                                   
+                                                                    <button *ngIf="blurPoid && currentField !== 'poids'" style="opacity:1;" class="btn btn_edit btn_edit_poids editfield"
+                                                                        (click)="updateProfil('poids');">edit</button>
+                                                                    <button *ngIf="!blurPoid" style="opacity:1.0;" class="pen btn btn_edit btn_edit_poid"
+                                                                    (click)="setFocus('poids')">edit</button>
+                                                                    <md-progress-spinner *ngIf="currentField === 'poids'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="item">
+                                                                <label>{{'Couleur cheveux'|translate}} : </label>
+                                                                <div class="item_content" *ngIf="userDetail && userDetail.value">
+                                                                    <input title="{{utilisateur.labelCouleurCheveux}}" *ngIf="!editCouleurCheveux" class="disableInput" [disabled]="true" type="text" id="statut" [(ngModel)]="utilisateur.labelCouleurCheveux"/>
+
+                                                                    <md-select #couleurcheveux class="activeinput" *ngIf="editCouleurCheveux" [(ngModel)]="utilisateur.id_couleurCheveux" (ngModelChange)="changeStatut('couleurCheveux')">
+                                                                        <md-option *ngFor="let x of userDetail.value[8].value" [value]="x.id">
+                                                                            {{x.label}}
+                                                                        </md-option>
+                                                                    </md-select>
+                                                                </div>
+                                                                <div class="bouton_wrapper">                                                     
+                                                                    <button *ngIf="editCouleurCheveux && currentField !== 'couleurCheveux' && selectCouleurCheveux" style="opacity:1;" class="btn btn_edit btn_edit_orientatio editfield"
+                                                                        (click)="updateProfil('couleurCheveux');">edit</button>
+                                                                    <button *ngIf="!editCouleurCheveux || !selectCouleurCheveux" style="opacity:1.0;" class="pen btn btn_edit btn_edit_orientatio"
+                                                                    (click)="setFocus('couleurCheveux')">edit</button>
+                                                                    <md-progress-spinner *ngIf="currentField === 'couleurCheveux'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="item">
+                                                                <label>{{'Taille des cheveux '|translate}} : </label>
+                                                                <div class="item_content" *ngIf="userDetail && userDetail.value">
+                                                                    <input title="{{utilisateur.labelTailleCheveux}}" *ngIf="!editTailleCheveux" class="disableInput" [disabled]="true" type="text" id="statut" [(ngModel)]="utilisateur.labelTailleCheveux"/>
+                                                                  
+                                                                    <md-select #taillecheveux class="activeinput" *ngIf="editTailleCheveux" [(ngModel)]="utilisateur.id_tailleCheveux" (ngModelChange)="changeStatut('tailleCheveux')">
+                                                                        <md-option *ngFor="let x of userDetail.value[10].value" [value]="x.id">
+                                                                            {{x.label}}
+                                                                        </md-option>
+                                                                    </md-select>
+                                                                </div>
+                                                                <div class="bouton_wrapper">                                                     
+                                                                    <button *ngIf="editTailleCheveux && currentField !== 'tailleCheveux' && selectTailleCheveux" style="opacity:1;" class="btn btn_edit btn_edit_orientatio editfield"
+                                                                        (click)="updateProfil('tailleCheveux');">edit</button>
+                                                                    <button *ngIf="!editTailleCheveux || !selectTailleCheveux" style="opacity:1.0;" class="pen btn btn_edit btn_edit_orientatio"
+                                                                    (click)="setFocus('tailleCheveux')">edit</button>
+                                                                    <md-progress-spinner *ngIf="currentField === 'tailleCheveux'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="item">
+                                                                <label>{{'Couleur des yeux'|translate}} : </label>
+                                                                <div class="item_content" *ngIf="userDetail && userDetail.value">
+                                                                    <input title="{{utilisateur.labelCouleurYeux}}" *ngIf="!editYeux" class="disableInput" [disabled]="true" type="text" id="statut" [(ngModel)]="utilisateur.labelCouleurYeux"/>
+                                                                    
+
+                                                                    <md-select #couleuryeux class="activeinput" *ngIf="editYeux" [(ngModel)]="utilisateur.id_couleurYeux" (ngModelChange)="changeStatut('couleurYeux')">
+                                                                        <md-option *ngFor="let x of userDetail.value[9].value" [value]="x.id">
+                                                                            {{x.label}}
+                                                                        </md-option>
+                                                                    </md-select>
+                                                                </div>
+                                                                <div class="bouton_wrapper">                                                     
+                                                                    <button *ngIf="editYeux && currentField !== 'couleurYeux' && selectCouleurYeux" style="opacity:1;" class="btn btn_edit btn_edit_orientatio editfield"
+                                                                        (click)="updateProfil('couleurYeux');">edit</button>
+                                                                    <button *ngIf="!editYeux || !selectCouleurYeux" style="opacity:1.0;" class="pen btn btn_edit btn_edit_orientatio"
+                                                                    (click)="setFocus('couleurYeux')">edit</button>
+                                                                    <md-progress-spinner *ngIf="currentField === 'couleurYeux'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="item">
+                                                                <label>{{'Silhouette'|translate}} : </label>
+                                                                <div class="item_content" *ngIf="userDetail && userDetail.value">
+                                                                    <input title="{{utilisateur.labelApparence}}" *ngIf="!editApparence" class="disableInput" [disabled]="true" type="text" id="statut" [(ngModel)]="utilisateur.labelApparence"/>
+                                                                    <md-select #apparence class="activeinput" *ngIf="editApparence" [(ngModel)]="utilisateur.id_apparence" (ngModelChange)="changeStatut('apparence')">
+                                                                        <md-option *ngFor="let x of userDetail.value[0].value" [value]="x.id">
+                                                                            {{x.label}}
+                                                                        </md-option>
+                                                                    </md-select>
+                                                                </div>
+                                                                <div class="bouton_wrapper">                                                     
+                                                                    <button *ngIf="editApparence && currentField !== 'apparence' && selectApparence" style="opacity:1;" class="btn btn_edit btn_edit_orientatio editfield"
+                                                                        (click)="updateProfil('apparence');">edit</button>
+                                                                    <button *ngIf="!editApparence || !selectApparence" style="opacity:1.0;" class="pen btn btn_edit btn_edit_orientatio"
+                                                                    (click)="setFocus('apparence')">edit</button>
+                                                                    <md-progress-spinner *ngIf="currentField === 'apparence'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="item">
+                                                                <label>{{'Look'|translate}} : </label>
+                                                                <div class="item_content" *ngIf="userDetail && userDetail.value">
+                                                                    <input title="{{utilisateur.labelLook}}" *ngIf="!editLook" class="disableInput" [disabled]="true" type="text" id="look" [(ngModel)]="utilisateur.labelLook"/>
+                                                                    <md-select #look class="activeinput" *ngIf="editLook" [(ngModel)]="utilisateur.id_look" (ngModelChange)="changeStatut('look')">
+                                                                        <md-option *ngFor="let x of userDetail.value[11].value" [value]="x.id">
+                                                                            {{x.label}}
+                                                                        </md-option>
+                                                                    </md-select>
+                                                                </div>
+                                                                <div class="bouton_wrapper">                                                     
+                                                                    <button *ngIf="editLook && currentField !== 'look' && selectLook" style="opacity:1;" class="btn btn_edit btn_edit_orientatio editfield"
+                                                                        (click)="updateProfil('look');">edit</button>
+                                                                    <button *ngIf="!editLook || !selectLook" style="opacity:1.0;" class="pen btn btn_edit btn_edit_orientatio"
+                                                                    (click)="setFocus('look')">edit</button>
+                                                                    <md-progress-spinner *ngIf="currentField === 'look'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="item">
+                                                                <label>{{'Signe(s) particulier(s)'|translate}} : </label>
+                                                                <div class="item_content" *ngIf="userDetail && userDetail.value">
+                                                                    <input title="{{utilisateur.labelSigne}}" *ngIf="!editSigne" class="disableInput" [disabled]="true" type="text" id="signe" [(ngModel)]="utilisateur.labelSigne"/>
+                                                                    <md-select #signepart class="activeinput" *ngIf="editSigne" [(ngModel)]="utilisateur.signeParticulier" (ngModelChange)="changeStatut('signepart')">
+                                                                        <md-option *ngFor="let x of userDetail.value[16].value" [value]="x.id">
+                                                                            {{x.label}}
+                                                                        </md-option>
+                                                                    </md-select>
+                                                                </div>
+                                                                <div class="bouton_wrapper">                                                     
+                                                                    <button *ngIf="editSigne && currentField !== 'signepart' && selectSigne" style="opacity:1;" class="btn btn_edit btn_edit_orientatio editfield"
+                                                                        (click)="updateProfil('signepart');">edit</button>
+                                                                    <button *ngIf="!editSigne || !selectSigne" style="opacity:1.0;" class="pen btn btn_edit btn_edit_orientatio"
+                                                                    (click)="setFocus('signepart')">edit</button>
+                                                                    <md-progress-spinner *ngIf="currentField === 'signepart'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item">
+                                                    <label>{{'Origine ethnique'|translate}}</label>
+                                                    <div class="item_content" *ngIf="userDetail && userDetail.value">
+                                                        <input title="{{utilisateur.labelOrigine}}" *ngIf="!editOrigine" class="disableInput" [disabled]="true" type="text" id="origine" [(ngModel)]="utilisateur.labelOrigine"/>
+                                                        <md-select  #origine  class="activeinput" *ngIf="editOrigine" [(ngModel)]="utilisateur.id_origine" (ngModelChange)="changeStatut('origine')">
+                                                            <md-option *ngFor="let x of userDetail.value[15].value" [value]="x.id">
+                                                                {{x.label}}
+                                                            </md-option>
+                                                        </md-select>
+                                                    </div>
+                                                    <div class="bouton_wrapper">
+                                                        <button *ngIf="editOrigine && currentField !== 'origine' && selectOrigine" style="opacity:1;" class="btn btn_edit btn_edit_origine editfield"
+                                                             (click)="updateProfil('origine')">edit</button>
+                                                        <button *ngIf="!editOrigine || !selectOrigine" style="opacity:1.0;" class="pen btn btn_edit btn_edit_origine"
+                                                        (click)="setFocus('origine')">edit</button>
+                                                        <md-progress-spinner *ngIf="currentField === 'origine'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="edit_container">
+                                        <h3>{{'Mes tendances et pratiques'|translate}}</h3>
+                                        <ul class="editable_list">
+                                            <li>
+                                                <div class="item">
+                                                    <label>Tendances :</label>
+                                                    <div class="item_content" *ngIf="userDetail && userDetail.value">
+                                                        <input title="{{utilisateur.labelTendance}}" *ngIf="!editTendance" class="disableInput" [disabled]="true" type="text" id="statut" [(ngModel)]="utilisateur.labelTendance"/>
+                                                        <md-select #tendance class="activeinput" *ngIf="editTendance" [(ngModel)]="utilisateur.id_tendance" (ngModelChange)="changeStatut('tendances')">
+                                                            <md-option *ngFor="let x of userDetail.value[4].value" [value]="x.id">
+                                                                {{x.label}}
+                                                            </md-option>
+                                                        </md-select>
+                                                    </div>
+                                                    <div class="bouton_wrapper">                                                       
+                                                        <button *ngIf="editTendance && currentField !== 'tendances' && selectTendance" style="opacity:1;" class="btn btn_edit btn_edit_orientatio editfield"
+                                                            (click)="updateProfil('tendances');">edit</button>
+                                                        <button *ngIf="!editTendance || !selectTendance" [ngStyle]="{opacity : ''+opacityTendances+''}" class="pen btn btn_edit btn_edit_orientatio"
+                                                        (click)="setFocus('tendances')">edit</button>
+                                                        <md-progress-spinner *ngIf="currentField === 'tendances'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item">
+                                                    <label>{{'Experience'|translate}} : </label>
+                                                    <div class="item_content" *ngIf="userDetail && userDetail.value">
+                                                        <input title="{{utilisateur.labelExperience}}" *ngIf="!editExperience" class="disableInput" [disabled]="true" type="text" id="statut" [(ngModel)]="utilisateur.labelExperience"/>
+                                                        <md-select #experience class="activeinput" *ngIf="editExperience" [(ngModel)]="utilisateur.experience" (ngModelChange)="changeStatut('experience')">
+                                                            <md-option *ngFor="let x of userDetail.value[14].value" [value]="x.id">
+                                                                {{x.label}}
+                                                            </md-option>
+                                                        </md-select>
+                                                    </div>
+                                                    <div class="bouton_wrapper">                                                    
+                                                        <button *ngIf="editExperience && currentField !== 'experience' && selectExperience" style="opacity:1;" class="btn btn_edit btn_edit_orientatio editfield"
+                                                            (click)="updateProfil('experience');">edit</button>
+                                                        <button *ngIf="!editExperience || !selectExperience" [ngStyle]="{opacity : ''+opacityExperience+''}" class="pen btn btn_edit btn_edit_orientatio"
+                                                        (click)="setFocus('experience')">edit</button>
+                                                        <md-progress-spinner *ngIf="currentField === 'experience'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item">
+                                                    <label>{{'Pratiques'|translate}} : </label>
+                                                    <div class="item_content" *ngIf="userDetail && userDetail.value">
+                                                        <input title="{{utilisateur.labelPratiques}}" *ngIf="!editPratique" class="disableInput" [disabled]="true" type="text" id="statut" [(ngModel)]="utilisateur.labelPratiques"/>                                                            
+                                                        <md-select #inputpratique class="activeinput"  *ngIf="editPratique" [(ngModel)]="utilisateur.id_pratique" multiple="{{true}}" (ngModelChange)="changeStatut('pratiques')">
+                                                            <md-option *ngFor="let x of userDetail.value[5].value" [value]="x.id">
+                                                                {{x.label}}
+                                                            </md-option>
+                                                        </md-select>
+                                                    </div>
+                                                    <div class="bouton_wrapper">                                                    
+                                                        <button *ngIf="editPratique && currentField !== 'pratiques' && selectPratique" style="opacity:1;" class="btn btn_edit btn_edit_orientatio editfield"
+                                                            (click)="updateProfil('pratiques');">edit</button>
+                                                        <button *ngIf="!editPratique || !selectPratique" [ngStyle]="{opacity : ''+opacityPratiques+''}" class="pen btn btn_edit btn_edit_orientatio"
+                                                        (click)="setFocus('pratiques')">edit</button>
+                                                        <md-progress-spinner *ngIf="currentField === 'pratiques'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="edit_container">
+                                        <h3>{{'Mes préférences'|translate}}</h3>
+                                        <ul class="editable_list">
+                                            <li>
+                                                <div class="item">
+                                                    <label>{{'Mobilité'|translate}} : </label>
+                                                    <div class="item_content" *ngIf="userDetail && userDetail.value">
+                                                        <input title="{{utilisateur.labelMobilite}}" *ngIf="!editMobilite" class="disableInput" [disabled]="true" type="text" id="statut" [(ngModel)]="utilisateur.labelMobilite"/>                                                            
+                                                        <md-select #inputmobilite class="activeinput"  *ngIf="editMobilite" [(ngModel)]="utilisateur.mobilite" multiple="{{false}}" (ngModelChange)="changeStatut('mobilite')">
+                                                            <md-option *ngFor="let x of userDetail.value[12].value" [value]="x.id">
+                                                                {{x.label}}
+                                                            </md-option>
+                                                        </md-select>
+                                                    </div>
+                                                    <div class="bouton_wrapper">                                                    
+                                                        <button *ngIf="editMobilite && currentField !== 'mobilite' && selectMobilite" style="opacity:1;" class="btn btn_edit btn_edit_orientatio editfield"
+                                                            (click)="updateProfil('mobilite');">edit</button>
+                                                        <button *ngIf="!editMobilite || !selectMobilite" [ngStyle]="{opacity : ''+opacityMobilite+''}" class="pen btn btn_edit btn_edit_orientatio"
+                                                        (click)="setFocus('mobilite')">edit</button>
+                                                        <md-progress-spinner *ngIf="currentField === 'mobilite'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item">
+                                                    <label>{{'Disponibilité'|translate}} : </label>
+                                                    <div class="item_content" *ngIf="userDetail && userDetail.value">
+                                                        <input title="{{utilisateur.labelDisponibilite}}" *ngIf="!editDisponibilite" class="disableInput" [disabled]="true" type="text" id="statut" [(ngModel)]="utilisateur.labelDisponibilite"/>                                                            
+                                                        <md-select #inputdisponibilite class="activeinput"  *ngIf="editDisponibilite" [(ngModel)]="utilisateur.disponibilite" multiple="{{false}}" (ngModelChange)="changeStatut('disponibilite')">
+                                                            <md-option *ngFor="let x of userDetail.value[13].value" [value]="x.id">
+                                                                {{x.label}}
+                                                            </md-option>
+                                                        </md-select>
+                                                    </div>
+                                                    <div class="bouton_wrapper">                                                    
+                                                        <button *ngIf="editDisponibilite && currentField !== 'disponibilite' && selectDisponibilite" style="opacity:1;" class="btn btn_edit btn_edit_orientatio editfield"
+                                                            (click)="updateProfil('disponibilite');">edit</button>
+                                                        <button *ngIf="!editDisponibilite || !selectDisponibilite" [ngStyle]="{opacity : ''+opacityDisponibilite+''}" class="pen btn btn_edit btn_edit_orientatio"
+                                                        (click)="setFocus('disponibilite')">edit</button>
+                                                        <md-progress-spinner *ngIf="currentField === 'disponibilite'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                   <!-- <div class="edit_container">
+                                        <h3>{{'Pseudo et Email '|translate}} </h3>
+                                        <ul class="editable_list">
+                                            <li>
+                                                <div class="item">
+                                                    <label>{{'Pseudo'|translate}} : </label>
+                                                    <div class="item_content" *ngIf="userDetail">
+                                                        <input type="text" id="pseudo" [(ngModel)]="utilisateur.pseudo" (ngModelChange)="changeStatut('pseudo')"></div>
+                                                    <div class="bouton_wrapper">
+                                                        <button class="pen btn btn_edit btn_edit_pseudo" [ngStyle]="{opacity : ''+opacityPseudo+'' , background: 'url(' + imgPseudo + ' )'}"
+                                                            [ngClass]="{disabled : !disabledPseudo}" (click)="openConfirmModal('pseudo')">edit</button>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item">
+                                                    <label>{{'Email'|translate}} : </label>
+                                                    <div class="item_content" *ngIf="userDetail">
+                                                        <input (blur)="emailToLowerCase()" type="text" id="email" [(ngModel)]="utilisateur.email" (ngModelChange)="changeStatut('email')">
+                                                    </div>
+                                                    <div class="bouton_wrapper">
+                                                        <button class="pen btn btn_edit btn_edit_email" [ngStyle]="{opacity : ''+opacityEmail+'' , background: 'url(' + imgEmail + ' )'}"
+                                                          ng-confirm-click="You are about ?"  [ngClass]="{disabled : !disabledEmail}" (click)="openConfirmModal('email')">edit</button>
+                                                    </div>
+                                                    &lt;!&ndash;updatePseudoEmail('email')&ndash;&gt;
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>-->
+                                </div>
+                                <div class="right">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </md-tab>
+                <md-tab *ngIf="(currentIndex !== 1 && innerWidth <= 1024) || (!settingIsChecked && innerWidth > 1024)">
+                    <ng-template md-tab-label>
+                        <div class="mat-mobile" (click)="settingIsChecked=false">
+                            <h2 class="mobil-2"><label>{{'Mes photos'|translate}}</label></h2>
+                        </div>
+                    </ng-template>
+                    <div class="tab_wrapper">
+                        <div class="photo_container">
+
+                            <p class="fil_arriane">
+                                <label>
+                                    <a (click)="album()">{{'Albums'|translate}} </a>
+                                    <span *ngIf="publicPhoto || privePhoto" class ="separator">&nbsp; >&nbsp;  </span>
+                                    <span *ngIf="publicPhoto">{{'Public'|translate}}</span>
+                                    <span *ngIf="privePhoto">{{'Privé'|translate}}</span>&nbsp;
+                                    <span *ngIf="publicPhoto || privePhoto"  class = "number">({{nbPhoto}})</span>
+                                </label>
+                            </p>
+                            <ul *ngIf="albumChoice">
+                                <li (click)="showPublic()" class="col-lg-2">
+                                    <div class="img_wrapper">
+                                        <img *ngIf="photosPubShow" src="{{baseUrl+photosPubShow}}" alt="image">
+                                        <img *ngIf="!photosPubShow" src="assets/img/photo/photo.png" alt="image">
+                                    </div>
+                                    Public ({{nbPhotoPub}})
+                                </li>
+                                <li (click)="showPrive()" class="col-lg-2">
+                                    <div class="img_wrapper">
+                                        <img *ngIf="photosPrivShow" src="{{baseUrl+photosPrivShow}}" alt="image">
+                                        <img *ngIf="!photosPrivShow" src="assets/img/photo/photo.png" alt="image">
+                                    </div>
+                                    Privé ({{nbPhotoPriv}})
+                                </li>
+                            </ul>
+                            <div *ngIf="!albumChoice">
+
+                                <app-album 
+                                    (onOpenModalImageDelete)="openModalImageDelete($event)" 
+                                    (onChangeProfil)="changerProfil($event)"
+                                    [photos]="photos" 
+                                    (onFileEvent)="fileEvent($event)"
+                                    [isMyProfil]=true
+                                    [isPublic]="publicPhoto"
+                                    [loading]="loading"></app-album>
+                                  
+                            </div>
+
+                        </div>
+                    </div>
+                </md-tab>
+                <!--onget  parametre Rl-->
+                <md-tab>
+                    <ng-template md-tab-label>
+                        <div class="mat-mobile" (click)="showSetting()">
+                            <h2 id="test" class="mobil-3"><label>Parametres</label></h2>
+                        </div>
+                    </ng-template>
+                    <div id="Param">
+                        <app-setting></app-setting>
+                    </div>
+                </md-tab>
+
+            </md-tab-group>
+
+            <app-setting [showHeader]="true" *ngIf="(currentIndex === 2 && innerWidth > 1024) "></app-setting>
+            <!--</form>-->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,175 @@
+<p-growl [(value)]="msgs"></p-growl>
+
+<div *ngIf="!modeList">
+    <div class="gridPict">
+        <a (click)="goToProfil(user.id)" class="cursor-pointer">
+            <img *ngIf="user.photo" src = "{{baseUrl+user.photo.replace('file_uploaded/','file_uploaded/square_320_')}}">   
+            <!-- <img *ngIf="!user.photo" class="" src = "assets/img/profil-default.png"> -->
+            <img *ngIf="!user.photo" class="" src = "{{user.defaultpdp}}">
+            
+        </a>
+        <div class="NombresPicts">
+            <span class="detail-photo-bl"><img  src="assets/img/AppPhoto-black.png"  align=""><label class="Nb-pix">{{user.nbPhotosPublic ? user.nbPhotosPublic : 0}}</label></span>
+            <span class="detail-photo-rd"><img  src="assets/img/AppPhoto-red.png"  align=""><label class="Nb-pix">{{user.nbPhotosPrivate ? user.nbPhotosPrivate : 0}}</label></span>
+        </div>
+    </div>
+    <div class="detailsPicts">
+        <div class="detailsPicts-names">
+            <a class="cursor-pointer" (click)="goToProfil(user.id)" class="user-Names" title="{{user.firstName}}-{{user.lastName}}">{{user.firstName}}{{(user.lastName && user.lastName.length !== 0 ? '-':'')}}{{user.lastName}}</a>
+            <span class="userStatus" *ngIf="user.isConnected">
+                    <img  src="assets/img/connect.png"  align="">
+            </span>
+            <span class="userStatus" *ngIf="!user.isConnected">
+                <img  src="assets/img/deconnect.png"  align="">
+            </span>
+        </div>
+        <div class="detailsPicts-local">
+            <span *ngIf="user.dist">{{user.dist}}Km</span>
+            <span *ngIf="!user.dist" class="nonCom">
+                Localisation inconnue                 
+             </span>
+        </div>
+        <div class="clearAll"></div>
+        <div class="detailPicts-infos">
+            <span *ngIf="user.age" title="{{user.age}} ans">{{user.age}} ans</span>  <span *ngIf="user.ville" title="{{user.ville}}">, {{user.ville}}</span>
+        </div>
+        <div class="detailPicts-infosSite">
+            {{user.type}} 
+        </div>
+        <div class="clearAll"></div>
+    </div>
+    <div class="actionsPicts" *ngIf="showTchatAndFavoris">
+        <div class="row">
+            <div class="col-xs-6">
+                <div *ngIf="autorisation['FAV_1']" class="actionImgages">   
+                    <svg *ngIf="user.favoris==false && !loading" [ngClass]="{'pix-stars-hide' : loading && identifiant==user.id }" (click)="favoris(user)"
+                        version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        x="0px" y="0px" width="50px" height="55px" viewBox="0 0 20 21" enable-background="new 0 0 20 21" xml:space="preserve">
+                        <g>
+                            <path id="Shape" fill="#9C9C9C" d="M10.029,15.744l6.18,3.727l-1.635-7.029l5.455-4.727l-7.191-0.617l-2.809-6.627L7.22,7.098L0.029,7.715l5.455,4.727l-1.635,7.029L10.029,15.744z"
+                            />
+                        </g>
+                    </svg>
+                    <svg *ngIf="user.favoris==true && !loading" [ngClass]="{'pix-stars-hide' : loading && identifiant==user.id }" (click)="deleteFavoris(user)"
+                        version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        x="0px" y="0px" width="50px" height="55px" viewBox="0 0 20 21" enable-background="new 0 0 20 21" xml:space="preserve">
+                        <g>
+                            <path id="Shape" fill="#FFEB3B" d="M10.029,15.744l6.18,3.727l-1.635-7.029l5.455-4.727l-7.191-0.617l-2.809-6.627L7.22,7.098L0.029,7.715l5.455,4.727l-1.635,7.029L10.029,15.744z"
+                            />
+                        </g>
+                    </svg>
+                    <div class=" loading"   *ngIf="loading && identifiant==user.id">
+                        <md-progress-spinner  class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-xs-6">
+                <div class="actionImgages">
+                    <a (click)="goToTchat(user)" class="user-Names" *ngIf="user.isConnected">
+                        <img src="assets/img/bulle-small@2xgreen.png" alt="Tchat">
+                    </a>
+                    <a (click)="goToTchat(user)" class="user-Names" *ngIf="!user.isConnected">                            
+                        <img src="assets/img/enveloppe@2x-grey.png" alt="Tchat">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="clearAll"></div>
+    </div>
+</div>
+
+<div *ngIf="modeList">
+    <div class="profil-list cursor-pointer"   (click)="goToProfil(user.id)">
+        <!-- <span class="profil-gm"><img src="assets/img/profil-default.png" width="109px" height="96px"  align=""></span> -->
+        <!--<span class="profil-gm"><img src="{{user.defaultpdp}}" width="109px" height="96px"  align=""></span>-->
+        <span class="profil-gm">
+                <img *ngIf="user.photo" src = "{{baseUrl+user.photo.replace('file_uploaded/','file_uploaded/square_320_')}}">
+        <!-- <img *ngIf="!user.photo" class="" src = "assets/img/profil-default.png"> -->
+                <img *ngIf="!user.photo" class="" src = "{{user.defaultpdp}}">                
+        </span>
+    </div>
+    <div class="user-list-name cursor-pointer"  (click)="goToProfil(user.id)">
+        <div class="name-u">
+            <!--{{user.defaultpdp}}-->
+            <p class="profil-name" title="{{user.firstName}}{{(user.lastName && user.lastName.length !== 0 ? '-':'')}}{{user.lastName}}, {{user.age}} ans ">{{user.firstName}}{{(user.lastName && user.lastName.length !== 0 ? '-':'')}}{{user.lastName}}, {{user.age}} ans <br> {{user.ville}} </p>
+            <p class="connect" *ngIf="user.isConnected">
+                <span class="green"><img src="assets/img/connect.png" align=""></span>
+            </p>
+            <p class="connect" *ngIf="!user.isConnected">
+                    <span class="green"><img src="assets/img/deconnect.png" align=""></span>
+                </p>
+        </div>
+        <div class="detail-pix-list">
+            <p class="detail-pix-Pblic">
+                <span class="detail-photo-bl">
+                    <img  src="assets/img/AppPhoto-white.png"  align="">
+                    <!--<img  src="assets/img/photo-publix@2x.png" width="33px" height="26px"  align="">--></span>
+                <!--{{user.nbPhotosPublic}}-->
+                <label class="Nbr-pix-list-Pblic">{{user.nbPhotosPublic ? user.nbPhotosPublic : 0}}</label>
+
+            </p>
+            <p class="detail-pix-prive">
+                <span class="detail-photo-rd">
+                    <img  src="assets/img/AppPhoto-red.png"  align="">
+                    <!--<img  src="assets/img/photo-priv@2x.png" width="33px" height="26px" align="">--></span>
+                    <!--{{user.nbPhotosPrivate}}-->
+                <label class="Nbr-pix-list-prive">{{user.nbPhotosPrivate ? user.nbPhotosPrivate : 0}}</label>
+            </p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="detail-user">
+        <p class="Dtail-Prl">
+            {{user.description}}               
+               {{user.type}}      
+        </p>     
+    </div>
+    <div class="block-km" >
+        <span *ngIf="user.dist" class="km-list">
+         {{user.dist}} Km
+        </span>
+        <span *ngIf="!user.dist" class="km-list nonCom">
+           Localisation inconnue             
+        </span>
+    </div>
+    <div class="block-fav-Mgs ">
+        <p class="fav-pix actionImgages cursor-pointer">
+            <svg *ngIf="user.favoris==false && identifiant!=user.id " [ngClass]="{'pix-stars-hide' : loading && identifiant==user.id }"
+                (click)="favoris(user)" version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px" y="0px" width="50px" height="55px" viewBox="0 0 20 21" enable-background="new 0 0 20 21" xml:space="preserve">
+                <g>
+                    <path id="Shape" fill="#9C9C9C" d="M10.029,15.744l6.18,3.727l-1.635-7.029l5.455-4.727l-7.191-0.617l-2.809-6.627L7.22,7.098
+		L0.029,7.715l5.455,4.727l-1.635,7.029L10.029,15.744z" />
+                </g>
+            </svg>
+            <svg *ngIf="user.favoris==true  && identifiant!=user.id " [ngClass]="{'pix-stars-hide' : loading && identifiant==user.id }"
+                (click)="deleteFavoris(user)" version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px" y="0px" width="50px" height="55px" viewBox="0 0 20 21" enable-background="new 0 0 20 21" xml:space="preserve">
+                <g>
+                    <path id="Shape" fill="#FFEB3B" d="M10.029,15.744l6.18,3.727l-1.635-7.029l5.455-4.727l-7.191-0.617l-2.809-6.627L7.22,7.098
+		L0.029,7.715l5.455,4.727l-1.635,7.029L10.029,15.744z" />
+                </g>
+            </svg>
+
+            <span  class="loading-fav" style="    position: relative;    display: block;    margin-bottom: 30px;">
+              <!--  <img src="assets/img/loading_apple.gif">-->
+                <md-progress-spinner  class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+            </span>
+
+        </p>
+        <p class="fav-mgs actionImgages">
+
+
+            <a (click)="goToTchat(user)" *ngIf="user.isConnected">
+                <img src="assets/img/bulle-small@2xgreen.png" alt="Tchat">
+            </a>
+            <a (click)="goToTchat(user)"  *ngIf="!user.isConnected">
+                <img src="assets/img/enveloppe@2x-grey.png" alt="Tchat">
+            </a>
+
+        </p>       
+    </div>
+
+    <!--<div class="clearfix"></div>-->
+</div>

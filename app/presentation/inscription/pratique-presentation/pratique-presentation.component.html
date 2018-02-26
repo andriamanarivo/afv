@@ -1,0 +1,65 @@
+
+
+<div class=" container form check_item pratique-form">
+	<div class=" container_wrapper">
+		<div class="logo">
+		  <img alt="logo" src=" assets/img/logo/logo_small.png">
+		</div>
+        <p class="sloganLogo">{{'100 nuances de plaisirs' | translate}}</p>
+		<div class=" form_body two_column">			
+			<h1>
+				{{title}}
+				<span>Plusieurs choix possibles</span>
+				<span *ngIf="submitted" class=" error">{{errorMessage}}</span>
+			</h1>
+			<div class=" column_wrapper">
+                <!-- <label style="color:red;">{{idpratiques}}</label> -->
+				<div class=" column_left">
+                    <md-select [disabled]="active.length !== 0 && active !== 'pratique1'" placeholder ="Choix 1"[(ngModel)]="pratique1" (ngModelChange)="select1($event,'pratique1')">
+                        <md-option *ngFor="let x of pratiques" [disabled]="x.disable"  [value]="x.id">
+                        {{x.label}}
+                        </md-option>
+                    </md-select>
+                    <md-select [disabled]="active.length !== 0 && active !== 'pratique3'"  placeholder ="Choix 3" [(ngModel)]="pratique3" (ngModelChange)="select1($event,'pratique3')">
+                        <md-option *ngFor="let x of pratiques" [disabled]="x.disable" [value]="x.id">
+                        {{x.label}}
+                        </md-option>
+                    </md-select>
+                    <md-select [disabled]="active.length !== 0 && active !== 'pratique5'"  placeholder ="Choix 5" [(ngModel)]="pratique5" (ngModelChange)="select1($event,'pratique5')">
+                        <md-option *ngFor="let x of pratiques" [disabled]="x.disable"  [value]="x.id">
+                        {{x.label}}
+                        </md-option>
+                    </md-select>
+
+
+				</div>
+                <div class=" column_right">
+                    <md-select [disabled]="active.length !== 0 && active !== 'pratique2'"  placeholder ="Choix 2" [(ngModel)]="pratique2" (ngModelChange)="select1($event,'pratique2')">
+                        <md-option *ngFor="let x of pratiques" [disabled]="x.disable"  [value]="x.id">
+                        {{x.label}}
+                        </md-option>
+                    </md-select>
+                    <md-select  [disabled]="active.length !== 0 && active !== 'pratique4'"  placeholder ="Choix 4" [(ngModel)]="pratique4" (ngModelChange)="select1($event,'pratique4')">
+                        <md-option *ngFor="let x of pratiques" [disabled]="x.disable" [value]="x.id">
+                        {{x.label}}
+                        </md-option>
+                    </md-select>
+                    <md-select [disabled]="active.length !== 0 && active !== 'pratique6'"  placeholder ="Choix 6" [(ngModel)]="pratique6" (ngModelChange)="select1($event,'pratique6')">
+                        <md-option *ngFor="let x of pratiques" [disabled]="x.disable"  [value]="x.id">
+                        {{x.label}}
+                        </md-option>
+                    </md-select>
+                </div>
+			</div>			
+			<div class=" button_wrapper">				
+				<div class=" left">
+					<button class=" btn btn_cancel" routerLink="/inscription/tendance" routerLinkActive="active">Cancel</button>
+				</div>
+				<div class=" right">
+					<!--<button class=" btn btn_done"  [routerLink]="['/inscription/recherche']" routerLinkActive="active">Done</button>-->
+					<button class=" btn btn_done" (click)="onSubmit()">Done</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,42 @@
+/* Limit image width to avoid overflow the container */
+img {
+    max-width: 100%; /* This rule is very important, please do not ignore this! */
+}
+.group-btn{
+    margin-top:20px;
+    margin-bottom:20px;
+}
+.img-crop-container{
+    margin-top:20px;
+}
+.icon-btn {
+    display:block;
+    width: 28px;
+    height:28px;
+vertical-align: middle;
+    margin: 0 auto;
+}
+.label-btn{
+    display:table-cell;
+    vertical-align: middle;
+}
+.rotate-right{
+    background:url('../../../../assets/img/right45.png');
+    background-size: cover;
+}
+.rotate-left{
+    background:url('../../../../assets/img/left45.png');
+    background-size: cover;
+}
+.zoomin{
+    background:url('../../../../assets/img/zoomin.png');
+    background-size: cover;
+}
+.zoomout{
+    background:url('../../../../assets/img/zoomout.png');
+    background-size: cover;
+}
+.btn-icon-only{
+    /* width:56% !important; */
+    margin:0 auto;
+}

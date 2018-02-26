@@ -1,0 +1,134 @@
+<!--div class="full-width">
+        {{title}}
+</div-->
+<div class="form check_item" id='complement' >
+        <div class="container form compte">
+            <div class="container_wrapper">
+                <div class="logo">
+                    <img alt="logo" src="assets/img/logo/logo_small.png">
+                </div>
+                <p class="sloganLogo">{{'100 nuances de plaisirs' | translate}}</p>
+                
+    
+                <div class="form_body" >
+                    <div class="loading-admin" *ngIf="loading">
+                        <app-loader [load]="loading"></app-loader>
+                    </div>
+                    <!--(submit)="processInscription()"-->
+                    <form [formGroup]="compteForm" *ngIf="!loading" class="form-valid-pseudo"> 
+                        <!-- <div class="error-sub" *ngIf="(errorMessage && errorMessage.length > 0)">
+                            
+                            <p *ngIf="errorPseudoMessage && errorPseudoMessage.length > 0" class="error-label">{{errorPseudoMessage}}</p>
+                        </div> -->
+    
+                        <div  class="input-field completeInfo" *ngIf="isPseudo=='true'">
+                            <div class="input-field">
+                                <md-input-container class="full-width">
+                                        <!-- (keyup)="uncapitalizeFirstLetter('pseudo')" (blur)="verifyPseudoIfExist(); isPseudoExcluded();"  style="text-transform: lowercase;" -->
+                                    <input  (blur)="verifyPseudoIfExist()" maxlength="12"  (keyup)="verifyPseudoIfExist();pseudoError='';" [style.color]="getInputColor()" #pseudo mdInput placeholder="Pseudo" formControlName="pseudo">                    
+                                    <control-messages class="message_error"  [controlName]="controlName['pseudo']" [control]="compteForm.controls.pseudo"></control-messages>  
+                                </md-input-container>
+                            </div>
+                            <div class="errorfield" *ngIf="errorPseudoMessage?.length !== 0">{{pseudoError}}</div>
+                        </div>
+                        <div  class="input-field completeInfo" *ngIf="isPseudo=='false'">
+                            <label class="Dobth"> Sexe </label>
+                            <md-select  formControlName="sexe"  [disabled]="disabled" (ngModelChange)="changeSexe($event)">
+                                <md-option *ngFor="let i of sexes" [value]="i.id" > {{i.label}}</md-option>
+                            </md-select>
+                            <div class="errorfield"  *ngIf="compteForm.controls['sexe'].hasError('required') && compteForm.controls['sexe'].touched">{{'requiredsexe' | translate}}</div>
+    
+                            <label class="Dobth"> Statut </label>
+                            <md-select  formControlName="statut">
+                                <md-option *ngFor="let statut of statuts" [value]="statut.id" > {{statut.label}}</md-option>
+                            </md-select>
+                            <div class="errorfield" *ngIf="compteForm.controls['statut'].hasError('required') && compteForm.controls['statut'].touched">{{'requiredstatut' | translate}}</div>
+    
+                            <label class="Dobth" *ngIf="coupleNormal"> Orientation </label>
+                            <md-select *ngIf="coupleNormal"  formControlName="orientation">
+                                <md-option *ngFor="let orientation of orientations" [value]="orientation.id" > {{orientation.label}}</md-option>
+                            </md-select>
+                            <div class="errorfield" *ngIf="coupleNormal && compteForm.controls['orientation'].hasError('required') && compteForm.controls['orientation'].touched">{{'requiredorientation' | translate}}</div>
+                            
+                            <label class="Dobth"> Tendance </label>
+                            <md-select  formControlName="tendance">
+                                <md-option *ngFor="let tendance of tendances" [value]="tendance.id" > {{tendance.label}}</md-option>
+                            </md-select>
+                            <div class="errorfield" *ngIf="compteForm.controls['tendance'].hasError('required') && compteForm.controls['tendance'].touched">{{'requiredtendance' | translate}}</div>
+    
+                            <label class="Dobth"> Pratique </label>
+                            <md-select multiple="{{true}}"  formControlName="pratique">
+                                <md-option *ngFor="let pratique of pratiques" [value]="pratique.id" > {{pratique.label}}</md-option>
+                            </md-select>
+                            <div class="errorfield" *ngIf="compteForm.controls['pratique'].hasError('required') && compteForm.controls['pratique'].touched">{{'reauiredpratique' | translate}}</div>
+    
+                            <label class="Dobth"> Date de Naissance </label>
+                            <md-input-container class="day all">
+                                <input mdInput (keyup)="dayOrMonthChange('birthDay')" placeholder="jj"  formControlName="birthDay"  maxlength="2">
+                                <!-- <control-messages [controlName]="controlName['birthDay']" [control]="compteForm.controls.birthDay"></control-messages> -->
+                            </md-input-container>
+    
+                            <md-input-container class="mois all">
+                                <input #birthMonth mdInput  (keyup)="dayOrMonthChange('birthMonth')"  placeholder="mm" formControlName="birthMonth"   maxlength="2">
+                                <!--<control-messages [controlName]="controlName['birthMonth']" [control]="compteForm.controls.birthMonth"></control-messages>-->
+                            </md-input-container>
+    
+                            <md-input-container class="years all">
+                                <input #birthYear mdInput placeholder="aaaa"  formControlName="birthYear"  maxlength="4">
+                                <!--<control-messages [controlName]="controlName['birthYear']" [control]="compteForm.controls.birthYear"></control-messages>-->
+                            </md-input-container>
+                            <div class="control-messages full-width clearAll dateMessage">
+                                <div class="mat-input-invalid">
+                                    <div *ngIf="compteForm.controls['birthDay'].value.length !== 0 && compteForm.controls['birthDay'].hasError('dateerror') && compteForm.controls['birthDay'].touched">Jour invalide</div>                                                                
+                                    <div *ngIf="compteForm.controls['birthYear'].value.length !== 0 && compteForm.controls['birthYear'].hasError('isMineur') && compteForm.controls['birthYear'].touched">{{ minorNotAutorized| translate }}</div>                                                                
+                                    <control-messages [controlName]="controlName['birthDay']" [control]="compteForm.controls.birthDay"></control-messages>
+                                    <control-messages [controlName]="controlName['birthMonth']" [control]="compteForm.controls.birthMonth"></control-messages>
+                                    <control-messages [controlName]="controlName['birthYear']" [control]="compteForm.controls.birthYear"></control-messages>
+                                    <!-- <div *ngIf="errorbirthMessage && errorbirthMessage.length > 0">{{errorbirthMessage}}</div> -->
+                                </div>
+                            </div>
+                            
+                            <div *ngIf="isCouple">
+                            <label class="Dobth"> Date de Naissance conjoint </label>
+                            <md-input-container class="day all">
+                                <input mdInput  (keyup)="dayOrMonthChange('birthCoDay')" placeholder="jj"  formControlName="birthCoDay"  maxlength="2">
+                                <!--<control-messages [controlName]="controlName['birthDay']" [control]="compteForm.controls.birthDay"></control-messages>-->
+                            </md-input-container>
+    
+                            <md-input-container class="mois all">
+                                <input #birthCoMonth mdInput  (keyup)="dayOrMonthChange('birthCoMonth')"   placeholder="mm" formControlName="birthCoMonth"   maxlength="2">
+                                <!--<control-messages [controlName]="controlName['birthMonth']" [control]="compteForm.controls.birthMonth"></control-messages>-->
+                            </md-input-container>
+    
+                            <md-input-container class="years all">
+                                <input #birthYearC mdInput placeholder="aaaa"  formControlName="birthYearC"  maxlength="4">
+                                <!--<control-messages [controlName]="controlName['birthYear']" [control]="compteForm.controls.birthYear"></control-messages>-->
+                            </md-input-container>
+                            <div class="control-messages full-width clearAll dateMessage">
+                                <div class="mat-input-invalid">
+                                    <div *ngIf="compteForm.controls['birthCoDay'].value.length !== 0 && compteForm.controls['birthCoDay'].hasError('dateconjointerror') && compteForm.controls['birthCoDay'].touched">Jour invalide</div>                                                                   <div *ngIf="compteForm.controls['birthYearC'].value.length !== 0 && compteForm.controls['birthYearC'].hasError('isMineur') && compteForm.controls['birthYearC'].touched">{{ minorNotAutorized| translate }}</div> 
+
+                                    <control-messages [controlName]="controlName['birthCoDay']" [control]="compteForm.controls.birthCoDay"></control-messages>
+                                    <control-messages [controlName]="controlName['birthCoMonth']" [control]="compteForm.controls.birthCoMonth"></control-messages>
+                                    <control-messages [controlName]="controlName['birthYearC']" [control]="compteForm.controls.birthYearC"></control-messages>
+                                    <!-- <div *ngIf="errorbirthCoMessage && errorbirthCoMessage.length > 0">{{errorbirthCoMessage}}</div> -->
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+    
+    
+    
+                        <!--(click)="processInscription(obtin.value)"-->
+                        <div class="button_wrapper">
+                            <button [disabled]="testPseudo && isPseudo === 'true'"  class="btn btn_connexion" [formGroup]="compteForm"  (click)="completeAndLog()">
+                                {{'Valider'|translate}}
+                            </button>
+                            <!--<button (click)="annulerInscription()" routerLink="/inscription/recherche" routerLinkActive="active" class="btn btn_cancel">{{'Annuler mon inscription'|translate}}</button>-->
+                            <button  (click)="logout()" routerLinkActive="active" class="btn btn_cancel">{{'Annuler'|translate}}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

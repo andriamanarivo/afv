@@ -1,0 +1,98 @@
+<section class="content" style="height:100%;">
+    <p-growl [(value)]="msgs"></p-growl>
+    <form [formGroup]="form">
+        
+        <div class="back-link-block">
+            Utiliser la molette du souris pour zoomer
+            <span class="gotolist" (click)="goToList()"> Revenir à la liste
+                <i class="zmdi zmdi-arrow-right"></i>
+            </span>
+        </div>
+
+        <div class="formsearch">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label class="labelleInput text-center center-block">Largeur : </label>
+                    <input class="form-control" type="number" placeholder="width" formControlName="width" />
+                </div>
+                <div class="col-sm-2">
+                    <label class="labelleInput text-center center-block">Hauteur : </label>
+                    <input class="form-control" type="number" placeholder="height" formControlName="height" />
+                </div>
+                <div class="col-sm-2">
+                    <label class="labelleInput text-center center-block">Rotation : </label>
+                    <input class="form-control" type="number" placeholder="rotate" formControlName="rotate" />
+                </div>
+                <div class="col-sm-2">
+                    <label class="labelleInput text-center center-block">X : </label>
+                    <input class="form-control" type="number" placeholder="scaleX" formControlName="x" />
+                </div>
+                <div class="col-sm-2">
+                    <label class="labelleInput text-center center-block">Y : </label>
+                    <input class="form-control"  type="number" placeholder="scaleY" formControlName="y" />
+                </div>
+                <!-- <div class="col-sm-2">
+                    <label class="labelleInput text-center center-block">scaleX : </label>
+                    <input class="form-control" step="0.01" (change)='scalexChange()' type="number" placeholder="scaleX" formControlName="scalex" />
+                </div>
+                <div class="col-sm-2">
+                    <label class="labelleInput text-center center-block">scaleY : </label>
+                    <input class="form-control" (change)='scaleyChange()' step="0.01"  type="number" placeholder="scaleY" formControlName="scaley" />
+                </div> -->
+            </div>
+
+            <div class="row group-btn">
+                <div class="col-sm-1">
+                    <button class="btn btn-secondary btn-block btn--icon-text btn-icon-only"  (click)='rotate(45)'><span class="icon-btn rotate-right"></span></button>
+                </div>
+                <div class="col-sm-1">
+                    <button class="btn btn-secondary btn-block btn--icon-text btn-icon-only"  (click)='rotate(-45)'><span class="icon-btn rotate-left"></span></button>
+                </div>
+                 <!-- <div class="col-sm-1">
+                    <button   (click)='updatescalex(-1)'>updatescalex</button>
+                </div>
+                 <div class="col-sm-1">
+                    <button   (click)='updatescalex(1)'>updatescalex</button>
+                </div>
+                 <div class="col-sm-1">
+                    <button   (click)='updatescaley(-1)'>updatescaley</button>
+                </div>
+                 <div class="col-sm-1">
+                    <button   (click)='updatescaley(1)'>updatescaley</button>
+                </div> -->
+                <div class="col-sm-1">                  
+                    <button class="btn btn-secondary btn-block btn--icon-text btn-icon-only"  (click)='zoom(0.1)'><span class="icon-btn zoomin"></span></button>
+                </div>
+                 <div class="col-sm-1">
+                    <button class="btn btn-secondary btn-block btn--icon-text btn-icon-only"  (click)='zoom(-0.1)'><span class="icon-btn zoomout"></span></button>           
+                 </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-secondary btn-block btn--icon-text"  (click)='updateSize()'>Modifier taille</button>
+                </div>
+                <!-- <div class="col-sm-2">
+                        <button class="btn btn-secondary btn-block btn--icon-text"  (click)='uncrop()'>Supprimer le recadrage</button>
+                    </div> -->
+                <div class="col-sm-2">
+                    <button class="btn btn-secondary btn-block btn--icon-text"  (click)='crop()'>Recadrer</button>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-secondary btn-block btn--icon-text"  (click)='reset()'>Reinitialiser</button>
+                </div>
+                <!-- <div class="col-sm-2">
+                    <button  class="btn btn-secondary btn-block btn--icon-text"  (click)='updateSize()'>Modifier taille</button>
+                </div> -->
+                <div class="col-sm-2">
+                    <button class="btn btn-secondary btn-block btn--icon-text"  (click)='confirmSave()'>Valider</button>
+                </div>               
+            </div>
+        </div>
+    </form>
+    <div style="width:100%;height:100%;" class="img-crop-container">
+
+
+        <!-- <img id="image" src="assets/img/logo-visa-elec.png"> -->
+        <img id="image" src="{{baseUrl + imgUri}}">
+        <!-- <img id="image" src="http://bdm.dev.arkeup.com/assets/file_uploaded/square_320_b639ff06555af3b12403c8399da4df1d.jpg"> -->
+        <!-- <img id="img" src="assets/img/capture3.jpg"> -->
+    </div>   
+</section>

@@ -1,0 +1,490 @@
+<section class="content select-wht content-admin">
+  <div class="back-link-block">
+    <span  class="gotolist" (click)="goToList()"> Revenir à la liste <i class="zmdi zmdi-arrow-right"></i> </span>
+  </div>
+  <div class="loading-admin" *ngIf ="isLoading">
+    <app-loader [load]="isLoading"></app-loader>
+  </div>
+  <form [formGroup]="siteDetailForm">
+    <div class="card head" *ngIf ="!isLoading">
+      <div class="card-header">
+        <h2 class="card-block_title">Sites</h2>
+      </div>
+      <div class="card-block">
+        <div class="row">
+          <div class="col-sm-6">
+            <h3 class="card-title">Titre</h3>
+          </div>
+          <div class="col-sm-6">
+            <h3 class="card-title">Thématique</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+              <!-- [(ngModel)]="siteDto.siteName" -->
+            <input #site  type="text" class="form-control" formControlName="site">
+            <control-messages [controlName]="controlName['site']" [control]="siteDetailForm.controls.site"></control-messages>
+          </div>
+          <div class="col-sm-6">
+              <!-- [(ngModel)]="thematique.uid"  -->
+              <md-select #thematique formControlName="thematique">
+              <md-option *ngFor="let x of thematiques" [value]="x.uid" (onSelectionChange)="thematiqueSelected($event, x.uid)">
+                    {{ x.libelle }}
+              </md-option>
+              </md-select>
+              <control-messages [controlName]="controlName['thematique']" [control]="siteDetailForm.controls.thematique"></control-messages>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" *ngIf ="!isLoading">
+      <div class="card-header">
+        <h2 class="card-block_title">Slogan</h2>
+      </div>
+      <div class="card-block">
+          <div class="row">
+            <div class="col-sm-4">
+              <h3 class="card-title">Slogan</h3>
+            </div>
+            <div class="col-sm-7">
+                <input #slogan type="text" formControlName="slogan" class="form-control">
+                <control-messages [controlName]="controlName['slogan']" [control]="siteDetailForm.controls.slogan"></control-messages>
+              </div>
+          </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <h3 class="card-title">{{SiteSettingsLogo | translate }}</h3>
+          </div>
+          <div class="col-sm-7">
+            <app-album                                 
+              (onFileEvent)="fileEvent($event)" 
+              [isMyProfil]=true
+              accept = "image/*"
+              [allowUpdatePhotoProfil]=true
+              widthImgWraper=5%                    
+              [loading]="loading">
+            </app-album>
+            <div class="card-block">
+              <alert type="{{ alertCssClass }}" *ngIf="errorMessage && errorMessage.length>0">
+                  {{errorMessage}}
+              </alert>              
+            </div>
+            <div class="img_wrapper" *ngIf="logoFile.fileUrl">
+              <img (click)="open(i)" src="{{ logoFile.fileUrl }}" alt="image">
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <h3 class="card-title">{{SiteSettingsDescription | translate }}</h3>
+          </div>
+          <div class="col-sm-7">
+            <div class="EditeurPlus">
+              <p-editor #description [style]="{'height':'170px'}" formControlName="description"></p-editor>
+              <control-messages [controlName]="controlName['description']" [control]="siteDetailForm.controls.description"></control-messages>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <h3 class="card-title">{{SiteSettingsClientPhone | translate }}</h3>
+          </div>
+          <div class="col-sm-7">
+            <input minlength="10" maxlength="14" #clientPhone type="text" formControlName="clientPhone" class="form-control">
+            <control-messages [controlName]="controlName['clientPhone']" [control]="siteDetailForm.controls.clientPhone"></control-messages>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <h3 class="card-title">{{SiteSettingsClientEmail | translate }}</h3>
+          </div>
+          <div class="col-sm-4">
+            <input #clientEmail type="text" formControlName="clientEmail"  class="form-control">
+            <control-messages [controlName]="controlName['clientEmail']" [control]="siteDetailForm.controls.clientEmail"></control-messages>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <h3 class="card-title">{{SiteSettingsAdminPhone | translate }}</h3>
+          </div>
+          <div class="col-sm-7">
+            <input minlength="10" maxlength="14" #adminPhone type="text" formControlName="adminPhone"  class="form-control">
+            <control-messages [controlName]="controlName['adminPhone']" [control]="siteDetailForm.controls.adminPhone"></control-messages>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <h3 class="card-title">{{SiteSettingsAdminEmail | translate }}</h3>
+          </div>
+          <div class="col-sm-7">
+            <input #adminEmail type="text" formControlName="adminEmail" class="form-control">
+            <control-messages [controlName]="controlName['adminEmail']" [control]="siteDetailForm.controls.adminEmail"></control-messages>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <h3 class="card-title">{{SiteSettingsModerateurPhone | translate }}</h3>
+          </div>
+          <div class="col-sm-7">
+            <input minlength="10" maxlength="14" #ModerateurPhone type="text" formControlName="ModerateurPhone"  class="form-control">
+            <control-messages [controlName]="controlName['ModerateurPhone']" [control]="siteDetailForm.controls.ModerateurPhone"></control-messages>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <h3 class="card-title">{{SiteSettingsModerateurEmail | translate }}</h3>
+          </div>
+          <div class="col-sm-4">
+            <input #ModerateurEmail type="text" formControlName="ModerateurEmail" class="form-control">
+            <control-messages [controlName]="controlName['ModerateurEmail']" [control]="siteDetailForm.controls.ModerateurEmail"></control-messages>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <h3 class="card-title">{{SiteSettingsSitePhone | translate }}</h3>
+          </div>
+          <div class="col-sm-7">
+            <input minlength="10" maxlength="14" #sitePhone type="text" formControlName="sitePhone" class="form-control">
+            <control-messages [controlName]="controlName['sitePhone']" [control]="siteDetailForm.controls.sitePhone"></control-messages>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <h3 class="card-title">{{SiteSettingsSiteEmail | translate }}</h3>
+          </div>
+          <div class="col-sm-7">
+            <input #siteEmail type="text" formControlName="siteEmail" class="form-control">
+            <control-messages [controlName]="controlName['siteEmail']" [control]="siteDetailForm.controls.siteEmail"></control-messages>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <h3 class="card-title">{{SiteSettingsSms | translate }}</h3>
+          </div>
+          <div class="col-sm-7">
+            <input minlength="10" maxlength="14" #sms type="text" formControlName="sms" class="form-control">
+            <control-messages [controlName]="controlName['sms']" [control]="siteDetailForm.controls.sms"></control-messages>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" *ngIf ="!isLoading">
+      <div class="card-header">
+        <h2 class="card-block_title">Scoring</h2>
+      </div>
+      <div class="card-block">        
+          <div class="row">
+            <div class="col-sm-7">
+              <h3 class="card-title">Point pdp</h3>
+            </div>
+            <div class="col-sm-4">
+              <p-spinner size="3" #pointAge formControlName="pointAge" [min]="0" [max]="20"></p-spinner>
+              <control-messages [controlName]="controlName['pointAge']" [control]="siteDetailForm.controls.pointAge"></control-messages>
+            </div>
+          </div>
+                <br>
+          <div class="row">
+            <div class="col-sm-7">
+              <h3 class="card-title">Point distance</h3>
+            </div>
+              <div class="col-sm-4">
+                <p-spinner size="3" #pointDistance formControlName="pointDistance" [min]="0" [max]="20"></p-spinner>
+                <control-messages [controlName]="controlName['pointDistance']" [control]="siteDetailForm.controls.pointDistance"></control-messages>
+              </div>
+          </div>
+          <br>
+          <div class="row">
+              <div class="col-sm-7">
+                <h3 class="card-title">point Rencontre</h3>
+              </div>
+              <div class="col-sm-4">
+                <p-spinner size="3" #pointRencontre formControlName="pointRencontre" [min]="0" [max]="20"></p-spinner>
+                <control-messages [controlName]="controlName['pointRencontre']" [control]="siteDetailForm.controls.pointRencontre"></control-messages>
+              </div>
+            </div>
+            <br>
+          <div class="row">
+            <div class="col-sm-7">
+              <h3 class="card-title">point Photos</h3>
+            </div>
+            <div class="col-sm-4">
+              <p-spinner size="3" #pointPhotos formControlName="pointPhotos" [min]="0" [max]="20"></p-spinner>
+              <control-messages [controlName]="controlName['pointPhotos']" [control]="siteDetailForm.controls.pointPhotos"></control-messages>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-7">
+                <h3 class="card-title">point Tendance</h3>
+            </div>
+            <div class="col-sm-4">
+              <p-spinner size="3" #pointTendance formControlName="pointTendance" [min]="0" [max]="20"></p-spinner>
+              <control-messages [controlName]="controlName['pointTendance']" [control]="siteDetailForm.controls.pointTendance"></control-messages>
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+
+      <div class="card" *ngIf ="!isLoading">
+        <div class="card-header">
+          <h2 class="card-block_title">Timers</h2>
+        </div>
+        <div class="card-block">
+          <div class="row">
+            <div class="col-sm-7">
+              <h3 class="card-title">Temps de la confirmation de compte</h3>
+            </div>
+            <div class="col-sm-4">
+              <p-spinner size="3" #tempConfCompte formControlName="tempConfCompte" [min]="0" [max]="20"></p-spinner> (h)
+              <control-messages [controlName]="controlName['tempConfCompte']" [control]="siteDetailForm.controls.tempConfCompte"></control-messages>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-7">
+              <h3 class="card-title">Temps de la désactivation d'un utilisateur refusé</h3>
+            </div>
+            <div class="col-sm-4">
+              <p-spinner size="3" #tempDesactiveUser formControlName="tempDesactiveUser" [min]="0" [max]="20"></p-spinner> (h)
+              <control-messages [controlName]="controlName['tempDesactiveUser']" [control]="siteDetailForm.controls.tempDesactiveUser"></control-messages>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-7">
+              <h3 class="card-title">Temps de la suspension d'un utilisateur</h3>
+            </div>
+            <div class="col-sm-4">
+              <p-spinner size="3" #tempSuspensionUser formControlName="tempSuspensionUser" [min]="0" [max]="20"></p-spinner> (h)
+              <control-messages [controlName]="controlName['tempSuspensionUser']" [control]="siteDetailForm.controls.tempSuspensionUser"></control-messages>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-7">
+              <h3 class="card-title">Temps d'inactivité de l'utilisateur</h3>
+            </div>
+            <div class="col-sm-4">
+              <p-spinner size="3" #tempInactiveUser formControlName="tempInactiveUser"  [min]="0" [max]="20"></p-spinner> (h)
+              <control-messages [controlName]="controlName['tempInactiveUser']" [control]="siteDetailForm.controls.tempInactiveUser"></control-messages>
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+
+      <div class="card" *ngIf ="!isLoading">
+        <div class="card-header">
+          <h2 class="card-block_title">Rôles et droits</h2>
+        </div>
+        <div class="card-block tableRoles">
+          <div class="row">
+            <div class="col-sm-12">
+              <h4>Liste des profils</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">            
+              <ng2-smart-table #listeProfils [settings]="droitSettings" [source]="siteDto.droitListeProfils"></ng2-smart-table>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <h4>Recherche de profils</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <ng2-smart-table #rechercheProfils [settings]="droitSettings" [source]="siteDto.droitRechercheProfils"></ng2-smart-table>
+            </div>
+          </div>
+          <!-- Chat -->
+          <div class="row">
+            <div class="col-sm-12">
+              <h4>Chat</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <ng2-smart-table #rechercheProfils [settings]="droitSettings" [source]="siteDto.droitChat"></ng2-smart-table>
+            </div>
+          </div>
+          <!-- Profil -->
+          <div class="row">
+            <div class="col-sm-12">
+              <h4>Profil</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <ng2-smart-table #rechercheProfils [settings]="droitSettings" [source]="siteDto.droitProfil"></ng2-smart-table>
+            </div>
+          </div>
+          <!-- Account (settings) -->
+          <div class="row">
+            <div class="col-sm-12">
+              <h4>Account (settings)</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <ng2-smart-table #rechercheProfils [settings]="droitSettings" [source]="siteDto.droitAccountSettings"></ng2-smart-table>
+            </div>
+          </div>
+          <!-- Favoris (anc. Amis) -->
+          <div class="row">
+            <div class="col-sm-12">
+              <h4>Favoris (anc. Amis)</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <ng2-smart-table #rechercheProfils [settings]="droitSettings" [source]="siteDto.droitFavorisAncAmis"></ng2-smart-table>
+            </div>
+          </div>
+          <!-- Visiteurs -->
+          <div class="row">
+            <div class="col-sm-12">
+              <h4>Visiteurs</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <ng2-smart-table #rechercheProfils [settings]="droitSettings" [source]="siteDto.droitVisiteurs"></ng2-smart-table>
+            </div>
+          </div>
+          <!-- Blacklist -->
+          <div class="row">
+            <div class="col-sm-12">
+              <h4>Blacklist</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <ng2-smart-table #rechercheProfils [settings]="droitSettings" [source]="siteDto.droitBlacklist"></ng2-smart-table>
+            </div>
+          </div>
+          <!-- Notifications email -->
+          <div class="row">
+            <div class="col-sm-12">
+              <h4>Notifications email</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <ng2-smart-table #rechercheProfils [settings]="droitSettings" [source]="siteDto.droitNotificationsEmail"></ng2-smart-table>
+            </div>
+          </div>
+          <!-- Affichage de publicité -->
+          <div class="row">
+            <div class="col-sm-12">
+              <h4>Affichage de publicité</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <ng2-smart-table #rechercheProfils [settings]="droitSettings" [source]="siteDto.droitAffichagePublicite"></ng2-smart-table>
+            </div>
+          </div>
+          <!-- Sondages -->
+          <div class="row">
+            <div class="col-sm-12">
+              <h4>Sondages</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <ng2-smart-table #rechercheProfils [settings]="droitSettings" [source]="siteDto.droitSondages"></ng2-smart-table>
+            </div>
+          </div>
+          <!-- Petites Annonces -->
+          <div class="row">
+            <div class="col-sm-12">
+              <h4>Petites Annonces</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <ng2-smart-table #rechercheProfils [settings]="droitSettings" [source]="siteDto.droitPetitesAnnonces"></ng2-smart-table>
+            </div>
+          </div>
+          <!-- Confessionnal -->
+          <div class="row">
+            <div class="col-sm-12">
+              <h4>Confessionnal</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <ng2-smart-table #rechercheProfils [settings]="droitSettings" [source]="siteDto.droitConfessionnal"></ng2-smart-table>
+            </div>
+          </div>
+
+          <!-- JOURNAL ou PAGE ou EVENT -->
+          <div class="row">
+              <div class="col-sm-12">
+                <h4>JOURNAL ou PAGE ou EVENT</h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <ng2-smart-table #rechercheProfils [settings]="droitSettings" [source]="siteDto.droitJournalPageEvent"></ng2-smart-table>
+              </div>
+            </div>
+            <!-- VISIO CHAT -->
+          <div class="row">
+              <div class="col-sm-12">
+                <h4>VISIO CHAT</h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <ng2-smart-table #rechercheProfils [settings]="droitSettings" [source]="siteDto.droitVisioChat"></ng2-smart-table>
+              </div>
+            </div>
+            <!-- RÉSULTATS DE RECHERCHE -->
+          <div class="row">
+              <div class="col-sm-12">
+                <h4>RÉSULTATS DE RECHERCHE</h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <ng2-smart-table #rechercheProfils [settings]="droitSettings" [source]="siteDto.droitResultatRecherche"></ng2-smart-table>
+              </div>
+            </div>
+
+
+
+        </div>
+      </div>
+
+      <div class="card" *ngIf ="!isLoading">
+        <div class="card-header">
+          <h2 class="card-block_title">Couleur</h2>
+          <small class="card-subtitle">HEXA</small>        
+          <div>
+            <ng2-smart-table [settings]="colorSettings" [source]="siteDto.colors"></ng2-smart-table>  
+          </div>
+          
+        </div>
+        
+      </div>
+      <div class="col-sm-1" *ngIf ="!isLoading">
+          <button type="button" [formGroup]="siteDetailForm"  class="btn btn-success" (click)="saveSite()">Sauvegarder</button>
+      </div>      
+
+      <div class="col-sm-5">
+          <div class="card-block">
+              <alert type="{{ alertCssClass }}" *ngIf="informationMessage && informationMessage.length>0">
+                  {{informationMessage}}
+              </alert>              
+          </div> 
+      </div>
+    </form>
+</section>

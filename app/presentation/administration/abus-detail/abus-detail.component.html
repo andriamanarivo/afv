@@ -1,0 +1,68 @@
+<section class="content" style="height:100%">
+ <div class="back-link-block">
+                  <span  class="gotolist" (click)="goToListAbus()"> Revenir à la liste <i class="zmdi zmdi-arrow-right"></i> </span>
+            </div>
+    <fieldset class="header-abus">
+        <legend class="content-abus">Détail de l'abus
+        </legend>
+        <div *ngIf="!loading">
+            <p>
+                <label>Date création : </label>
+                <span>{{currentAbus?.dateCreation}}</span>
+            </p>
+            <p>
+                <label>Emetteur : </label>
+                <span>{{currentAbus?.pseudoEm}}</span>
+            </p>
+            <p>
+                <label>Utilisateur reporté : </label>
+                <span>{{currentAbus?.pseudoRep}}</span>
+            </p>
+             <p>
+                <label>Id site : </label>
+                <span>{{currentAbus?.idSite}}</span>
+            </p>
+            <p>
+                <label>Motif : </label>
+                <span>{{currentAbus?.motif}}</span>
+            </p>
+            <p>
+                <label>Contenu : </label>
+            </p>
+            <p class="contenu">
+                <span>{{currentAbus?.texte}}</span>
+            </p>
+            <p>
+                <label>Nombre de reports d'abus : </label>
+                <span>{{currentAbus?.nb}}</span>
+            </p>
+            <p>
+                <label>Statut : </label>
+                <span>{{currentAbus?.statut}}</span>
+            </p>
+            <p>
+                <label>Action : </label>
+                <select *ngIf="currentAbus" [(ngModel)]="currentAbus.idAction" name="test" class="action">
+                            <option value="1">Prévenir</option>
+                            <option value="2">Suspendre</option>
+                            <option value="3">Aucune action</option>
+                        </select>
+            </p>
+            <!-- <button (click)="goToListAbus()" class="btn-res" md-button color="warn">Liste des abus</button> -->
+            <button (click)="validerAction()" class="btn-res" md-button color="warn">Valider l'action</button>
+            <div class="error-abus">
+                <p *ngFor="let err of errors">
+                    - {{err}}
+                </p>
+            </div>
+            <div class="succes-abus">
+                <p>
+                    {{successMessage}}
+                </p>
+            </div>
+        </div>
+        <div class="loading-admin" *ngIf="loading">
+            <app-loader [load]="loading"></app-loader>
+        </div>
+    </fieldset>
+</section>

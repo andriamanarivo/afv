@@ -1,0 +1,20 @@
+<div md-dialog>
+    <div  *ngIf="data && data.name">
+        <h1 md-dialog-title>Confirmation</h1>
+        <div md-dialog-content>
+            <p class="test">Etes vous sûr de vouloir blacklister {{data.name}} ?</p>
+        </div>
+        <div md-dialog-actions>
+             <!--[md-dialog-close]="data.name"-->
+            <button md-button (click)="onNoClick()" tabindex="-1">Annuler</button>
+            <button md-button (click)="addToBlackList(data.name)" tabindex="2">Valider</button>
+        </div>
+        <div>
+            <!--{{errors.length}}-->
+            <p *ngFor="let err of errors">{{err}}</p>
+        </div>
+    </div>
+    <div *ngIf="!data">
+         Veuillez séléctionner un utilisateur.
+    </div>
+</div>

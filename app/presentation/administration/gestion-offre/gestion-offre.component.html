@@ -1,0 +1,193 @@
+<section class="content" style="height:100%;">
+    <div class="loading-admin" *ngIf="loading">
+        <app-loader [load]="loading"></app-loader>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Offre</h2>
+            <small class="card-subtitle">Liste et creation des  Offres</small>
+            <div class="formsearch">
+            <div class="row">
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-success allList" (click)="openFormCreate();" >Créer</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="card-block offre-list" id="listTheme">
+            <ng-table
+                    [config]="config"
+                    (tableChanged)="onChangeTable(config)"
+                    (cellClicked)="onCellClick($event)"
+                    [rows]="rows"
+                    [columns]="columns">
+            </ng-table>
+            <div *ngIf="getEmptyMessage().length !== 0 && !loading">
+                {{getEmptyMessage()}}
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <pagination *ngIf="config.paging"
+                                class="pagination-sm"
+                                [(ngModel)]="page"
+                                [totalItems]="length"
+                                [itemsPerPage]="itemsPerPage"
+                                [maxSize]="maxSize"
+                                [boundaryLinks]="true"
+                                [rotate]="false"
+                                (pageChanged)="onChangeTable(config, $event)"
+                                (numPages)="numPages = $event">
+                    </pagination>
+                </div>
+                <div class="col-sm-6">
+                    <div class="pagination justify-content-end">
+                        <label for="">Afficher par page :</label>
+                        <!-- <button type="button" class="btn btn-success" (click)="changeItemsPerPage(5)">5</button> -->
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(20)">20</button>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(25)">25</button>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(50)">50</button>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(100)">100</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+<div bsModal #childModalCree="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+    <form  [formGroup]="offreForm" (ngSubmit)="createOrUpdateOffre(offreForm)" >
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">{{title}}</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>Titre :</label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" [formControl] = "offreForm.controls['title']" [(ngModel)]="name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>Prix par année/mois/heure :</label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" [formControl] = "offreForm.controls['prix']" [(ngModel)]="prix">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>Unité monétaire :</label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" [formControl] = "offreForm.controls['unite']" [(ngModel)]="unite">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>Périodcité paiement :</label>
+                </div>
+                <div class="col-sm-8">
+                    <div class="form-group form-group--select">
+                        <div class="select">
+                            <select class="form-control" [formControl] = "offreForm.controls['periode']" [(ngModel)]="itemSelected" >
+                                <option *ngFor="let periode of periodes" [value]="periode.id" [selected]="itemSelected == periode.id" >{{periode.libelle}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>Durée à payer:</label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" [formControl] = "offreForm.controls['duree']" [(ngModel)]="duree">
+                </div>
+            </div>
+            <!--<div class="row">
+                <div class="col-sm-4">
+                    <label>Unité durée :</label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" [formControl] = "offreForm.controls['dureeUnit']" [(ngModel)]="dureeUnit">
+                </div>
+            </div>-->
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>Condition de paimement:</label>
+                </div>
+                <div class="col-sm-8">
+                    <textarea  class="form-control" [(ngModel)]="condition" [formControl] = "offreForm.controls['condition']"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>Description :</label>
+                </div>
+                <div class="col-sm-8">
+                    <textarea  class="form-control" [(ngModel)]="description" [formControl] = "offreForm.controls['description']"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>Statut :</label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="checkbox" [formControl] = "offreForm.controls['statut']" [(ngModel)]="statut">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>OnePay :</label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="checkbox" [formControl] = "offreForm.controls['onepay']" [(ngModel)]="onepay">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label >avantage (s):</label>
+                </div>
+                <div class="col-sm-8">
+                    <div class="row" *ngIf="addAvantage.length===0">
+                        <div class="col-sm-10">
+                            <textarea *ngIf="visibilities[0]" class="form-control" [(ngModel)]="textModel[0]" [formControl] = "offreForm.controls['avantage0']"></textarea>
+                        </div>
+                        <div class="col-sm-2 circleplus">
+                            <i class="fa fa-plus-circle" aria-hidden="true" (click)="addChamp(0)"></i>
+                        </div>
+                    </div>
+                    <div class="row" *ngFor=" let avantage of addAvantage ; let i = index">
+                        <div *ngIf="visibilities[i]" >
+                            <div class="col-sm-10">
+                                <textarea class="form-control" [formControl] = "offreForm.controls[avantage.nameControler]" [(ngModel)]="textModel[i]"></textarea>
+                            </div>
+                            <div class="col-sm-2 circleplus" *ngIf="i==0">
+                                <i class="fa fa-plus-circle" aria-hidden="true" (click)="addChamp(i)"></i>
+                            </div>
+                            <div class="col-sm-2 circleplus" *ngIf="i!=0">
+                                <i class="fa fa-minus-circle" aria-hidden="true" (click)="removeChamp(i)"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+         </div>
+         <div class="modal-footer">
+            <div class="pull-left">
+                <button type="submit" class="btn btn-danger">{{buttonName}}</button>
+                <button type="button" class="btn btn-secondary" (click)="onDeleteCancel()">Annuler</button>
+            </div>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>

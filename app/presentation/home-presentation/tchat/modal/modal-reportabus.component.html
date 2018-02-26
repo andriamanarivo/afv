@@ -1,0 +1,27 @@
+<div md-dialog>
+    <div *ngIf="data && data.pseudo">
+        <h1 md-dialog-title>Reporter un abus</h1>
+            <div *ngIf="!load" md-dialog-content>
+                <p class="test">
+                    <label>Utilisateur reporté : </label>
+                    <span>{{data.pseudo}}</span>
+                </p>
+                <select (change)="onMotifChanged()" [(ngModel)]="data.motif" name="test" placeholder="Type abus" class="motif">
+                    <option *ngFor="let a of abus" value="{{a.message}}"> {{ a.message }}</option>
+                </select><br/>
+                <input class="autremotif" *ngIf="showInput" [(ngModel)]="data.motif" mdInput placeholder="Autre motif">
+                <textarea class="content" [(ngModel)]="data.contenu" mdInput placeholder="Contenu">1600 Amphitheatre Pkwy</textarea>
+            </div>
+        <md-progress-spinner *ngIf="load" class="loader-margin-action" color="warn" mode="indeterminate"> </md-progress-spinner>
+        <div *ngIf="!load" md-dialog-actions>
+            <button md-button (click)="onNoClick()" tabindex="-1">Annuler</button>
+            <button md-button (click)="reportAbus()" tabindex="2">Valider</button>
+        </div>
+        <div>
+            <p *ngFor="let err of errors">{{err}}</p>
+        </div>
+    </div>
+    <div *ngIf="data.pseudo.length === 0">
+        Veuillez séléctionner un utilisateur
+    </div>
+</div>

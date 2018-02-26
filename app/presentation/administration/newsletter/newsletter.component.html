@@ -1,0 +1,38 @@
+<section class="content" style="height:100%;">
+    <div class="loading-admin" *ngIf="loading">
+        <app-loader [load]="loading"></app-loader>
+    </div>
+    <p-growl [(value)]="msgs"></p-growl>
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Newsletters</h2>
+            <!--<small class="card-subtitle">Liste des newsletters</small>-->
+        </div>
+        <div class="card-block">
+        <div class="fordown">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h3 class="card-block__title">Export CSV de la liste des utilisateurs ayant souscrit aux newsletters</h3>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-success btn-block" (click)="getUserSuscribeNewsletter()">Téléchargement</button>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!--<div class="card-block"  id="listLetters">
+            <ng2-smart-table [settings]="config" [source]="dataSource" 
+            (deleteConfirm)="onDeleteConfirm($event)"
+            (editConfirm)="onSaveConfirm($event)"
+            (createConfirm)="onCreateConfirm($event)"
+            (tableChanged)="onChangeTable(config)"></ng2-smart-table>
+            <div class="pagination justify-content-end">
+                <label for="">Afficher par page :</label>
+                <button type="button" class="btn btn-success" (click)="changeItemsPerPage(20)">20</button>
+                <button type="button" class="btn btn-success" (click)="changeItemsPerPage(25)">25</button>
+                <button type="button" class="btn btn-success" (click)="changeItemsPerPage(50)">50</button>
+                <button type="button" class="btn btn-success" (click)="changeItemsPerPage(100)">100</button>
+            </div>
+        </div>-->
+    </div>
+</section>

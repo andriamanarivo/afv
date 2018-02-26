@@ -1,0 +1,15 @@
+<div class="col-lg-10 main-chart">
+    <p><label>Souscription: </label>{{souscription.souscription}}</p>
+    <p><label>Montant: </label> {{souscription.montant}} </p>
+    <p><label>Date de souscription: </label> {{souscription.date_souscription}}</p>
+    <p><label>Date d'expiration: </label> {{souscription.date_expiration}}</p>
+    <p><label>Statut: </label> {{souscription.statut}}</p>
+    <div>
+        <p><label>Avantages</label></p>
+        <ul *ngFor="let avantage of souscription.avantages">
+            <li>{{avantage.libele}}</li>
+        </ul>
+    </div>
+    <button *ngIf="souscription.statut == 'actif'" (change)="resilier(souscription.id)">Résilier</button>
+    <button *ngIf="souscription.statut != 'actif'" (change)="renouveler(souscription.id)">Rénouveler</button>
+</div>

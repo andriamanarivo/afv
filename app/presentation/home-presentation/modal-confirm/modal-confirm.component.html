@@ -1,0 +1,25 @@
+<!--<div md-dialog>
+    <h1 md-dialog-title>Confirmation</h1>
+    <div md-dialog-content>
+        <p class="test">Voulez-vous vraiment changer votre email? Vous serez deconnecté et votre compte sera désactivé jusqu'à ce que vous
+            confirmiez votre nouvel email.</p>
+    </div>
+    <div md-dialog-actions>
+        <!--[md-dialog-close]="data.name"
+        <button md-button (click)="onNoClick()" tabindex="-1">Annuler</button>
+        <button md-button md-dialog-close="true" tabindex="2">Valider</button>
+    </div>
+</div>-->
+
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title pull-left">{{confirmTitle}}</h5>
+  </div>
+  <div class="modal-body">
+    {{confirmMessage}}
+  </div>
+  <div class="modal-footer">
+    <button id="accept" type="button" class="btn btn-danger" (click)="onDeleteConfirm(bsModalRef)">OUI</button>
+    <button id="decline" type="button" class="btn btn-secondary" (click)="onDeleteCancel(bsModalRef)">NON</button>
+  </div>
+</div>

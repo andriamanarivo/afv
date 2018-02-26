@@ -1,0 +1,17 @@
+<div id="tchatAdmin" class="modal-content  modal-lg ">
+    <div class="modal-header">
+      <h5 class="modal-title pull-left">Tchat avec {{model.pseudo}}</h5>
+    </div>
+    <div class="modal-body">
+        <app-tchat
+            [ctJid]="model.ctJid"
+            [showList]=false
+            [userDetailId]="userDetailId"
+            redirectionUrl = '' 
+            [showTchat] = true
+            [showConversation] = true>
+        </app-tchat>
+    </div>
+    <div class="modal-footer"></div>
+</div>
+  

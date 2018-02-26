@@ -1,0 +1,61 @@
+@import '../administration.component.css';
+/*.card-header h2 {
+    float:right;
+    position: relative;
+    right: 73px;
+}*/
+.fil_arriane {
+    color: #000000 !important;
+}
+.user_profile.admin_profil.Administration  {
+    width: 100% !important;
+    float: none;
+}
+
+
+.col-sm-1 {
+    float: right;
+    position: relative;
+    top: 30px;
+    right: -50px;
+}
+
+/*style*/
+
+.btn-bar-center {
+  margin: auto; 
+  max-width: 1020px;
+  text-align:center;
+}
+.btn-bar-padding {
+  padding:.25em 0 .25em 0;
+}
+.panel {
+  background-color:white;
+}
+.dropdown-menu {
+  padding:1em;
+}
+.legend {
+  min-width:230px;
+  min-height:230px;
+  background-color:white;
+  padding:1em;
+  text-align:center;
+}
+
+.close {
+      float: right;
+}
+.content-admin .card .card-header{
+    display:table;
+    width:100%;
+}
+.content-admin .card .card-header .title-block-header{
+    display:table-cell;
+}
+.content-admin .card .card-header .back-link-block{
+    display:table-cell;
+    text-align: right;
+    width:20%
+}

@@ -1,0 +1,35 @@
+<section class="content" style="height:100%;">
+    <div class="loading-admin" *ngIf="loading">
+        <app-loader [load]="loading"></app-loader>
+    </div>
+    <p-growl [(value)]="msgs"></p-growl>
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Termes</h2>
+            <small class="card-subtitle">Liste des termes interdits</small>
+        </div>
+        <div class="card-block"  id="listTheme">
+            <ng2-smart-table [settings]="config" [source]="data" 
+            (deleteConfirm)="onDeleteConfirm($event)"
+            (editConfirm)="onSaveConfirm($event)"
+            (createConfirm)="onCreateConfirm($event)"
+            (tableChanged)="onChangeTable(config)"></ng2-smart-table>
+
+            <div class="row">
+                <div class="col-sm-6">
+
+                </div>
+                <div class="col-sm-6">
+                    <div class="pagination justify-content-end">
+                        <label for="">Afficher par page :</label>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(20)">20</button>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(25)">25</button>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(50)">50</button>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(100)">100</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

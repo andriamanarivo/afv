@@ -1,0 +1,64 @@
+<p-growl [(value)]="msgs"></p-growl>
+<div class="col-lg-10 main-chart">
+    <div class="pageTitle extend">
+        <h2>Visiteurs </h2>
+    </div>
+
+    <!-- NAV CONTENT MIDDLE -->
+    <div  *ngIf="visiteur && visiteur.length > 0" class="nav-content">       
+        <div class="col col-md-4 col-sm-4 col-xs-12 mb">
+            <div class="mod-nav">
+                  <span>{{'trier par'|translate}}</span>
+                <div class="btn-group">
+                    <md-select id="aside-select" (change)="sortVisiteur()"  [(ngModel)]="selectedValue" name="trie">
+                        <md-option *ngFor="let trie of tries" [value]="trie.value">
+                        {{trie.viewValue}}
+                        </md-option>
+                    </md-select>
+                </div>            
+            
+            </div>
+        </div>
+        <div class="col col-md-4 col-sm-4 col-xs-6 mb">
+            <div (click)="grilleMode = true" [ngClass]="{'current': grilleMode, 'notcurrent': !grilleMode}" class="mod-nav GridingList current">
+                <span class="cursorpointer">{{'affichage par grille'|translate}}</span>
+                <div class="btn-group open">
+                    <a><img src="assets/img/grille.png"  align=""></a>
+                </div>
+            </div>
+        </div>
+        <div class="col col-md-4 col-sm-4 col-xs-6 mb">
+            <div (click)="grilleMode = false" [ngClass]="{'current': !grilleMode, 'notcurrent': grilleMode}" class="mod-nav ListingList notcurrent">
+                <span class="cursorpointer">{{'affichage par liste'|translate}}</span>
+                <div class="btn-group open">
+                    <a><img src="assets/img/liste.png"  align=""></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <md-progress-spinner  *ngIf="loadData" color="warn" mode="indeterminate"></md-progress-spinner>   
+    <!-- CONTENT MIDDLE 1  -->
+    <div *ngIf="grilleMode && !loadData" class="listItems">
+        <div class="gridBlocks" *ngFor="let home of visiteur">
+            <app-user-card [user]="home"></app-user-card>
+        </div>
+    </div>
+    <div *ngIf="!grilleMode && !loadData" class="listItems ListMOde">
+        <div class="gnrl-PL" *ngFor="let home of visiteur">
+            <app-user-card modeList="true" [user]="home"></app-user-card>
+        </div>
+    </div>
+    <div class="emptyvisiteur" *ngIf="!visiteur || (visiteur && visiteur.length === 0)">
+        {{emptyMessage}}
+    </div>
+    <!-- MIDDLE pagination -->
+    <div class="CT-pag-nav">
+        <div *ngIf="pager.pages && pager.pages.length && pager.pages.length !== 1" class="pagination clearfix">
+            <a *ngIf="pager.currentPage > 1" [ngClass]="{disabled:pager.currentPage === 1}" (click)="setPage({},pager.currentPage - 1)"><img src="assets/img/left-arrow-blk.png"  align=""></a>
+            <span *ngFor="let page of pager.pages"><a  [ngClass]="{active:pager.currentPage === page}" (click)="setPage({},page)" >{{page}}</a></span>
+            <a *ngIf="pager.currentPage!==pager.totalPages" [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="setPage({},pager.currentPage + 1)"><img src="assets/img/right-arrow-blk.png" align=""></a>
+        </div>
+    </div>
+
+</div>
+<!-- col-lg-10 main-chart end -->

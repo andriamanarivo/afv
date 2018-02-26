@@ -1,0 +1,30 @@
+.header{
+    margin-top: 34px;
+    padding-bottom: 28px;
+}
+
+.modal-header{
+    background: #000;
+    padding-top: 16px;
+}
+
+.modal-title{
+    color: #fff !important;
+}
+
+.modal-content{
+    background: #424242;
+    border-radius: 5px;
+}
+
+.modal-footer{
+    background: #000;
+    padding-top: 16px;
+    text-align: left;
+}
+
+.error{
+    color: #ff0101; 
+    font-style: italic;
+    font-size: 15px;
+}

@@ -1,0 +1,54 @@
+<p-growl [(value)]="msgs"></p-growl>
+<div class="container ContactForm form check_item Validating">
+    <div class="container_wrapper">
+        <div class="section textPage" id="sct-one">
+            <div class="section_wrapper">
+                <div class="logo">
+                    <img alt="logo" src="assets/img/logo/logo.png">
+                </div>
+                <p class="slogan">{{'100 nuances de plaisirs' | translate}}</p>
+            </div>
+            <div class="form_body">
+                <div *ngIf="errorMessage.length !== 0" class="error_message"></div>
+                <div class="messagesInscr">
+                    <div class="input-table container">
+                        <span class="header">Contactez-nous via le formulaire ci-dessous : </span>
+                        <form [formGroup]="emailDataForm" class="sendEmail">                            
+                            <div class="input-field">
+                                <div class="input-field">
+                                    <input [ngClass]="getErrorClass('name')" #nom mdInput placeholder="Votre nom" [formControl]="emailDataForm.controls['name']">
+                                    <br/>
+                                    <div *ngIf="emailDataForm.controls['name'].hasError('required') && emailDataForm.controls['name'].touched" class="errormesage">{{'indiquezvotrenom' | translate}}</div>
+
+                                    <input (blur)="uncapitalizeEmail()" [ngClass]="getErrorClass('email')" #email style="text-transform: lowercase;" mdInput placeholder="Votre adresse email"
+                                        [formControl]="emailDataForm.controls['email']">
+                                    <br/>
+                                    <div *ngIf="emailDataForm.controls['email'].hasError('required') && emailDataForm.controls['email'].touched" class="errormesage">{{'requiredemail' | translate}}</div>
+                                    <div *ngIf="emailDataForm.controls['email'].value.length !== 0 && emailDataForm.controls['email'].hasError('invalidEmailAddress') && emailDataForm.controls['email'].touched"
+                                        class="errormesage">{{'invalidEmailAddress' | translate}}</div>
+
+                                    <input [ngClass]="getErrorClass('objet')" #objet mdInput placeholder="Objet" [formControl]="emailDataForm.controls['objet']">
+                                    <br/>
+                                    <div *ngIf="emailDataForm.controls['objet'].hasError('required') && emailDataForm.controls['objet'].touched" class="errormesage">{{'objetrequis' | translate}}</div>
+
+                                    <textarea [ngClass]="getErrorClass('text')" #content class="message" mdInput placeholder="Messages" [formControl]="emailDataForm.controls['text']"></textarea>
+                                    <div *ngIf="emailDataForm.controls['text'].hasError('required') && emailDataForm.controls['text'].touched" class="errormesage">{{'contentrequis' | translate}}</div>
+
+                                </div>
+                            </div>
+                            <div class="button_wrapper">
+                                <button (click)="goToSplashscreen()" style="margin-top: 12px; background: #0e0e0e !important; border: none;" class="btn_send" >
+                                    {{ 'annuler' | translate}}
+                                </button>
+                                <button style="background: #0e0e0e !important; border: none;" [disabled]="loading" class="btn_send" (click)="sendEmail()">
+                                    {{loading ? ('pendingsend' | translate) : ('valider' | translate)}}
+                                </button>
+
+                            </div>
+                        </form>
+                    </div>
+                    <!-- <a class="contactUs1" (click)="goToSplashscreen()">{{'returnToHomePage'|translate}}</a> -->
+                </div>
+            </div>
+        </div>
+    </div>

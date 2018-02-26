@@ -1,0 +1,8 @@
+{
+    "host": "localhost",
+    "showprototype": "0" ,
+    "site1": { "siteid" : "1", "sitename" : "bdm.site1.local" },
+    "site2": { "siteid" : "1", "sitename" : "bdm.site2.local" },
+    "site3": { "siteid" : "1", "sitename" : "bdm.site3.local" },
+    "site4": { "siteid" : "1", "sitename" : "localhost" }    
+}

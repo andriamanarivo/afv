@@ -1,0 +1,73 @@
+.labelForm{
+    font-size: 17px !important;
+}
+.form_body{
+    margin-top: 5px !important;
+}
+.sendEmail{
+    margin-left: 25px  !important;    
+}
+.text{
+    background: #333333;
+    padding: 0 5px;
+    width: 190px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 18px;
+    height: 138px;
+    padding-top: 9px;
+}
+
+.btn_send{
+    width: 86%  ;
+    height: 35px  ;
+    font-size: 21px ;
+    color: #ffffff  ;
+    border-radius: 5px  ;
+    padding: 5px 33px  ;
+    display: inline-block ;        
+    background-color: #0e0e0e !important;    
+}
+
+.header{
+    margin-left: 24px;
+}
+
+
+
+.container{
+    margin-left: 14px;
+}
+
+.ng-invalid{
+    border: 1px !important;   
+}
+
+.ng-valid{
+    border: 1px !important;   
+}
+
+input {
+    margin-top: 11px !important;
+    width: 89% !important;
+}
+
+textarea{
+    margin-top: 11px !important;
+    width: 89% !important;
+    background: #333333;
+    padding: 0 5px;
+    padding: 5px;
+    border-radius: 5px;    
+}
+
+.errorinput{
+    border: 1px solid red !important;
+}
+
+.errormesage{
+    font-size: 14px;
+    color: #ff0101;
+    margin-top: 10px;
+    font-style: italic;
+}

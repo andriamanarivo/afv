@@ -1,0 +1,73 @@
+
+
+/*---------------------------------------
+    1. Site Variable and Mixins
+----------------------------------------*/
+@import "./scss/variables"; 
+@import "./scss/mixins"; 
+
+
+/*---------------------------------------
+    2. Bootstrap
+----------------------------------------*/
+@import "./scss/bootstrap-imports/bootstrap-imports";
+
+
+/*---------------------------------------
+    1. Site Styles
+----------------------------------------*/
+@import "./scss/fonts";
+@import "./scss/base";
+@import "./scss/layout";
+@import "./scss/charts";
+@import "./scss/toggle-switch";
+@import "./scss/listview";
+@import "./scss/page-loader";    
+
+
+/*---------------------------------------
+    5. Bootstrap Overrides
+----------------------------------------*/
+ @import "scss/bootstrap-overrides/dropdown";
+@import "scss/bootstrap-overrides/media";
+@import "scss/bootstrap-overrides/progress";
+@import "scss/bootstrap-overrides/card";
+@import "scss/bootstrap-overrides/buttons";
+@import "scss/bootstrap-overrides/tables";
+@import "scss/bootstrap-overrides/forms";
+@import "scss/bootstrap-overrides/input-groups";
+@import "scss/bootstrap-overrides/custom-forms";
+@import "scss/bootstrap-overrides/pagination";
+@import "scss/bootstrap-overrides/datepicker";
+@import "scss/bootstrap-overrides/timepicker";
+@import "scss/bootstrap-overrides/alerts";
+@import "scss/bootstrap-overrides/close";
+@import "scss/bootstrap-overrides/breadcrumbs";
+@import "scss/bootstrap-overrides/accordion";
+@import "scss/bootstrap-overrides/carousel";
+@import "scss/bootstrap-overrides/modal";
+@import "scss/bootstrap-overrides/popovers";
+@import "scss/bootstrap-overrides/ratings";
+@import "scss/bootstrap-overrides/sortable";
+@import "scss/bootstrap-overrides/tabs";
+@import "scss/bootstrap-overrides/tooltip";  
+ 
+
+/*---------------------------------------
+    5. Vendor Overrides
+----------------------------------------*/
+ @import "./scss/vendor-overrides/flot";
+@import "./scss/vendor-overrides/sparklines";
+@import "./scss/vendor-overrides/select2";
+@import "./scss/vendor-overrides/dropzone";
+@import "./scss/vendor-overrides/angular2-color-picker";
+@import "./scss/vendor-overrides/nouislider";
+
+
+/*---------------------------------------
+    5. App Global Styles
+----------------------------------------*/
+  @import "./scss/misc";  
+
+
+  

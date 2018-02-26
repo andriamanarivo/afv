@@ -1,0 +1,6 @@
+@import '../administration.component.css';
+.user_profile h2 {
+       color: #000!important;
+      background:#fff!important;
+  }
+

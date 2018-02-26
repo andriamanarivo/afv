@@ -1,0 +1,20 @@
+<p-growl [(value)]="msgs"></p-growl>
+
+<div class="clearfix"></div>
+<!-- NAV CONTENT MIDDLE END -->
+<!-- CONTENT MIDDLE 1  -->
+<div class="listItems ListMOde">
+    <div class="gnrl-PL" *ngFor="let home of homes">      
+       <app-user-card  modeList="true" [user]="home"></app-user-card>
+    </div>
+</div>
+<!-- MIDDLE pagination -->
+<div class="CT-pag-nav">
+    <div *ngIf="pager.pages && pager.pages.length && pager.pages.length !== 1" class="pagination clearfix">
+        <a *ngIf="pager.currentPage > 1" [ngClass]="{disabled:pager.currentPage === 1}" (click)="setPage(pager.currentPage - 1, dataFiltre)"><img src="assets/img/left-arrow-blk.png"  align=""></a>
+        <span *ngFor="let page of pager.pages"><a  [ngClass]="{active:pager.currentPage === page}" (click)="setPage(page,dataFiltre)">{{page}}</a></span>
+        <a *ngIf="pager.currentPage!==pager.totalPages" [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="setPage(pager.currentPage + 1, dataFiltre)"><img src="assets/img/right-arrow-blk.png" align=""></a>
+    </div>
+</div>
+<!-- MIDDLE pagination end -->
+<div class="clearfix"></div>

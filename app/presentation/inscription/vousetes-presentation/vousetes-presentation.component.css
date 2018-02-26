@@ -1,0 +1,34 @@
+@import '../../../../styles.css';
+/*
+.Rounded-Rectangle-2 {
+  width: 420px;
+  height: 205px;
+  border-radius: 30px;
+  background-color: #000000;
+}
+.Rounded-Rectangle-1 {
+  width: 420px;
+  padding-top : 10px;
+  height: 40px;
+  background-color: #000000;
+  border-radius: 30px;
+}
+
+*/
+
+.form.check_item h1{
+	padding: 20px 0  18px;
+}
+
+@media only screen and (max-width: 1440px){
+	.form.check_item{
+		font-size: 18.3px;
+	}
+	.form.check_item .form_body{
+		margin-top: 7%;
+	}
+	.form.check_item h1{
+		padding: 15px 0 ;
+	}
+
+}

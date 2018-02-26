@@ -1,0 +1,8 @@
+{
+    "host": "112.164.12.21",
+    "showprototype": "0" ,
+    "site1": { "siteid" : "1", "sitename" : "http://front.bdm.dev.arkeup.com/" },
+    "site2": { "siteid" : "2", "sitename" : "http://front.bdm.dev.arkeup.com/" },
+    "site3": { "siteid" : "3", "sitename" : "http://front.bdm.dev.arkeup.com/" },
+    "site4": { "siteid" : "4", "sitename" : "http://front.bdm.dev.arkeup.com/" }   
+}

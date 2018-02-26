@@ -1,0 +1,130 @@
+<div class="main-setting">
+    <p-growl [(value)]="msgs"></p-growl>
+    <div class="setting"  *ngIf="showHeader">
+        <div class="title-param">
+            <h2> {{'Parametres'| translate}} </h2>
+        </div>
+    </div>
+
+    <ng-template md-tab-label>
+        <div class="mat-mobile"  >
+            <h2 class="mobil-3"><label> {{'Parametres'| translate}} </label></h2>
+        </div>
+    </ng-template>
+
+    <div class="tab_wrapper paramContent">
+        <h2> {{'Général'| translate}}</h2>
+        <div class="listOptions Infos ">
+            <ul>
+                <li>
+                    <span>{{'Pseudonyme'| translate}}</span>
+                    <span *ngIf="!editingPseudo">{{setting?.pseudo}}</span>                 
+                    <input (keyup)="verifyPseudo('pseudo')" maxlength="12" minlength="2" style="text-transform: lowercase;"
+                        #pseudo (blur)="blurField = 'pseudo'; blurEmailAndPseudo('pseudo'); isPseudoExcluded(pseudo.value); pseudoExist()" 
+                        md-input style="color:white; border:none; background: transparent; padding: 5px; border-bottom:1px solid #ffffff;" 
+                        *ngIf="setting && editingPseudo" type="text" [(ngModel)]="currentPseudo"/>
+                
+                    <div style="font-size: 14px;" class="control-messages" *ngIf="errorPseudoMessage && errorPseudoMessage.length > 0">{{errorPseudoMessage}}</div>
+                    <div style="font-size: 14px;"  class="control-messages" *ngIf="pseudoExistMessage && pseudoExistMessage.length > 0">{{pseudoExistMessage}}</div>
+                    <a *ngIf="currentField !== 'pseudo' && updatePseudo && blurField !== 'pseudo' " class="editfield"(click)="editingPseudo = true;"></a>
+                    <a *ngIf="currentField !== 'pseudo' && blurField === 'pseudo' && !errorPseudoMessage && pseudoVerified" 
+                        class="savefield" (click)="openModalConfirmPseudo('pseudo'); enableField='' "></a>
+                    <md-progress-spinner *ngIf="currentField === 'pseudo' || findPseudo" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                </li>
+                <li>
+                    <span>{{'Email'| translate}}</span>
+                    <span *ngIf="!editingEmail">{{setting?.email}}</span>
+                    <input (keyup)="verifyPseudo('email')" style="text-transform: lowercase;" #email (blur)="blurField = 'email'; blurEmailAndPseudo('email'); isMailExcluded(email.value)" md-input style="olor:white; border:none; background: transparent; padding: 5px; border-bottom:1px solid #ffffff" *ngIf="setting && editingEmail" type="text" [(ngModel)]="currentEmail"/>
+                    <div class="control-messages" *ngIf="errorEmailMessage && errorEmailMessage.length > 0">{{errorEmailMessage}}</div>
+                    <!-- <a *ngIf="currentField !== 'email' && blurField !== 'email'" class="editfield"(click)="editingEmail = true;"></a>
+                    <a *ngIf="currentField !== 'email' && blurField === 'email' && !errorEmailMessage" class="savefield" (click)="openConfirmModal(); enableField='' "></a>                     -->
+                    <md-progress-spinner *ngIf="currentField === 'email'" class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>                    
+                </li>
+                <li>
+                    <span> {{'Mot de passe'| translate}}</span>
+                    <input class="inputpass" type="password" value="{{setting?.pass}}" />
+                    <!--<a></a>-->
+                </li>
+                <!-- <li>
+                    <span> {{'Langue utilisée'| translate}}</span>
+                    <span *ngIf="setting && !setting.langue">  {{'Langue non renseignée'| translate}}</span>
+                    <span>{{setting?.langue}}</span>
+                </li> -->
+            </ul>
+        </div>
+        <h2> {{'Abonnement'| translate}}</h2>
+        <div class="listOptions">
+            <ul>
+                <li>
+                    <span> {{'Abonnement'| translate}}</span>
+                    <span class="cursorpointer"   (click)="goToSouscription()" *ngIf="!currentSouscription"> {{'Aucun abonnement en cours'| translate}}</span>
+                    <a (click)="goToSouscription()"></a>
+                    <div *ngIf="currentSouscription" class="listsouscription">
+                        <p> {{'Souscription'| translate}} : {{currentSouscription.dureeSouscription}} <label>{{currentSouscription.dureeUnit}}</label></p>
+                        <p> {{'Montant'| translate}} : {{currentSouscription.montant}} <label>{{currentSouscription.unit}}</label></p>
+                        <p> {{'Datedesouscription'| translate}} : {{currentSouscription.dateSouscription}}</p>
+                        <p>  {{'DateExp'| translate}} : {{currentSouscription.dateExpiration}}</p>
+                        <p>  {{'Statut'| translate}} : <label class="suppr"> {{currentSouscription.statut}} </label> </p>
+                        <span> {{'Avantages'| translate}} </span>                     
+                            <p *ngFor="let avantage of currentSouscription.avantages">
+                                - {{avantage.description}}
+                            </p>                      
+                    </div>
+                    <!--<a></a>-->
+                </li>
+<!--                <li>
+                    <span>{{'Informations de paiement'| translate}}</span>
+                    <span *ngIf="!setting?.infosPaiment"> {{'Informations de paiement non renseignées'| translate}}</span>
+                    <a ></a>
+                </li>-->
+            </ul>
+        </div>
+        <h2> {{'Autres'| translate}}</h2>
+        <div class="listOptions">
+            <ul>
+                <li>
+                    <span class="cursorpointer" (click)="goToHelp()"> {{'Aide'| translate}}</span>
+                    <a (click)="goToHelp()" class="blacklistlink"></a>
+                </li>
+                <li>
+                    <span class="cursorpointer" (click)="contactUs()">{{'Nous contacter'| translate}}</span>
+                    <a (click)="contactUs()" class="blacklistlink"></a>
+                </li>
+                <li *ngIf="autorisation['BLIST_2']" (click)="goToBlacklist()">
+                    <span (click)="goToBlacklist()"> {{'Blacklist'| translate}}</span>
+                    <a (click)="goToBlacklist()" class="blacklistlink"></a>
+                </li>
+                <li>
+                    <span> {{'Newsletter'| translate}}</span>
+                    <span>  {{'Sinscrire à la newsletter'| translate}}</span>
+                    <div class="set-toggle">
+                        <md-radio-group>
+                            <label class="switch"> 
+                                <input type="checkbox"   name ="connect" [(ngModel)]="renderValue" (change)="checkedOptions($event)">
+                                <div class="slider round"></div>
+                            </label>
+                        </md-radio-group>
+                        <app-loader [load]="isLoading"></app-loader>
+                    </div>
+                </li>
+                <li (click)="goToGestNotification()" >
+                    <span (click)="goToGestNotification()"> {{'Gestion des notifications'| translate}}</span>
+                    <a (click)="goToGestNotification()" class="blacklistlink"></a>
+                </li>
+                <li>
+                    <span (click)="openModalDeleteUser()"> {{'Supprimer mon compte'| translate}}</span>
+                    <span (click)="openModalDeleteUser()"> {{'Toute suppression est définitive'| translate}}</span>
+                    <!--<a ></a>-->
+                </li>           
+                <li class="deconnectResponsive">
+                    <span class="cursorpointer" (click)="goTocgu()"> {{'CGU'|translate}}</span>
+                    <a (click)="goTocgu()" class="blacklistlink"></a>
+                </li>
+                <li class="deconnectResponsive">
+                    <span  (click)="goToDeconection()" class="pointer">  {{'Déconnexion'| translate}}</span><br>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>

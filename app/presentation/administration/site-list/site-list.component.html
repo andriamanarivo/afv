@@ -1,0 +1,29 @@
+<section class="content">
+    <div class="loading-admin" *ngIf ="isLoading">
+      <app-loader [load]="isLoading"></app-loader>
+    </div>
+    <div class="card" *ngIf ="!isLoading">
+       <div class="card-header">
+        <!--<h2 class="card-title">Sites</h2>-->
+        <small class="card-subtitle">Liste des sites</small>
+      </div>
+        <div class="card-block site-list"  id="listTheme">
+            <ng2-smart-table [settings]="config" [source]="listeSites"
+                (deleteConfirm)="onDeleteConfirm($event)"
+                (custom)="onCustom($event)"
+                (userRowSelect)="onRowSelect($event)"></ng2-smart-table>
+            <div class="row">
+                <div class="col-sm-12 text-right">
+                    <button type="button" class="btn btn-success" (click)="newSite()">{{ 'newSite'| translate}}</button>
+                </div>
+            </div>
+            <alert type="{{ alertCssClass }}" *ngIf="informationMessage && informationMessage.length>0">
+                {{informationMessage}}
+            </alert>
+
+        </div>
+
+    </div>
+     <!-- <button class="btn btn-secondary" (click)="openConfirmModal('siteeslug','siteE')">Small modal</button>  -->
+    
+</section>

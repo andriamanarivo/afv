@@ -1,0 +1,28 @@
+export const DataProfil = [
+	'sexe',
+	'statut', 
+	'tendance', 
+	'pratique', 
+	'orientation',
+	'recherche', 
+	'pseudo', 
+	'email', 
+	'dateNaissance', 
+	'libelleDescription',  
+	'situation', 	
+	'origine', 
+	'experience', 
+    'disponibilite',
+    'mobilite',
+
+    'taille',
+    'poids',
+    'couleurCheveux',
+    'tailleCheveux',
+    'couleurYeux',
+    'apparence',
+    'apparence',
+    'look',
+    'signeParticulier',
+    'pdp'
+];

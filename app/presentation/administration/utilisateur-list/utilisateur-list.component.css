@@ -1,0 +1,36 @@
+@import '../administration.component.css';
+
+.formsearch .form-group {
+    margin-bottom: 0;
+}
+.formsearch input[type=text],
+.formsearch select{
+    background: #ffffff;
+    padding: 10px;
+}
+th{
+    cursor: pointer !important;
+}
+#CheckRole li{
+    padding: 5px;
+    margin: 2px 0 3px;
+}
+#CheckRole li:before {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    color: #333333;
+    border-radius: 2px;
+    content: '\f0c8';
+    font-size: 16px;
+    vertical-align: middle;
+    font-family: 'fontawesome';
+    margin-right: 5px;
+}
+#CheckRole li.selected{
+    color: #b32a2a;
+}
+#CheckRole li.selected:before {
+    content: '\F14A';
+    color: #b32a2a;
+}

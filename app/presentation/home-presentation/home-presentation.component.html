@@ -1,0 +1,46 @@
+<section id="container">
+    <!-- **********************************************************************************************************************************************************
+    TOP BAR CONTENT & NOTIFICATIONS
+    *********************************************************************************************************************************************************** -->
+    <!--header start-->
+    <app-admin-header></app-admin-header>
+    <!--header end-->
+    <!--sidebar start-->
+    <app-side></app-side>
+    <!--sidebar end-->
+
+    <!-- **********************************************************************************************************************************************************
+    MAIN CONTENT
+    *********************************************************************************************************************************************************** -->
+    <!--main content start-->
+    <section id="main-content" class="col-md-10">
+        <section class="wrapper">
+            <div class="row">
+                <router-outlet></router-outlet>
+
+                <!-- **********************************************************************************************************************************************************
+                  RIGHT SIDEBAR CONTENT
+                  *********************************************************************************************************************************************************** -->
+                <div class="col-lg-2 ds" *ngIf="autorisation['PUB_1']">
+                    <div class="desc-right">
+                        <div class="pub">
+                            <a href="https://www.demonia.com/ " target="_blank"><img alt="publicité" src="assets/img/EncartDemonia1.jpg"></a>
+                        </div>
+<!--                        <div class="pub">
+                            <img alt="publicité" src="assets/img/capture.jpg">
+                        </div>-->
+
+                    </div>
+                </div>
+                <!-- /col-lg-2 -->
+
+            </div>
+        </section>
+    </section>
+    <!--main content end-->
+    <div style="clear: both"></div>
+    <!--footer start-->
+
+    <!--footer end-->
+</section>
+<app-footer> </app-footer>

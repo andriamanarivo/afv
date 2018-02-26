@@ -1,0 +1,42 @@
+export const authenticationtoken: any =  {
+    "encodingOptions":15,
+    "content":"{\"token\":\"eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIiwiQUJPTk5FIl0sInVzZXJuYW1lIjoibXVtZXRlc3QiLCJwc2V1ZG8iOiJtdW1ldGVzdCIsInZpbGxlIjoiUGFyaXMiLCJpZFNpdGUiOjEsImlkVnNldGVzIjoxLCJpZFN0YXR1dCI6MSwiaWRPcmllbnRhdGlvbiI6MSwiaWRTaXR1YXRpb24iOjEsImlkUmVjaGVyY2hlIjoxLCJpZFRlbmRhbmNlIjoxLCJwYXlzIjpudWxsLCJvYnRpbiI6dHJ1ZSwiZW1haWwiOiJrLnJpYW5qYWZpbWFtb25qaXNvYUBldGVjaGNvbnN1bHRpbmctbWcuY29tIiwidWlkIjoibXVtZXRlc3Q1OTYzNWE1OWMyMjFiNi4wNDQ0MDkwOSIsImFwcGFyZW5jZSI6IjEiLCJkYXRlTmFpc3NhbmNlIjoiMjAwMS0wMS0xMCIsImRhdGVOYWlzc2FuY2VDIjpudWxsLCJleHAiOjE0OTk5Mjc2NjQsImlhdCI6MTQ5OTkyNDA2NH0.IFrQQ9u-yqo3Xat6BOQIO_4DubGQuXfjy5kITxo3UafoafY_ba34SNzkxab6gSCedjKXrGqp1hkxxA49UBXEt4WDr9Xm9tPzsw6V3WB5acrUl_mtLWJkQdwKRRwPVaDU9NKQnuuN-5C8ITm1iHjrucx14vkbwZjyMNgpipn6s7A7TwWwrObV_1YUTmaB1xFJVuHMf8h-S9RCy23Iga8-Dnf06Ieq1vyupBNc_cwyUli6E_5Rk-4r6JCTL1aqBe6UJA7L4E3ira0ww4sRq-SxRMOhFLiqoKLSM8cPRTT2BqKHoX2x_g7SLbKSBPOrMH2n-ocfuY4oPS9Xo8cDGRyCKplVPOVKhEnYLMYnoBpntfIKz6_VfIoNTbiSGazMphX5XmXXxetOIamqV2nBoZXzCpeBfYCaXU-m7CDIyputMDI3SAsFMelWtD3oYBP8TdQ3SQybFZ3Q_ysDO-54ov9YsS-B_TCQcgpFnEaeeyn7JXXC_w2XGWyAmaWAN_ZP8hmt4Eat_FpBOoplOT65TcT9b9HCy1yLAObbdDmlsGJyi7QNUUC3hBgajR3NGBbhcb60-3vkc5PEBpzmse4QmSS9M8eM2c0tAuOHM5o9vCYkj9kF7Jd5rDiSO0Q1rCeCoXYkwQxnXEXFFj4EIO4Fly8686FaSmjVX3wMrAtD-dISNRkQcc\"}",
+    "protocolVersion":"1.0",
+    "statusCode":200,
+    "charset":null,
+    "cacheable":false,
+    "fresh":false,
+    "validateable":false,
+    "date":{
+        "timezone":{
+            "name":"GMT",
+            "transitions":false,
+            "location":false
+        },
+        "offset":0,
+        "timestamp":1499924064
+    },
+    "age":0,
+    "expires":null,
+    "maxAge":null,
+    "ttl":null,
+    "lastModified":null,
+    "etag":null,
+    "vary":[],
+    "invalid":false,
+    "informational":false,
+    "successful":true,
+    "redirection":false,
+    "clientError":false,
+    "serverError":false,
+    "ok":true,
+    "forbidden":false,
+    "notFound":false,
+    "redirect":false,
+    "empty":false,
+    "headers":{
+        "cache-control":["no-cache"],
+        "date":["Thu, 13 Jul 2017 05:34:24 GMT"],
+        "content-type":["application\/json"]
+    }
+}

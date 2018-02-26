@@ -1,0 +1,123 @@
+<section class="content" style="height:100%;">
+    <div class="loading-admin" *ngIf="isLoading">
+        <app-loader [load]="isLoading"></app-loader>
+    </div>
+    <div class="card" *ngIf="!isLoading">
+        <div class="card-header">
+            <h2 class="card-title">Photos ({{length}})</h2>
+            <div class="formsearch">
+                <form action="" #photoForm>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <h3 class="card-block__title">Statut modération</h3>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group form-group--select">
+                                <div class="select">
+                                    <select class="form-control" #typeModeration (change)="searchPhotos(typeModeration.value, pseudo.value, email.value)">
+                                        <option value="aucun" [selected]="defaultFilter === 'aucun'">Aucun</option>
+                                        <option value="false" [selected]="defaultFilter === 'false'">A Modérer</option>
+                                        <option value="true" [selected]="defaultFilter === 'true'">Modéré</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>                       
+                        <div class="col-sm-2">
+                            <button type="button" class="btn btn-success btn-block" (click)="showAllPhotos()">Tout afficher</button>
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" placeholder="Pseudo" #pseudo>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" placeholder="Email" #email>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <i class="form-group__bar"></i>
+                                <button class="btn btn-secondary btn--icon-text btn-block" (click)="searchPhotos(typeModeration.value, pseudo.value, email.value)">
+                                    Rechercher
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <label>Trier par date de création : </label>
+                            <md-radio-group name="sort" [(ngModel)]="sortValue" (change)="sortByDate()">
+                                <md-radio-button value="1">Ascendant</md-radio-button>
+                                <md-radio-button value="0">Descendant</md-radio-button>
+                            </md-radio-group>
+                        </div>                    
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="card-block" style="overflow:auto">
+            <div id="tableListe">
+                <ng-table [config]="config" (tableChanged)="onChangeTable(config)" (cellClicked)="onCellClick($event)" [rows]="rows" [columns]="columns">
+                </ng-table>
+                <div>
+                    {{getEmptyMessage()}}
+                </div>
+            </div>
+        </div>
+        <div class="data-table__footer">
+            <div class="row">
+                <div class="col-sm-6">
+                    <pagination *ngIf="config && config.paging && length > 0" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+                        [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
+                        (numPages)="numPages = $event">
+                    </pagination>
+                </div>
+                <div class="col-sm-6">
+                    <div class="pagination justify-content-end">
+                        <label for="">Afficher par page :</label>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(20)">20</button>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(25)">25</button>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(50)">50</button>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(100)">100</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-block">
+                <alert type="danger" *ngIf="errorMessage?.length>0">
+                    {{errorMessage}}
+                </alert>
+            </div>
+        </div>
+    </div>
+</section>
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Modifier statut modération</h4>
+            </div>
+
+
+            <div class="modal-body">
+                <div class="form-group form-group--select">
+                    <div class="select" *ngIf="currentPhoto">
+                        <md-radio-group name="moderation" [(ngModel)]="currentPhoto.moderation">
+                            <md-radio-button value="1">Modéré</md-radio-button>
+                            <md-radio-button value="0">A modéré</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group text-center">
+
+                    <div class="pull-left">
+
+                        <button type="submit" class="btn btn-danger" (click)="updateStatutModeration()">Valider</button>
+                        <button type="button" class="btn btn-secondary" (click)="cancel()">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

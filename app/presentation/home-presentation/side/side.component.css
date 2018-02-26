@@ -1,0 +1,32 @@
+/*@import '../../../../assets/css/bootstrap.css';*/
+@import '../home-presentation.component.css';
+@import '../home-loading.css';
+
+/*.pix-container {
+    width:14%;
+    height:auto;
+    float:right;
+}*/
+
+/* Modif side select */
+
+.btn-group {
+    width:300px;
+}
+.GridingList .btn-group ,
+.ListingList .btn-group  {
+    display: inline-block !important;
+    width:auto  !important;
+}
+#sidebar .btn-group .mat-select {
+    width: 71%!important;
+}
+#sidebar .btn-group .mat-select-arrow {
+    margin: 0 8px!important;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+
+/* Modif side select end */
+

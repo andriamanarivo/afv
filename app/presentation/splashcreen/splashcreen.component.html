@@ -1,0 +1,129 @@
+<div class="container page splashcreen">
+	<input id="slide-1-trigger" type="radio" name="slides" checked>
+	<div class="section top" id="sct-one">
+		<div class="section_wrapper">
+			<div class="logo">
+				<img alt = "logo" src = "assets/img/logo/logo.png">
+			</div>
+			<p>{{'100 nuances de plaisirs' | translate}}</p>
+			<h1> Bienvenus sur le 1er site de Rencontres BDSM et Fétichiste en France. <br />  Curieux ou initiés, rejoignez des milliers de profils sur notre chat SM <i class="rounds"></i></h1>
+			<div class="form">
+					<span *ngIf="!confirmInscriptionHasError && confirmInscriptionMessage && confirmInscriptionMessage.length >0" class="info spashInfos">{{confirmInscriptionMessage}}</span>
+					<span *ngIf="confirmInscriptionHasError && confirmInscriptionMessage && confirmInscriptionMessage.length >0"  class="error spashInfos">{{confirmInscriptionMessage}}</span>
+					<!-- <span *ngIf="!resetpasswordHasError && resetpasswordMessage && resetpasswordMessage.length >0" class="info spashInfos">{{resetpasswordMessage}}</span>
+					<span *ngIf="resetpasswordHasError && resetpasswordMessage && resetpasswordMessage.length >0"  class="error spashInfos">{{resetpasswordMessage}}</span> -->
+			</div>
+
+		</div>
+		<div class="SplashNavigation">
+			<div *ngIf ="isLoading" class="loader">
+				<app-loader [load]="isLoading"></app-loader>
+			</div>
+			<ol id="splash-pagination">
+
+				<li><label for="slide-1-trigger" [ngClass]="{'active': current === 'one', 'notactived':current !== 'one' }" (click)="current='one'">One</label></li>
+				<li><label [ngClass]="{'active': current === 'two', 'notactived':current !== 'two' }" (click)="current='two'"  for="slide-2-trigger">Two</label></li>
+				<li><label [ngClass]="{'active': current === 'three', 'notactived':current !== 'three' }" (click)="current='three'" for="slide-3-trigger" >Three</label></li>
+
+			</ol>
+			<div class="button_wrapper" *ngIf ="!isLoading">
+				<button class="btn btn_connexion" (click)="onSubmit()" routerLinkActive="active">S'inscrire</button>
+				<button class="btn" type="submit" name="action" routerLink="/login" routerLinkActive="active">Se connecter</button>
+                <div *ngIf ="errorMessage.length>0">{{errorMessage}}</div>
+			</div>
+
+		</div>
+	</div>
+	<input id="slide-2-trigger" type="radio" name="slides">
+	<div class="section sec-un" id="sct-tw">
+		<div class="section_wrapper">
+
+			<div class="left pull-right">
+				<div class="LogoPArt">
+				<img class="simple_image" id="sct-trw"  alt="logo" src="assets/img/splashcreen/screenshot.png">
+				</div>
+			</div>
+			<div class="right pull-left">
+				<div class="InContents">
+					<div class="logoSplash">
+					<img alt = "logo" src = "assets/img/logo/logo-25-ans.png">
+				</div>
+					<h2>100 nuances de plaisirs</h2>
+					<div class="txtSpalsh">
+                                            <h2> La plus grande, la plus ancienne communauté BDSM, <br /> Spécialisée depuis plus de 25 ans dans les rencontres SM
+												<br> sans aucune animation.</h2>
+						<span class="medium-font">
+							Vous et vous seulement vivez vos désirs secrets librement,
+							consensuellement avec joie.<br>
+							Rencontrez et vivez librement vos 100 nuances de plaisirs avec des femmes,
+							hommes et tous le genres adeptes des pratiques du BDSM telles que la
+							fessée, le Shibari, le bondage, le baillon, les menottes...
+						</span>
+						<span class="medium-font">
+							Rejoignez notre Dialogue SM et rencontrez vos prochains pertenaires SM
+							sur le 1er tchat BDSM gratuit.
+						</span>
+						<i class="rounds"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<input id="slide-3-trigger" type="radio" name="slides" >
+	<div class="section sec-deux">
+		<div class="section_wrapper">
+			<div class="left pull-left">
+				<div class="LogoPArt">
+				<img class =  "simple_image"  alt = "logo" src = "assets/img/splashcreen/iphone.png">
+				</div>
+			</div>
+			<div class="right pull-right">
+				<div class="InContents">
+					<div class="logoSplash">
+						<img alt = "logo" src = "assets/img/logo/logo_small_2.png">
+					</div>
+					<h2>{{'100 nuances de plaisirs' | translate}}</h2>
+					<div class="txtSpalsh">
+						<h3>Rencontres et Chat BDSM sur mobiles.</h3>
+						<span class="medium-font">
+							Adaptée aux supports et navigateurs actuels, la nouvelle version de DOMI vous offre une ergonomie simple et intuitive tout en préservant la qualité de chacune de ses fonctionnalités.<br>
+							Obtenez les profils SM et fétichismes situés près de chez vous en un seul clic !
+							Personnalisez, affinez et enregistrez vos différentes recherches.
+							Dialoguez en toute tranquilité grâce à la blacklist et autres fonctions de confort.
+							Visionnez des milliers de photos BDSM publiques et privées et découvrez les désirs, pratiques et fantasmes les plus piquants des adeptes de la communauté BDSM.
+						</span>
+						<span>C'est le moment de réaliser vos fantasmes les plus inavouables !</span>
+						<i class="rounds"></i>
+					</div>
+					<div class="suivez-nous">
+						<span>
+							Suivez-nous sur
+							<a href="https://www.facebook.com/Chat-et-rencontres-SM-167164067062161/" target="_blank" class="linkSocial"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+							<a href="https://plus.google.com/+DomiChatSM" target="_blank" class="linkSocial"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a>
+						</span>
+					</div>
+				</div>
+			</div>			
+		</div>
+	
+	</div>
+    <div class="footer-splash">
+		<p>
+            <a class="contactUs" routerLink="/mentionLegale">Mentions légales</a> -
+            <a class="contactUs" routerLink="/personalData"> Données personnelles </a>  - 
+             <a class="contactUs" routerLink="/cgu">CGU</a> - 
+            <a class="contactUs" routerLink="/contactUs">Nous contacter</a>
+        </p>
+        <p>Copyright <!--&copy;--> &copy; {{year}} Domi.com - Tous droits réservés</p>
+    </div>
+</div>
+<!-- MIDDLE pagination end -->
+<p-sidebar [(visible)]="show" position="top" styleClass="ui-sidebar-sm" id="CoockiesPage">
+    <span>
+        Ce site utilise des cookies pour vous offrir le meilleur service. En poursuivant votre navigation, vous acceptez l'utilisation
+        des cookies.
+    </span>
+    <button type="button" (click)="acceptCookies()" class="ui-button-success">J'accepte</button>
+    <button type="button" (click)="goToAbout()" class="ui-button-success">En savoir plus</button>
+</p-sidebar>

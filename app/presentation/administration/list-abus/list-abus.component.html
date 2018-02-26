@@ -1,0 +1,99 @@
+<p-growl [(value)]="msgs"></p-growl>
+<section class="content" style="height:100%;">
+    <div class="loading-admin" *ngIf="loading">
+        <app-loader [load]="loading"></app-loader>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Abus</h2>
+            <small class="card-subtitle">Liste des abus</small>
+            <div class="formsearch">
+            <form  [formGroup]="abusForm" (ngSubmit)="getSearch(abusForm)" >
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label class="labelleInput text-center center-block">Satut</label>
+                        <div class="form-group form-group--select">
+                            <div class="select">
+                            <select class="form-control" [formControl] = "abusForm.controls['statut']" >
+                                <option *ngFor="let statut of statuts" [value]="statut.id" >{{statut.libelle}}</option>
+                            </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <label class="labelleInput text-center center-block">Date début</label>
+                        <input type="hidden" [(ngModel)]="date_deb" class="form-control"  [formControl] = "abusForm.controls['date_deb']"  placeholder="Date début">
+                        <material-datepicker style="width:159px" placeholder="Sélectionner une date" class="form-control date_deb"  [dateFormat]="'DD-MM-YYYY'"   [(date)]="date_deb"></material-datepicker>
+                    </div>
+                    <div class="col-sm-2">
+                        <label class="labelleInput text-center center-block">Date fin</label>
+                        <input type="hidden" [(ngModel)]="date_fin" class="form-control" [formControl] = "abusForm.controls['date_fin']"   placeholder="Date fin">
+                        <material-datepicker style="width:159px" placeholder="Sélectionner une date" class="form-control date_fin"   [dateFormat]="'DD-MM-YYYY'"   [(date)]="date_fin"></material-datepicker>
+                    </div>
+                    <div class="col-sm-2">
+                        <label class="labelleInput text-center center-block">Emetteur</label>
+                        <input type="text" class="form-control" [(ngModel)]="emetter" [formControl] = "abusForm.controls['emetter']"   placeholder="Emetteur">
+                    </div>
+                    <div class="col-sm-2">
+                        <label class="labelleInput text-center center-block">Utilisateur reporté</label>
+                        <input type="text" class="form-control" [(ngModel)]="user_report" [formControl] = "abusForm.controls['user_report']"   placeholder="Utilisateur reporté">
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-success btn-block allList" (click)="getAllListAbus();" >Tout afficher</button>
+                        <div class="form-group">
+                            <i class="form-group__bar"></i>
+                            <button class="btn btn-secondary btn-block btn--icon-text" type="submit" >
+                            <!--<i class="zmdi zmdi-search"></i> -->
+                               Rechercher</button>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" [(ngModel)]="page" class="form-control" [formControl] = "abusForm.controls['first']">
+                <input type="hidden" [(ngModel)]="itemsPerPage" class="form-control" [formControl] = "abusForm.controls['max']">
+            </form>
+            </div>
+        </div>
+        <div class="card-block abus-list">
+            <ng-table
+                    [config]="config"
+                    (tableChanged)="onChangeTable(config)"
+                    (cellClicked)="onCellClick($event)"
+                    [rows]="rows"
+                    [columns]="columns">
+            </ng-table>
+            <div *ngIf="getEmptyMessage().length !== 0 && !loading">               
+                {{getEmptyMessage()}}
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <pagination *ngIf="config.paging"
+                                class="pagination-sm"
+                                [(ngModel)]="page"
+                                [totalItems]="length"
+                                [itemsPerPage]="itemsPerPage"
+                                [maxSize]="maxSize"
+                                [boundaryLinks]="true"
+                                [rotate]="false"
+                                (pageChanged)="setPage(config,$event)"
+                                (pageChanged)="onChangeTable(config, $event)"
+                                (numPages)="numPages = $event">
+                    </pagination>
+                </div>
+                <div class="col-sm-6">
+                    <div class="pagination justify-content-end">
+                        <label for="">Afficher par page :</label>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(20)">20</button>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(25)">25</button>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(50)">50</button>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(100)">100</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</section>

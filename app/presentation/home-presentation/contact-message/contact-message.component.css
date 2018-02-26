@@ -1,0 +1,400 @@
+/* block-mess */
+/*
+.block-mess {
+    width: 79%;
+
+}
+*/
+.pageTitle h2 {
+    color:#fff!important;
+}
+.block-mess {
+    height: 100%;
+    /*margin-left: 15px;*/
+    background: #0c0c0c;
+    display: inline-block;
+    width: -webkit-calc(100% - 315px);
+    width: -moz-calc(100% - 315px);
+    width: calc(100% - 315px);
+}
+@media screen and (max-width: 1366px) {
+    .block-mess {
+        width: -webkit-calc(100% - 175px);
+        width: -moz-calc(100% - 175px);
+        width: calc(100% - 175px);
+    }
+}
+@media screen and (max-width: 1200px) {
+    .block-mess {
+        width: 100%;
+    }
+}
+.block-msm {
+    width: 100%;
+    height:auto;
+    margin:0 auto;
+    padding:0;
+    background: #000; /*#2f2f2f*/
+    border-bottom: 9px solid #b32a2a;
+}
+.msm h2 {
+    line-height: 50px;
+    font-size: 27px;
+    color: #fff!important;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+.msm-content {
+    width:100%;
+    height: 100%;
+    margin:0 auto;
+    padding:20px;
+    display: inline-block;
+}
+.navbar-left {
+    width: 22%;
+    height:50px;
+    float: left;
+}
+.msm-input {
+    width:100%;
+    height: 30px;
+    background:#fff;
+    border-radius:15px;
+    position: relative;
+}
+span.input-search-icons {
+    position: absolute;
+    top: 7px;
+    right: 11px;
+}
+.select-right {
+    width: 33%;
+    height:50px;
+    float: right;
+}
+label.slt-right {
+    color:#fff;
+    position: relative;
+    top: 7px;
+    left:-10px;
+}
+
+/* block-mess :end */
+
+
+/* block contact */
+.tchat_container {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+}
+#mod-msm {
+    width:100%;
+    height:100%;
+    margin:0 auto;
+    padding:0;
+    text-align: center;
+    display: inline-flex;
+}
+.tchat-input-icons {
+    width:70%;
+    height: auto;
+    margin:0 auto;
+    padding:0;
+    text-align: center;
+}
+input.usr-search {
+    width:100%;
+    height:35px;
+    background:#e3e3e3;
+    border-radius:15px;
+    margin-bottom: 20px;
+    border:0px;
+    padding-left: 10px;
+    font-size: 16.2px!important;
+    font-weight: 600;
+    font-family: 'gothambook'!important;
+    color:rgba(47, 47, 47, 0.72);
+}
+span.input-icons { 
+    position:relative;
+    top: -44px;
+    right: -127px;
+}
+.block-contacts {
+    width: 100%;
+    height: 100%;  
+   
+    margin-top: 20px;
+}
+.block-contacts ul {
+    width: 100%;
+    min-height: 280px;  
+    
+    color:#fff;
+}
+.block-contacts ul li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.block-contacts ul li.active {
+    background:#000;
+}
+.block-contacts ul li:nth-child(odd) {
+    background:#000;
+}
+.contacts li {
+    line-height: 25px;
+    border-top: 1px solid gray;
+    padding-left: 5px;
+}
+.thumb {
+    display: flex;
+    /*background: #000;*/
+    width: 100%;
+    min-height: 100px;
+    padding: 20px;
+}
+.no-thumb {
+    display: flex;
+    background: #0c0c0c;
+    width: 100%;
+    min-height: 100px;
+    padding: 20px;
+}
+img.thumb-msm {
+    width:109px;
+    height:96px;
+    border-radius:12px;
+}
+span.user-status {
+    position:absolute;
+    bottom: 4px;
+    right: 3px;
+}
+label.tchat-clock-rule {
+    font-size: 14.8px;
+    color: #616161;
+    position: relative;
+    left: 70px;
+    float: right;
+    top: 10px;
+}
+label.tchat-clock-rule img {
+    position:relative;
+    top:4px;
+}
+.tape-user {
+    position:relative;
+}
+.edit-user {
+    width:90%;
+    position: relative;
+}
+
+label.tchat-name {
+    position: relative;
+    left: 12px;
+    color: #000;
+    float: left;
+    top: 10px;
+    font-weight: bold;
+    font-size: 16.2px;
+    font-family: 'gothambook';
+    
+}
+.profil-tchat {
+    width: 100%;
+    display: block;
+    text-align: left;
+    position:relative
+}
+label.profil-txt {
+    position: absolute;
+    left: 10px;
+    top: 60px;
+    color:rgba(0, 0, 0, 0.88);
+}
+.encadr-msm {
+    width: 91%;
+    min-height: 100%;
+    border-radius: 10px;
+    background-color: #ffffff;
+    margin-left: 29px;
+}
+
+.unread-notif {
+    position: relative;
+    top: 9px;
+    left: 30px;
+    z-index: 0;
+    float: left;
+}
+label.read-motif {
+    font-weight: 400;
+    color:#fff;
+    text-align: center;
+    top: 50%;
+    right: 0;
+    font-family: gothambook;
+    font-size: 15.9px;
+    text-align: center;
+    color: #ffffff;
+    width: 15px;
+    height: 23px;
+    display: inline-block;
+    line-height: 17px;
+}
+span.pix-read {
+    position: absolute;
+    top: -4px;
+    left: -4.3px;
+    z-index: -1;
+}
+/* block contact :end */
+
+.pagination {
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+.pagination a, .pagination strong {
+    display: inline-block;
+    margin-right: 3px;
+    padding: 4px 12px;
+    text-decoration: none;
+    line-height: 1.5em;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    font-size: 15px;
+    color:#fff;
+}
+.pagination a:hover {
+    background-color: #BEBEBE;
+    color: #fff;
+}
+.pagination a.active {
+    background: #BEBEBE;
+}
+
+.block-add-btn button{
+    width: 100%;
+    height: 28px;
+    border-radius: 14px;
+    background-color: #781212 !important;
+    text-align: center;
+    margin: 0 auto;
+}
+
+/* RESPONSIVE DESKTOP contact.message.component */
+@media only screen and (max-width :1685px) {
+   /* .block-mess {
+    width: 75%;
+    }*/
+}
+
+@media only screen and (max-width :1605px) {
+    /*.block-mess {
+    width: 74%;
+    }*/
+}
+
+@media only screen and (max-width :1445px) {
+    /*.block-mess {
+    width: 70%;
+    }*/
+    label.tchat-clock-rule {
+    left: 46px;
+    }
+    .select-right {
+    width: 40%;
+    }
+}
+
+@media only screen and (max-width :1370px) {
+    /*.block-mess {
+    width: 68%;
+    }*/
+}
+
+@media only screen and (max-width :1285px) {
+    /*.block-mess {
+    width: 64%;
+    }*/
+    .select-right {
+    width: 47%;
+    }
+    label.tchat-clock-rule {
+    left: 25px;
+    }
+}
+
+/* RESPONSIVE MOBILE */
+@media only screen and (max-width: 1024px){
+    .block-mess {
+    width: 97%;
+    }
+}
+
+
+@media only screen and (max-width: 360px){
+    .navbar-left {
+    width: 95%!important;
+    }
+    .select-right {
+    width: 100%!important;
+    }
+    span.user-status {
+    position: relative;
+    bottom: 22px;
+    right: -44px;
+    }
+    label.tchat-clock-rule {
+    left: 0 ;
+    top: 31px;
+    }
+
+}
+
+@media screen and (min-width: 361px) and (max-width:420px){
+    .navbar-left {
+    width: 95%;
+    }
+    .select-right {
+    width: 100%;
+    }
+    span.user-status {
+    position: relative;
+    bottom: 22px;
+    right: -44px;
+    }
+    label.tchat-clock-rule {
+    left: 0 ;
+    top: 31px;
+    }
+}
+
+@media only screen and (max-width: 320px){ 
+    .navbar-left {
+    width: 95%;
+    }
+    .select-right {
+    width: 100%;
+    }
+    span.user-status {
+    position: relative;
+    bottom: 22px;
+    right: -44px;
+    }
+    label.tchat-clock-rule {
+    left: 0 ;
+    top: 31px;
+    }
+}
+
+

@@ -1,0 +1,16 @@
+ <div class="row">
+    <div class="col-sm-2">
+      <div class="color-pick">
+        <input type="text" class="form-control" [cpSaveClickOutside] ="true"  
+        (colorPickerChange) = "onColorPickerChange($event)" [cpOKButton]="true"
+        [(colorPicker)]="selectedColor" [value]="selectedColor || '#000'" [cpPosition]="'bottom'" />
+        <i class="form-group__bar"></i>
+        
+      </div>
+    </div>
+    <div class="color-pick-viewer">
+      <div [style.background-color]="selectedColor || '#000'">
+        <div >{{selectedColor}}</div>
+      </div>
+    </div>
+  </div>   

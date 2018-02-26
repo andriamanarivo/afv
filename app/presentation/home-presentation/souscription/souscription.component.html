@@ -1,0 +1,206 @@
+<div class="col-lg-10 main-chart">
+    <div class="souscription">
+        <div class="title-offre">
+            <a (click)="back()" class="back-link"></a>
+            <h2>{{'Abonnement'|translate}}</h2>
+        </div>
+    </div>
+    <div class="detail-souscri" *ngIf="!loadDataSouscription">
+        <!--<p *ngIf="currentSouscription" class="header-souscri">{{'Votre_souscription'| translate}}</p>-->
+        <p *ngIf="!currentSouscription" class="txt-souscr">
+            <!--{{'pasdesouscription' | translate}}-->
+        </p>
+
+        <div class="current-souscr" *ngIf="currentSouscription">
+            <div *ngIf="!loading">
+                <p>{{'subscription' | translate}} : {{currentSouscription.dureeSouscription}} <label>{{currentSouscription.periodicite}}</label></p>
+                <p>{{'Montant' | translate}} : {{currentSouscription.montant*currentSouscription.dureeSouscription}} <label>{{currentSouscription.unit}}</label></p>
+                <p>{{'Datedesouscription'|translate}} : {{currentSouscription.dateSouscription}}</p>
+                <p>{{'DateExp'|translate}} : {{currentSouscription.dateExpiration}}</p>
+                <p> {{'Statut'|translate}} :
+                    <label class="suppr green" *ngIf="currentSouscription.statut.toLowerCase() === 'actif'"> {{currentSouscription.statut}} </label>
+                    <label class="suppr red"  *ngIf="currentSouscription.statut.toLowerCase() !== 'actif'"> {{currentSouscription.statut}} </label>
+                </p>
+                <h2>{{'Avantages'|translate}}</h2>
+                <ul>
+                    <li *ngFor="let avantage of currentSouscription.avantages">
+                        <img src="assets/img/icon-souscrip.png" width="24px" height="24px" align="" alt="user"> {{avantage.description}}
+                    </li>
+                </ul>
+                <button *ngIf="resulier" (click)="doAction(currentSouscription)" class="btn-res" md-button color="warn">{{currentSouscription.statut.toLowerCase() === "actif" ? "Résilier" : "Renouveler"}}</button>
+                <!--<button class="res-btn" (click)="doAction(currentSouscription)"  *ngIf="currentSouscription.statut.toLowerCase() === 'actif'">Résilier</button>
+                <button class="ren-btn" (click)="doAction(currentSouscription)"  *ngIf="currentSouscription.statut.toLowerCase() !== 'actif'">Renouveler</button>-->
+            </div>
+
+            <md-progress-spinner *ngIf="loading" class="loader-margin-action" color="warn" mode="indeterminate">
+            </md-progress-spinner>
+        </div>
+    </div>
+    <div class="offres" *ngIf="!currentSouscription && !loadDataSouscription">
+        <div class="title-offre">
+            <h2>{{'Nos offres'|translate}}</h2>
+        </div>
+    </div>
+    <md-progress-spinner *ngIf="loadDataSouscription" class="loader-margin-action" color="warn" mode="indeterminate">
+    </md-progress-spinner>
+    <div class="subscription-content">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="page-title">Découvrez  les avantages de DOMI <br/>en souscrivant un <span class="golden-text"> abonnement Premium</span> sans engagements.</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="frb-group">
+                    <ng-container *ngFor="let item of souscriptions" >                      
+                        <div class="frb" (click)="scroll()"  *ngIf="item.actif">
+                            <input type="radio" [id]="item.id" name="radio-button" [value]="item" [(ngModel)]="offre">
+                            <label [for]="item.id">
+                                <div class="frb-title table-title">
+                                    <div class="label-left-title">
+                                        <span >{{item.titre}} </span>
+                                        <!--<span  *ngIf="item.dureeUnit == 'Y'">ans </span>
+                                        <span   *ngIf="item.dureeUnit == 'M'">mois </span>-->
+                                    </div>
+                                    <div class="label-right-title">
+                                        <span class="price-label"> {{item.prix}}{{item.unit}}</span>
+                                        <span class="per-month-label"> /{{item.periodeId}}</span>
+                                    </div>
+                                </div>
+                                <span class="frb-description">{{item.conditionBlack}} <span class="condition_red">{{item.conditionRed}}</span></span>
+                                <span class="frb-description">{{item.description}}</span>
+                            </label>
+                        </div>
+                    </ng-container>
+                </div>
+
+                <div class="codepromo-block">
+                    <label>Code promo</label>
+                    <input [(ngModel)]="codePromo" type="text" class="promo-input"/>
+                    <a (click)="recalculer()">Recalculer</a><br/>
+                    <div *ngIf="erreurMessage && erreurMessage.length>0" [style.color]="'red'">{{erreurMessage}}</div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 ">
+                <div class="avantages" *ngIf="offre" >
+                    <span class="frb-title golden-text">Privilèves premium</span>
+                    <ul class="avantages-list">
+                        <li *ngFor="let item of offre.avantages"> {{item.description}}</li>
+                    </ul>
+                    <div class="frb-title golden-text abonnement-label">
+                        <span class=" nom-abonnement">{{offre.titre}}</span>
+                        <!--<span  *ngIf="offre.dureeUnit == 'Y'">ans </span>
+                        <span  *ngIf="offre.dureeUnit == 'M'">mois </span>-->
+                    </div>
+                        <span class="frb-subtitle nom-abonnement">Paiement de {{offre.prixPay}}{{offre.unit}}</span>
+                    <div class="form-paiement">
+                        <div class="row">
+                            <form [formGroup]="payForm" #formDir="ngForm">
+                                <div class="col-md-6">
+                                    <div class="num-card-content">
+                                        <span class="icon-num-card"><i class="fa fa-credit-card" aria-hidden="true"></i></span>
+                                        <p-inputMask  mask="9999 9999 9999 9999"  class="num-card noborder" id="porteur" [(ngModel)]="data.porteur" formControlName="porteur" type="text" placeholder="Numero de carte"></p-inputMask>
+                                    </div>
+                                    <div *ngIf="porteur.invalid && (porteur.dirty || porteur.touched || click)"
+                                    class="alert alert-danger">
+                                        <div *ngIf="porteur.errors.required">
+                                            Champ obligatoire
+                                        </div>
+                                        <div *ngIf="porteur.errors.invalidCreditCard && !porteur.errors.required">
+                                            numéro de carte invalide
+                                        </div>
+                                        <!--<div *ngIf="porteur.errors.maxCreditCard && !porteur.errors.required">
+                                            numéro de carte invalide ,nombre superieur à 16 
+                                        </div>
+                                        <div *ngIf="porteur.errors.minCreditCard && !porteur.errors.required">
+                                            numéro de carte invalide, nombre inferieur à 16
+                                        </div>-->
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-3">
+                                    <p-inputMask  mask="99/99"  id="dateval" formControlName="dateval" [(ngModel)]="data.dateval" class="date-card" type="text" placeholder="MM/AA"></p-inputMask>
+                                    <div *ngIf="dateval.invalid && (dateval.dirty || dateval.touched || click)" class="alert alert-danger">
+                                        <div *ngIf="dateval.errors.required">
+                                            Champ obligatoire
+                                        </div>
+                                        <div *ngIf="dateval.errors.invalidDate && !dateval.errors.required ">
+                                            date invalide
+                                        </div>
+                                        <div *ngIf="dateval.errors.datePerime">
+                                            carte périmé
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3"><input  id="cvv" formControlName="cvv" [(ngModel)]="data.cvv"  class="cvv-card" type="text" placeholder="CVV">
+                                    <div *ngIf="cvv.invalid && (cvv.dirty || cvv.touched || click)"
+                                    class="alert alert-danger">
+                                        <div *ngIf="cvv.errors.required">
+                                            Champ obligatoire
+                                        </div>
+                                        <div *ngIf="!cvv.errors.required">
+                                            cvv invalide
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class='btn-zone'><a (click)="subscribeToOffer()" class="btn-paiement">Payer {{offre.prixPay}}{{offre.unit}}</a></div>
+                    </div>
+                </div>
+                <div class="card-list-block">
+                    <div class="card-list-content">
+                        <ul >
+                            <li ><span class="icon-card"><img src="assets/img/logo-visa.png"/></span> </li>
+                            <li ><span class="icon-card"><img src="assets/img/logo-cb.png"/></span> </li>
+                            <li ><span class="icon-card"><img src="assets/img/logo-mastercard.png"/></span> </li>
+                            <li ><span class="icon-card"><img src="assets/img/logo-amex.png"/></span> </li>
+                            <li ><span class="icon-card"><img src="assets/img/logo-visa-elec.png"/></span> </li>
+                        </ul>
+                    </div>
+                    <span class="paiement-info">Paiement sécurisé SSL <i class="fa fa-lock" aria-hidden="true"></i></span>
+                    <span class="mention-info">Mention sur votre relevé bancaire : BDMULTIMEDIA</span>
+                    <span class="engagement-info">Sans engagement, vous pouvez vous désabonner dans Mon compte/abonnement.</span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--                        <div class="detail-offre" *ngIf="!currentSouscription && !loadDataSouscription">
+                                <div class="group-offre" *ngFor="let items of souscriptions">
+                                    <div class="offre-1" *ngFor="let item of items">
+                                        <p class="txt-offre">
+                                            <md-card>
+                                                <md-card-title>
+                                                    <i class="ion-ios-navigate-outline"></i>
+                                                    <span class="rightmdcardtitle">
+                                                        <span class="tarifTitle">Professionnel</span>
+                                                        {{item.prix}}
+                                                        <label>{{item.unit}}</label>
+                                                        <span class="tarifMonth">/mois</span>
+                                                    </span>
+                                                </md-card-title>
+                                                <md-card-subtitle>{{'Avantages'|translate}}</md-card-subtitle>
+                                                <md-card-content>
+                                                    <ul *ngIf="!(loading && currentSouscriptionId === item.id)">
+                                                        <li *ngFor="let avantage of item.avantages">
+                                                            {{avantage.description}}
+                                                        </li>
+                                                    </ul>
+                                                    <md-progress-spinner *ngIf="loading && currentSouscriptionId === item.id" class="loader-margin" color="warn" mode="indeterminate">
+                                                    </md-progress-spinner>
+                                                </md-card-content>
+                                                <md-card-actions>
+                                                    <button [disabled]="loading && currentSouscriptionId === item.id" (click)="subscribeToOffer(item)" md-button>Souscrire</button>
+                                                </md-card-actions>
+                                            </md-card>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>-->
+
+

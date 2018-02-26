@@ -1,0 +1,42 @@
+ <aside class="navigation" [class.navigation--toggled]="sidebarVisible">
+    <ul class="navigation__menu">
+         <!-- <li routerLinkActive="active"><a routerLink="/home"><i class="zmdi zmdi-home"></i> Home</a></li>  -->
+         <li routerLinkActive="active">
+            <a href="javascript:void(0)">Administration<i (click)="toggleNavigationSub('Administrations', $event)" class="zmdi zmdi-plus-square"></i></a>
+            <ul class="navigation__sub" [@toggleHeight]="navigationSubState.Administrations">
+                <li routerLinkActive="active"><a routerLink="/administration/utilisateurs">Profils</a></li>
+                <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="/administration/sites">Multi-site  <i (click)="toggleNavigationSub('multi', $event)" class="zmdi zmdi-plus-square"></i> </a>
+                    <ul class="navigation__sub__sub" [@toggleHeight]="navigationSubState.multi">
+                        <li routerLinkActive="active"><a routerLink="/administration/listeThematique">Thématiques</a></li>
+                        <li routerLinkActive="active"><a routerLink="/administration/listeCouleur">Couleurs</a></li>
+                    </ul>
+                </li>
+                <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="/administration/abus" (click)="initPagination()">Gestion des abus</a></li>
+                <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="/administration/abonnement">Gestion des abonnés</a></li>
+                <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="/administration/termes-interdit">Gestion des termes interdits</a></li>
+                <li *ngIf="isAdmin" routerLinkActive="active" ><a routerLink="/administration/gestion-offre">Gestion des offres</a></li>
+                 <!--<li *ngIf="isAdmin" routerLinkActive="active" ><a routerLink="/administration/gestion-codes">Gestion des codes promo</a></li> -->
+                 <li *ngIf="isAdmin" routerLinkActive="active" ><a routerLink="/administration/newsletter">Newsletters</a></li>
+                 <li  routerLinkActive="active" ><a routerLink="/administration/moderation-photo">Modération photos</a></li>
+                 <li  routerLinkActive="active" ><a routerLink="/administration/moderation-text">Modération texte</a></li>
+                 <!--<li *ngIf="isAdmin" routerLinkActive="active" ><a  routerLink="/administration/import">Importation</a></li>-->
+
+            </ul>
+        </li> 
+    </ul>
+</aside> 
+<!-- 
+<aside class="navigation" [class.navigation--toggled]="sidebarVisible">
+    <ul class="navigation__menu">
+        <li routerLinkActive="active"><a [routerLink]="['/home']"><i class="zmdi zmdi-home"></i> Home</a></li>
+        
+        <li routerLinkActive="active">
+            <a (click)="toggleNavigationSub('Tables', $event)"><i class="zmdi zmdi-view-list"></i> Tables</a>
+
+            <ul class="navigation__sub" [@toggleHeight]="navigationSubState.Tables">
+                <li routerLinkActive="active"><a routerLink="/administration/utilisateurs">HTML Table</a></li>
+                <li routerLinkActive="active"><a routerLink="/administration/utilisateurs">Data Table</a></li>
+            </ul>
+        </li>
+    </ul>
+</aside> -->

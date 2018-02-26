@@ -1,0 +1,17 @@
+<div class = "default_buttons">        
+    <button *ngIf="getloggedIn" 
+        [routerLink]="['./inscription/Vousetes']" routerLinkActive="active">
+        {{'Registration'|translate}}
+    </button>
+    <button *ngIf="getloggedIn" 
+        [routerLink]="['./login']" routerLinkActive="active">{{'Login'|translate}}
+    </button>
+</div>
+<!-- <div class = "idle">
+    <p><strong>{{idleState}}</strong></p>
+    
+    <button (click)="resetIdle()" *ngIf="timedOut">Restart</button>
+</div> -->
+<router-outlet></router-outlet>
+
+<!-- <p *ngIf="lastPing"><small>Last keepalive ping <strong>{{lastPing}}</strong></small></p> -->

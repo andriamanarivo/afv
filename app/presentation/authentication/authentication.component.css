@@ -1,0 +1,84 @@
+
+
+.authentification .form_body{
+	padding-top: 80px;
+}
+.password_forgotten {
+	/*text-align: right;*/
+	font-size: 15.4px;
+    /*margin-top: -13px;*/
+	position: relative;
+    /*z-index: 1;*/
+}
+.password_forgotten a{
+	color: rgba(255, 255, 255, 0.5);
+	text-decoration: none;
+	cursor: pointer;
+}
+.button_wrapper{
+	/*position: relative;*/
+	max-width: 425px;
+	width: 100%;
+	/*top: 62px;*/
+}
+
+button.btn{
+	width: 100%;
+	font-size: 19px;
+	color: #fff;
+	background-color: transparent !important;
+	border: none;
+	cursor: pointer;
+	padding: 13px 0 12px;
+    border-radius: 5px;
+}
+button.btn.btn_connexion{
+	background-color: #0e0e0e !important;
+	font-size: 23px;
+	margin-bottom: 0;
+}
+
+.clear_field button.btn{	
+    font-size: 0 ;
+	padding: 0 ;
+	-webkit-transform: rotate(45deg);
+	transform: rotate(45deg);
+    opacity: 0.5;
+}
+
+
+@media only screen and (max-width: 1440px){
+	.authentification .form_body{
+		padding-top: 50px;
+	}
+}
+@media only screen and (max-width: 992px){
+	.container.forgotpassword .form_body,
+	.authentification .form_body{
+		padding-top: 25px;
+	}
+}
+
+@media only screen and (max-width: 640px){
+	.container.forgotpassword .form_body {
+		padding-top: 10px;
+	}
+	.authentification .form_body{
+		padding-top: 0;
+	}
+	.authentification .form_body .input-field {
+		margin-bottom: 0;
+	}
+
+}
+
+.form.authentification span.error,
+.form.authentification span.info {
+	background:#000;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	padding:20px;
+	display: inline-block;
+	width: auto !important;
+
+}

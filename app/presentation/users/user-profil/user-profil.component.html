@@ -1,0 +1,347 @@
+<!--p>
+  profil works! modifiable
+</p-->
+<div class="user-profil-admin">
+<div class = "user_profile admin_profil detail Administration">
+    <p-growl [(value)]="msgs"></p-growl>
+	<div class = "row">
+		<div class = "tab_container">
+			<div class="mobile" *ngIf="userDetail">
+				<div class = "middle">
+					<h4 class = "user_name">
+						<a href="#" class="linkBack"></a>
+						{{userDetail.pseudo}}
+						<i class="user-status">
+							<img src="assets/img/connect.png" align="" alt="">
+						</i>
+					</h4>
+					<div class = "img_container">
+						<!--img-->
+						<div class = "img_wrapper">
+							<img class="" src = "assets/img/profil-1.png">
+						</div>
+					</div>
+					<div class = "text_wrapper">
+						<label><span>{{userDetail.vsetes}}</span><span class = "user_age">{{userDetail.age}} ans</span>,&nbsp;<span class = "user_localisation">{{userDetail.ville}}&nbsp;({{userDetail.codepostal}})</span>,&nbsp;<span class = "user_orientation">{{userDetail.orientation}}</span></label>
+					</div>
+				</div>
+			</div>
+			<md-tab-group class="userProfil">
+			  <md-tab>
+				<ng-template md-tab-label>
+					<h2 class="mobil-1"> <label> description </label> </h2>
+				</ng-template>
+				<div class = "tab_wrapper" *ngIf="userDetail">
+					<div class = "profile_top">
+						<div class = "profile_top_wrapper">
+							<div class = "left">
+								<div class = "img_container">
+									<!--img-->
+									<div class = "img_wrapper">
+										<img *ngIf="userDetail.pdp" class="" src = "{{baseUrl+userDetail.pdp}}">
+										<img *ngIf="!userDetail.pdp" class="" src = "assets/img/profil-default.png">
+									</div>
+								</div>
+								<div class = "text_wrapper">
+									<!--<label class = "user_name">{{userDetail.pseudo}}<span class = "user_age">, {{userDetail.age}} ans</span></label>
+									<label>
+										<span  *ngIf="userDetail.vsetes">{{userDetail.vsetes}}</span>
+										<span  *ngIf="userDetail.vetes">{{userDetail.vetes}}</span>
+										<span class = "user_orientation">, {{userDetail.orientation}}</span></label>
+									<label><span class = "user_localisation">{{userDetail.ville}}&nbsp;({{userDetail.codepostal}})</span></label>-->
+
+									<label><span class = "user_name">{{userDetail.pseudo}}</span>, <span class = "user_age">{{userDetail.age}} ans</span>,&nbsp;<span class = "user_localisation">{{userDetail.ville}}&nbsp;({{userDetail.codepostal}})</span>,<span  *ngIf="userDetail.vsetes">{{userDetail.vsetes}}</span>
+										<span  *ngIf="userDetail.vetes">{{userDetail.vetes}}</span> , <span class = "user_orientation">{{userDetail.orientation}}</span></label>
+								</div>
+							</div>
+							<div class = "right">								
+								<div class = "edit_container">
+									<!--<p class = "progress">
+										<label>profil completé à <span class = "progress_value">80%</span></label>
+										<progress id="avancement_profile" value="80" max="100"></progress>
+									</p>-->
+									<p class="progress">
+											<!--<label>profil completé à <span class = "progress_value">80%</span></label>
+											<progress id="avancement_profile" value="80" max="100"></progress>-->
+											<md-card>
+												<md-card-content>
+													<h2 class="example-h2">80%</h2>
+													<section>
+														<md-progress-bar
+															class="bar-progr"
+															[color]="Warn"
+															[mode]="mode"
+															[value]="80"
+															[bufferValue]="100">
+														</md-progress-bar>
+													</section>
+												</md-card-content>
+                                              </md-card>
+										</p>
+									<div class = "text_area_wrapper">	
+										<div class = "item">
+											<label>A propos de moi :</label>
+											<textarea> {{userDetail.description}}
+											</textarea>
+										</div>
+										<div class = "item">
+											<label>Ce que je recherche:</label>
+											<textarea>{{userDetail.recherche}} 
+											</textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class = "profile_bottom">
+						<div class = "profile_bottom_wrapper">
+							<div class = "left">
+
+								<div class = "edit_container">
+									<h3>J’en dis plus sur moi</h3>
+									<ul class = "editable_list">
+										<li>
+											<div class = "item"> 
+												<label>Satut : </label>
+												<div class = "item_content">
+													<input type="text" value="{{userDetail.statut}}" id="statut">
+												</div>
+											</div>										
+										</li>
+										<li>
+											<div class = "item"> 
+												<label>Orientation : </label>
+												<div class = "item_content">
+													<input type="text" value="{{userDetail.orientation}}" readonly="true" id="orientation">
+												</div>
+											</div>
+										</li>
+										<!--<li>
+											<div class = "item"> 
+												<label>Situation</label>
+												<div class = "item_content">
+													<input type="text" readonly="true" value="{{userDetail.situation}}" id="situation">
+												</div>
+											</div>
+										</li>-->
+										<li>
+											<div class="item withChild">
+                                                    <label>{{'Apparence'}} : </label>
+                                                    <ul class="editable_list">
+                                                        <li>
+                                                            <div class="item">
+                                                                <label>{{'Taille'}} : </label>
+                                                                <div class="item_content">
+                                                                    <input value="{{userDetail.taille}}"  type="text" id="taille" readonly="true"/>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="item">
+                                                                <label>{{'Poids'}} : </label>
+                                                                <div class="item_content" >
+                                                                   <input value="{{userDetail.poids}}"  type="text" id="poids" readonly="true"/>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="item">
+                                                                <label>{{'Couleur cheveux'}} : </label>
+                                                                <div class="item_content">
+                                                                    <input value="{{userDetail.couleurCheveux}}"  type="text" id="couleurCheveux" readonly="true"/>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="item">
+                                                                <label>{{'Taille des cheveux '}} : </label>
+                                                                <div class="item_content">
+                                                                    <input value="{{userDetail.tailleCheveux}}"  type="text" id="tailleCheveux" readonly="true"/>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="item">
+                                                                <label>{{'Couleur des yeux'}} : </label>
+                                                                <div class="item_content" >
+                                                                    <input value="{{userDetail.couleurYeux}}"  type="text" id="couleurYeux" readonly="true"/>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="item">
+                                                                <label>{{'Silhouette'}} : </label>
+                                                                <div class="item_content">
+                                                                    <input value="{{userDetail.apparence}}"  type="text" id="apparence" readonly="true"/>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="item">
+                                                                <label>{{'Look'}} : </label>
+                                                                <div class="item_content">
+                                                                    <input value="{{userDetail.look}}"  type="text" id="look" readonly="true"/>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="item">
+                                                                <label>{{'Signe(s) particulier(s)'}} : </label>
+                                                                <div class="item_content" *ngIf="userDetail && userDetail.value">
+                                                                    <input value="{{userDetail.signeParticulier}}"  type="text" id="signeParticulier" readonly="true"/>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>	
+										</li>
+										<li>
+											<div class = "item">
+												<label>Origine ethnique : </label>
+												<div class = "item_content">
+													<input type="text" readonly="true" value="{{userDetail.origine}}" id="origine">
+												</div>
+											</div>	
+										</li>
+									</ul>
+								</div>
+
+								<div class = "edit_container">
+									<h3>Mes tendances et pratiques</h3>
+									<ul class = "editable_list">
+										<li>
+											<div class = "item">
+												<label>Tendance :</label>
+												<div class = "item_content">
+													<input type="text" readonly="true"  value="{{userDetail.tendances}}" id="tendance">
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class = "item">
+												<label>Experience : </label>
+												<div class = "item_content">
+													<input type="text" readonly="true"  value="{{userDetail.experience}}" id="experience">
+												</div>	
+											</div>	
+										</li>
+										<li>
+											<div class = "item">
+												<label>Pratiques : </label>
+												<div class = "item_content">
+													<input type="text" readonly="true" value="{{userDetail.pratique}}" id="pratiques">
+												</div>
+											</div>
+										</li>									
+									</ul>
+								</div>
+
+								<div class = "edit_container">
+									<h3>Mes préférences</h3>
+									<ul class = "editable_list">
+										<li>
+											<div class = "item">
+												<label>Mobilité : </label>
+												<div class = "item_content">
+													<input type="text"  value="{{userDetail.situation}}" readonly="true" id="mobilite">
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class = "item">
+												<label>Disponibilité : </label>
+												<div class = "item_content">
+													<input type="text" readonly="true"  value="{{userDetail.disponibilite}}" id="disponibilite">
+												</div>
+												
+											</div>
+										</li>																	
+									</ul>
+								</div>
+							</div>
+							<div class = "right">
+								<div class = "edit_container" *ngIf="nbAllPhoto!==0">
+									<div class="T-carsl"><span class="T-left">photos</span><span class="T-right">{{nbAllPhoto}}</span></div>
+									<div class="clearfix"></div>
+									<div class="dbm-gal">
+										<ul class="nav-gal">
+										<li  *ngFor="let photo of photosCouv " ><a href="#pic1"><img alt="" src="{{baseUrl+photo.uri}}"></a></li>
+										</ul>
+									</div>
+								</div>   
+							</div>
+						</div>						
+					</div>
+				</div>
+			  </md-tab>
+			  <md-tab>
+				<ng-template md-tab-label>
+					<div class="mat-mobile">
+						<h2 class="mobil-2"> <label>photos ({{nbPhotoPrivPub}}) </label></h2>
+					</div>
+				</ng-template>
+				<div class = "tab_wrapper">
+					<div class=" col-md-12 desc-profl">
+						<div class = "middle"  *ngIf="userDetail">
+							<div class = "img_container">
+								<!--img-->
+								<div class = "img_wrapper">
+									<img *ngIf="userDetail.pdp" class="" src = "{{baseUrl+userDetail.pdp}}">
+									<img *ngIf="!userDetail.pdp" class="" src = "assets/img/profil-default.png">
+								</div>
+							</div>
+							<div class = "text_wrapper">
+								<label class = "user_name">{{userDetail.pseudo}}, <span class = "user_age">{{userDetail.age}} ans</span> </label>
+								<label *ngIf="userDetail.vsetes"><span>{{userDetail.vsetes}}</span></label>
+								<label *ngIf="userDetail.vetes"><span>{{userDetail.vetes}}</span></label>
+								<label><span class = "user_localisation">{{userDetail.ville}}<span *ngIf="userDetail.codepostal">&nbsp;({{userDetail.codepostal}})</span></span>,&nbsp;<span class = "user_orientation">{{userDetail.orientation}}</span></label>
+							</div>
+						</div>
+					</div>
+					<div class = "photo_container">
+						<p class = "fil_arriane">
+							<label>
+								<a (click)="album()">Albums </a>
+								<span *ngIf="publicPhoto || privePhoto" class ="separator">&nbsp; > &nbsp;</span>
+								<a *ngIf="publicPhoto">Public</a>
+								<a *ngIf="privePhoto">Privé</a>
+								&nbsp;
+								<span *ngIf="publicPhoto || privePhoto"  class = "number">({{nbPhoto}})</span>
+							</label>
+						</p>
+						<ul *ngIf="albumChoice">
+							<li (click)="showPublic()" >
+								<div class = "img_wrapper">
+									<img *ngIf="photosPubShow" src = "{{baseUrl+photosPubShow}}" alt = "image">
+									<img *ngIf="!photosPubShow" src = "assets/img/photo/photo.png" alt = "image">
+
+								</div>
+								Public
+							</li>
+							<li (click)="showPrive()" >
+								<div class = "img_wrapper">
+									<img *ngIf="photosPrivShow" src = "{{baseUrl+photosPrivShow}}" alt = "image">
+									<img *ngIf="!photosPrivShow" src = "assets/img/photo/photo.png" alt = "image">
+								</div>
+								Privé
+							</li>
+						</ul>
+						<div *ngIf="!albumChoice">
+							<ul class="pix-pr-pu">
+								<li class="col-lg-2" *ngFor="let photo of photos">
+									<div class="img_wrapper">
+										<img src="{{baseUrl+photo.uri}}" alt="image">
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+    		</md-tab>	
+		</md-tab-group>
+	</div>
+</div>
+</div>
+</div>

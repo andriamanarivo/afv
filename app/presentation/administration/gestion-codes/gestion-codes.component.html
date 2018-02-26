@@ -1,0 +1,143 @@
+<section class="content" style="height:100%;">
+    <div class="loading-admin" *ngIf="loading">
+    <app-loader [load]="loading"></app-loader>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Codes promo</h2>
+            <small class="card-subtitle">Liste et creation des  codes promo</small>
+            <div class="formsearch">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-success allList" (click)="openFormCreate();" >Créer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-block offre-list" id="listTheme">
+            <ng-table
+            [config]="config"
+            (tableChanged)="onChangeTable(config)"
+            (cellClicked)="onCellClick($event)"
+            [rows]="rows"
+            [columns]="columns">
+            </ng-table>
+            <div *ngIf="getEmptyMessage().length !== 0 && !loading">
+            {{getEmptyMessage()}}
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <pagination *ngIf="config.paging"
+                class="pagination-sm"
+                [(ngModel)]="page"
+                [totalItems]="length"
+                [itemsPerPage]="itemsPerPage"
+                [maxSize]="maxSize"
+                [boundaryLinks]="true"
+                [rotate]="false"
+                (pageChanged)="onChangeTable(config, $event)"
+                (numPages)="numPages = $event">
+                </pagination>
+            </div>
+            <div class="col-sm-6">
+                <div class="pagination justify-content-end">
+                    <label for="">Afficher par page :</label>
+                    <!-- <button type="button" class="btn btn-success" (click)="changeItemsPerPage(5)">5</button> -->
+                    <button type="button" class="btn btn-success" (click)="changeItemsPerPage(20)">20</button>
+                    <button type="button" class="btn btn-success" (click)="changeItemsPerPage(25)">25</button>
+                    <button type="button" class="btn btn-success" (click)="changeItemsPerPage(50)">50</button>
+                    <button type="button" class="btn btn-success" (click)="changeItemsPerPage(100)">100</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    </div>
+</section>
+
+<div bsModal #childModalCree="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-md">
+    <div class="modal-content">
+        <form  [formGroup]="codeForm" (ngSubmit)="createOrUpdateCode(codeForm)" >
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">{{title}}</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>Date de début de l'opération :</label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="date" class="form-control" [formControl] = "codeForm.controls['dateDeb']" [(ngModel)]="dateDeb">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>Date de fin de l'opération(inclus) :</label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="date" [min]="dateDeb" class="form-control" [formControl] = "codeForm.controls['dateFin']" [(ngModel)]="dateFin">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>Le code promotion :</label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" [formControl] = "codeForm.controls['code']" [(ngModel)]="code">
+                </div>
+            </div>
+            <div class="row">
+                <span></span>
+                <md-radio-group  [formControl] = "codeForm.controls['typePromo']" (change)="changeTypePromo()" [(ngModel)]="typePromo" name="typePromo">
+                    <md-radio-button value="0" >
+                        remise en pourcentage
+                    </md-radio-button>
+                    <md-radio-button  value="1" >
+                        remise en déduisant un montant
+                    </md-radio-button>
+                </md-radio-group>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>La valeur {{libelleValeur}} de remise:</label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="number" class="form-control" [formControl] = "codeForm.controls['valeur']" [(ngModel)]="valeur">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <label>Selectionnez les abboments concernés par cette offre : <span>(pour supprimer une offre, décocher la case)</span></label>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>Statut :</label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="checkbox" [formControl] = "codeForm.controls['statut']" [(ngModel)]="statut">
+                </div>
+            </div>
+            <div class="row">
+                <div *ngFor="let offre of offres" class="col-sm-12">
+                    <input type="checkbox" [formControl] = "codeForm.controls[offre.nameControler]" [(ngModel)]="offre.checked"> {{offre.titre}}
+                </div>
+            </div>
+            <div *ngIf="errorMessage && errorMessage.length>0">{{errorMessage}}</div>
+
+
+        </div>
+<div class="modal-footer">
+    <div class="pull-left">
+        <button type="submit" class="btn btn-danger">{{buttonName}}</button>
+        <button type="button" class="btn btn-secondary" (click)="onDeleteCancel()">Annuler</button>
+    </div>
+</div>
+</form>
+</div>
+</div>
+</div>

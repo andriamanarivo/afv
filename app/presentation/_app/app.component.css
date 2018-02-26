@@ -1,0 +1,149 @@
+@import 'app-component-box.css';
+button {
+  margin-top: 20px;
+  font-family: Arial;
+  background-color: #eee;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer; cursor: hand;
+
+  width: 10em;
+  height: 2em;
+  font-weight:bolder;
+}
+button:hover {
+  background-color: #cfd8dc;
+}
+button:disabled {
+  background-color: #eee;
+  color: #ccc; 
+  cursor: auto;
+}
+
+
+h1 {
+  font-size: 1.2em;
+  color: #999;
+  margin-bottom: 0;
+}
+h2 {
+  font-size: 2em;
+  margin-top: 0;
+  padding-top: 0;
+}
+nav a {
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 4px;
+}
+nav a:visited, a:link {
+  color: #607D8B;
+}
+nav a:hover {
+  color: #039be5;
+  background-color: #CFD8DC;
+}
+nav a.active {
+  color: #039be5;
+}
+
+layouttheme
+{
+  padding: 0 ;
+}
+
+:host /deep/ nav a.active,
+:host /deep/ nav a:hover 
+ {
+  color: darkslateblue !important;
+}
+
+
+.default_buttons{
+	position: fixed;
+	bottom: 0 ;
+}
+
+
+/*theme-default*/
+:host-context(.theme-default)  h1, 
+:host-context(.theme-default) /deep/ div.layouttheme, 
+:host-context(.theme-default) /deep/ .layouttheme li, 
+:host-context(.theme-default) /deep/ button,
+:host-context(.theme-default) a
+{
+    background-color: #b32a2a!important;
+    border-color: #b32a2a!important;
+    color:  #ffffff;
+
+}
+
+:host-context(.theme-default) /deep/ h2,
+:host-context(.theme-default) /deep/ h3,
+:host-context(.theme-default) /deep/ i
+{
+    color: #b32a2a !important;
+}
+
+:host-context(.theme-default) /deep/ .contactDetails,
+:host-context(.theme-default) /deep/ .contactList
+{
+    border: 2px solid #b32a2a;
+}
+
+
+/*theme-blue*/
+:host-context(.theme-blue) h1, 
+:host-context(.theme-blue) /deep/ div.layouttheme, 
+:host-context(.theme-blue) /deep/ .layouttheme li,
+:host-context(.theme-blue) /deep/ button,
+:host-context(.theme-blue) a 
+{
+    background-color: lightskyblue !important;
+
+    color: #039be5;
+}
+
+:host-context(.theme-blue) /deep/ h2,
+:host-context(.theme-blue) /deep/ h3,
+:host-context(.theme-blue) /deep/ i
+{
+    color: deepskyblue !important;
+    /*color: red !important;*/
+}
+
+:host-context(.theme-blue) /deep/ .contactDetails,
+:host-context(.theme-blue) /deep/ .contactList
+{
+  border: 2px solid deepskyblue;
+}
+
+
+/*theme-green*/
+:host-context(.theme-green) h1, 
+:host-context(.theme-green) /deep/ div.layouttheme, 
+:host-context(.theme-green) /deep/ .layouttheme li,
+:host-context(.theme-green) /deep/ button,
+:host-context(.theme-green) a 
+{
+    background-color:mediumseagreen !important;
+    color: aliceblue;
+}
+
+:host-context(.theme-green) /deep/ h2,
+:host-context(.theme-green) /deep/ h3,
+:host-context(.theme-green) /deep/ i
+{
+    color: mediumseagreen;
+}
+
+:host-context(.theme-green) /deep/ .contactDetails,
+:host-context(.theme-green) /deep/ .contactList
+{
+    border: 2px solid mediumseagreen;
+}
+/*/deep/*/

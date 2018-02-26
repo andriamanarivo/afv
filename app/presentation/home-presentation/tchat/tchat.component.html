@@ -1,0 +1,155 @@
+<div *ngIf="showTchat">
+ <!-- {{userDetailId}} -->
+    <!--<div  *ngFor="let home of contacts | orderByTimesStamp: '-currentMessageTimestamp';">{{home.name}}
+
+
+    </div> !-->
+    
+    <div id="dede"></div>
+    <div id="mod-tchat"  [class.tchatFullWidth]="showConversation" [class.heightAuto]="!showConversation" [style.height.px]="innerHeight">
+        <p-growl [(value)]="msgs"></p-growl>
+        
+        <div class="pageTitle extend">
+                <h2>{{'Messages' | translate}}</h2>
+        </div>
+        <div #loaderRef *ngIf="loading">
+            <app-loader  [load]="loading"></app-loader>
+        </div>
+        <div [ngClass]="{'hideContentTchat': loading}">
+        
+            <div *ngIf="showList" class="block-contacts" [class.contacts-without-chat]="!showConversation" [class.contacts-with-chat]="showConversation">
+                <div class="top-message">
+                    <div class="tchat-input-icons" *ngIf="contacts.length>0">
+                            <!-- (keyup)="contactSearch($event)" -->
+                        <input class="usr-search" type="text" [(ngModel)]="contactSearchTerm"  name="rechercher par utilisateur"
+                            value="rechercher par utilisateur" ng-reflect-model="" placeholder="Rechercher">
+                        <span class="input-icons">
+                            <img src="assets/img/loupe-sms.png" align="" alt="loupe"> </span>
+        
+                    </div>
+                    <div class="notResult" *ngIf="getEmptySearch() && getEmptySearch().length !== 0">
+                        {{ getEmptySearch()}}
+                    </div>
+                </div>
+        
+                <ul id="myElementId" [style.height.px]="messtchatHeight">
+                    <!-- | orderByTimesStamp: '-currentMessageTimestamp' -->
+                    <li *ngFor="let contact of getPagedContacts" (click)="setCurrentContact(contact, true)" [class.selected-contact]="contact === currentContact">
+                        <div class="thumb">
+                            <div class="tape-user">
+                                <a>
+                                    <!--  assets/img/profil-1.png -->
+                                    <img *ngIf="contact.pdp" class="thumb-tchat" src="{{baseUrl+ contact.pdp}}" align="" alt="user">
+                                    <img *ngIf="!contact.pdp" class="thumb-tchat" src="{{contact.defaultpdp}}" align="" alt="user">
+                                    <span class="user-status">
+                                        <!-- <img src="assets/img/chat/user-pending.png" align="" alt="user"> -->
+                                        <img src="assets/img/chat/user-{{ contact.status }}.png" align="" alt="{{ contact.status }}">
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="encadr-msm">
+                                <div class="edit-user">
+                                    <!--<label class="tchat-name"> {{ contact.name }} - {{ innerHeight }}</label>-->
+                                    <label class="tchat-name"> {{ contact.name }}</label>
+                                    <div *ngIf="contact.unreadMessageCount > 0" class="unread-notif">
+                                        <label class="read-motif"> {{ contact.unreadMessageCount }}
+                                            <span class="pix-read">
+                                                <!-- <img src="assets/img/nav-picto.png" width="24px" height="24px" align="" alt=""> -->
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <label class="tchat-clock-rule" *ngIf="contact.currentMessageTimestamp">
+                                        <img src="assets/img/clock-circular-outline.png" align="" alt="user">
+                                        <!-- aujourd'hui 00:16 -->
+                                        {{contact.currentMessageRelativeDate}} {{ contact.currentMessageTimestamp | date:'HH:mm' }}
+                                    </label>
+                                </div>
+                                <div class="profil-tchat" *ngIf="contact.currentMessageContent">
+                                    <label class="profil-txt">
+                                        {{ contact.currentMessageContent | truncate : 20 }}
+        
+                                        <!-- {{currentMessage.body | truncate : 20}} -->
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div *ngIf="pager.pages && pager.pages.length && pager.pages.length !== 1" class="pagination clearfix">
+                    <a [ngClass]="{disabled:pager.currentPage === 1}" *ngIf="pager.currentPage > 1" (click)="setPage(pager.currentPage - 1)">
+                        <img src="assets/img/left-arrow.png" align="">
+                    </a>
+                    <span *ngFor="let page of pager.pages">
+                        <a [ngClass]="{active:pager.currentPage === page}" (click)="setPage(page)">{{page}}</a>
+                    </span>
+                    <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}" *ngIf="pager.currentPage!==pager.totalPages" (click)="setPage(pager.currentPage + 1)">
+                        <img src="assets/img/right-arrow.png" align="">
+                    </a>
+                </div>
+            </div>
+        
+        
+            <div [ngClass]="{'fullwidth':!showList}" id="messageId" class="block-tchat test" *ngIf="showConversation && currentMessageQueue" [style.height.px]="messtchatHeight">
+                <!--[scrollTop]="messagesContainter.scrollHeight"-->
+                <!--<div   class="mess-tchat" [style.height.px]="messtchatHeight">-->
+                <div *ngFor="let message of currentMessageQueue.messages" [class.others-message]="message.from === userUid" [class.received-message]="message.from !== userUid"
+                    [ngClass]="message.status === 'PENDING' ? 'pending-message' : 'sent-message'" class="message">
+        
+        
+                    <span class="mess-tchat-Bd mess-tchat-right">
+                        {{ message.body }}
+                    </span>
+                    <span class="mess-tchat-time mess-tchat-rgt">
+                        {{message.messageDate}} {{ message.timestamp | date:'HH:mm' }} {{message.status | translate }}
+                    </span>
+                    <span *ngIf="message.from === userUid" class="sent">
+                        <img src="assets/img/hehe.png" align="" alt="user">
+                    </span>
+                    <span *ngIf="message.from !== userUid" class="side-triangle">
+                        <img src="assets/img/side-triangle.png" align="" alt="user">
+                    </span>
+                </div>
+                <!--</div>-->
+        
+        
+              
+        
+            </div>
+        
+            <!--<div class="block-send"  [style.top.px]="messtchatHeight">-->
+            <div id="sendblock" class="block-send" [ngClass]="{'fullwidth':!showList}" [class.contacts-without-chat]="!showConversation"
+                [class.contacts-with-chat]="showConversation" *ngIf="contacts.length>0">
+                <div class="MenuBtns">
+        
+                    <a id="linkPopup" (click)="popupAction()"> &hellip;</a>
+                    <div class="row-menuProfil" *ngIf="showAction">
+                        <ul>
+                            <li *ngIf="autorisation['BLIST_1']" id="blacklisterLabel" (click)="openConfirmDialog()">
+                                {{'Blacklister' | translate}}
+                            </li>
+                            <li id="reportLabel" (click)="openReportabusDialog()">
+                                {{'Reporter Abus' | translate}}
+                            </li>
+                        </ul>
+                    </div>
+        
+                </div>
+        
+                <div class="area-tchat">
+                    <div class="tchat-indic">
+                        <!-- <img class="type-img" *ngIf="currentContact && currentContact.isTyping" src="assets/img/typing-indicator.gif" alt=""> -->
+                        <img class="type-img" *ngIf="contactIsComposing" src="assets/img/typing-indicator.gif" alt="">
+                    </div>
+                    <input class="hip-tchat" [(ngModel)]="typedMessage" (focusout)="focusoutChat()" (keyup.enter)="sendMessage()" (keypress)="keyPressOnChatInput()"
+                        type="text" />
+                </div>
+                <div class="tab-tchat-btn">
+                    <div class="tchat-btn">
+                        <a (click)="sendMessage()">{{'Envoyer' | translate}} </a>
+                    </div>
+                </div>
+        
+            </div>            
+        </div>
+    </div>
+</div>

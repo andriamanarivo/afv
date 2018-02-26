@@ -1,0 +1,17 @@
+@import '../../../../styles.css';
+
+.form.check_item h1{
+	padding: 25px 0  17px;
+}
+
+@media only screen and (max-width: 1440px){
+	.form.check_item .form_body{
+		margin-top: 7%;
+	}
+	.form.check_item{
+		font-size: 20px;
+	}
+	.form.check_item h1 {
+		padding: 20px 0  !important;
+	}	
+}

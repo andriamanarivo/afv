@@ -1,0 +1,56 @@
+.action {    
+    background-color: #f3f3f3;;
+    height: 35px;
+    border: solid 1px #d7dfea;
+    padding-left: 15px;
+    font-style: italic;
+    text-transform: uppercase; 
+    color: #9b9b9b;
+    overflow: hidden;
+    width: 30% !important;
+    margin-top: 10px;
+    margin-left: 0   !important;
+    border-radius: 5px;
+}
+
+.header-abus{
+    border: solid 1px #d7dfea;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.content-abus{
+    border: solid 1px #d7dfea;
+    padding: 6px;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.error-abus{
+    margin-top: 20px;
+    color: red;
+}
+
+.succes-abus{
+    color:#039be5;
+}
+
+.loading-admin {
+  width:auto;
+  height:auto;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+
+.contenu{
+     margin-top: -40px;
+    width: 85%;
+    float: right;
+    border: solid 1px #d7dfea;
+    margin-right: 85px;
+    padding: 7px;
+    border-radius: 5px;
+}
+

@@ -1,0 +1,37 @@
+@import '../../../../styles.css';
+
+.form.check_item h1{
+    padding: 30px 0  15px;
+}
+
+@media only screen and (max-width: 1440px){
+    .form.check_item .form_body{
+        margin-top: 7%;
+    }
+    .form.check_item{
+        font-size: 20px;
+    }
+    .form.check_item h1{
+        padding: 20px 0  15px;
+    }
+    .container.form h1 span{
+        font-size: 13px;
+    }
+    .container.form h1 span.error{
+        font-size: 16px;
+    }
+}
+
+@media only screen and (max-width: 320px){
+    #searchbar .search-select .mat-input-container .mat-input-wrapper .mat-input-flex {
+        width: 90px;
+        left: 0 !important;
+    }
+    #searchbar .search-select .mat-input-container .mat-input-wrapper .mat-input-flex .mat-input-infix {
+        width: 100%;
+        left: 0 !important;
+    }
+    .cdk-overlay-pane{
+        left:10px !important;
+    }
+}

@@ -1,0 +1,35 @@
+<footer  id="footer" class="site-footer">
+    <div class="col-lg-10  footer">
+        <div class="footer-text FootAvtar"> <a routerLinkActive="active" routerLink="{{ '/home/user'}}"> {{'accueil'|translate}} </a> </div>
+        <div class="footer-text FootBullet"> <a routerLinkActive="active" routerLink="{{ '/home/messages'}}">  {{'messages'|translate}} <span *ngIf="nbMessages !== 0" class="mainnav-info">{{nbMessages}}</span> </a> </div>
+        <div class="footer-text FootEyes">
+            <a routerLinkActive="active"  routerLink="{{ '/home/visiteur'}}">  {{'visiteurs'|translate}}<span *ngIf="nbVisiteur !== 0" class="mainnav-info">{{nbVisiteur}}</span> </a>
+        </div>
+        <div class="footer-text FootStars"> <a routerLinkActive="active"  routerLink="{{ '/home/favoris'}}"> <span *ngIf="nbFavoris !== 0" class="mainnav-info">{{nbFavoris}}</span></a> </div>
+        <div class="footer-text FootPrfl">
+            <a routerLinkActive="active"  routerLink="/home/modifProfil/0">
+                <span>
+                    <img *ngIf="userConnecte.photo" class="thumbImg"  src = "{{baseUrl+userConnecte.photo.replace('file_uploaded/','file_uploaded/square_320_')}}">
+                <!--<img *ngIf="userConnecte.photo"  alt="{{userConnecte.pseudo}}" src = "{{baseUrl + userConnecte.photo}}"/>-->
+                    <img *ngIf="!userConnecte.photo"  alt="{{userConnecte.pseudo}}" src = "assets/img/profil-default.png"/>
+                </span>
+            </a>
+         </div>
+    </div>
+    <div class="col-lg-10 footerWeb">
+        <div class="footer-text FootAvtar active"> <a routerLink="/about"> <label> {{'A propos'|translate}}  </label></a></div>
+        <div class="footer-text FootBullet"> <a  routerLink="/cgu"><label>{{'CGU'|translate}}  </label> </a> </div>
+        <div class="footer-text FootEyes"> <a  href="#"><label>
+            <h4><span></span></h4>
+        </label></a></div>
+        <div class="footer-text FootStars"> <a routerLink="/confidentiality"> <label>{{'Confidentialité'|translate}}  </label></a> </div>
+        <div class="footer-text FootPrfl"> <a routerLink="/help"> <label>{{'Aide'|translate}}  </label> </a></div>
+    </div>
+<footer>
+<!--
+
+
+    <li routerLinkActive="active"> <a routerLinkActive="active" routerLink="{{ '/home/user'}}"> {{'accueil'|translate}} </a> </li>
+    <li> <a href="#">  {{'messages'|translate}} <img alt="nav-picto" src="assets/img/nav-picto.png"><span class="mainnav-info">10</span> </a> </li>
+    <li> <a href="#">  {{'visiteurs'|translate}} <img alt="nav-picto" src="assets/img/nav-picto.png"><span class="mainnav-info">3</span> </a> </li>
+    <li routerLinkActive="active" > <a routerLink="{{ '/home/favoris'}}" routerLinkActive="active"> {{'favoris'|translate}}  <img alt="nav-picto" src="assets/img/nav-picto.png"><span class="mainnav-info">{{nbFavoris}}</span> </a> </li>-->

@@ -1,0 +1,51 @@
+<p-growl [(value)]="msgs"></p-growl>
+
+<div class="clearfix"></div>
+<!-- NAV CONTENT MIDDLE END -->
+<!-- CONTENT MIDDLE 1  -->
+<div class="row" *ngIf='homes && homes.length !== 0'>
+    
+    <div class=" loading" *ngIf="loadList">
+        <md-progress-spinner color="warn" mode="indeterminate"></md-progress-spinner>
+    </div>
+
+    <div *ngIf='!modeList && !loadList' class="listItems">
+        <div class="gridBlocks"  *ngFor="let home of homes">
+            <app-user-card *ngIf="!loadList"  [user]="home"></app-user-card>
+        </div>
+    </div>
+   
+    <div *ngIf='modeList && !loadList' class="listItems ListMOde">
+        <div class="gnrl-PL"  *ngFor="let home of homes">
+            <app-user-card *ngIf="!loadList" modeList='true' [user]="home"></app-user-card>
+        </div>
+    </div>
+ 
+</div>
+<div class="emptylist" *ngIf="!homes || (homes && homes.length === 0) && !loadList">
+    {{getEmptyMessage()}}
+</div>
+<div class="clearfix"></div>
+<!-- MIDDLE pagination -->
+<div class="CT-pag-nav">
+    <div *ngIf="pager.pages && pager.pages.length  && pager.pages.length !== 1" class="pagination clearfix">
+        <a *ngIf="pager.currentPage > 1" [ngClass]="{disabled:pager.currentPage === 1}" (click)="setPage(pager.currentPage - 1, dataFiltre)">
+            <img src="assets/img/left-arrow-blk.png" align="">
+        </a>
+        <span *ngFor="let page of pager.pages">
+            <a [ngClass]="{active:pager.currentPage === page}" (click)="setPage(page,dataFiltre)">{{page}}</a>
+        </span>
+        <a *ngIf="pager.currentPage!==pager.totalPages" [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="setPage(pager.currentPage + 1, dataFiltre)">
+            <img src="assets/img/right-arrow-blk.png" align="">
+        </a>
+    </div>
+</div>
+<!-- MIDDLE pagination end -->
+<p-sidebar [(visible)]="show" position="top" styleClass="ui-sidebar-sm" id="CoockiesPage">
+    <span>
+        Ce site utilise des cookies pour vous offrir le meilleur service. En poursuivant votre navigation, vous acceptez l'utilisation
+        des cookies.
+    </span>
+    <button type="button" (click)="acceptCookies()" class="ui-button-success">J'accepte</button>
+    <button type="button" (click)="goToAbout()" class="ui-button-success">En savoir plus</button>
+</p-sidebar>

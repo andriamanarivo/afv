@@ -1,0 +1,18 @@
+.loading-admin {
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    position: absolute;
+    top: 43%;
+    z-index: 30;
+    left: 34%;
+    right: 18%;
+}
+.table-cursor{
+    cursor: pointer;
+}
+.titre{
+    padding-bottom: 14px;
+}

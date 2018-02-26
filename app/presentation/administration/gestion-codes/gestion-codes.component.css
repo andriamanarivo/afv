@@ -1,0 +1,26 @@
+
+.modal.show .modal-dialog {
+    width: 50% !important;
+}
+
+.modal-footer{
+    background-color: #000 !important;
+    color:#fff !important;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.modal-header {
+    background-color: #000 !important;
+    color:#fff !important;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.row {
+    padding: 5px;
+}
+
+.circleplus {
+    font-size: 50px;
+}

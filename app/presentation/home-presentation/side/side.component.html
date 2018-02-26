@@ -1,0 +1,115 @@
+
+
+<aside>
+        <!-- <input type='text' specialCharacters="[ '[' ,']' , '*' ]" mask="[00]*[000]" > -->
+    <p-growl [(value)]="msgs"></p-growl>
+    <div id="sidebar" class="">
+        <!-- <div class="prof-online"> -->
+            <!-- <p class="av-online">
+                <img alt="avatar" src="assets/img/avatar.png">
+                <span  class="no-result">{{'AucunResultSamecity'|translate}}</span>
+            </p>             -->
+        <!-- </div> -->
+        <!-- <div *ngIf="nbResult" class="title-side-left">
+            <ul class="tab-nav-left">
+                <li class="cursor-pointer" (click)="sortList('firstName')">
+                     A-Z 
+                     <label *ngIf="order==='firstName' && !desc">&uarr;</label>
+                     <label *ngIf="order==='firstName' && desc">&darr;</label>
+                </li>
+                <li class="cursor-pointer" *ngIf="autorisation['LI_PRO_4']"  (click)="sortList('tendance')">
+                     {{'Tendances'|translate}} 
+                     <label *ngIf="order==='tendance' && !desc">&uarr;</label>
+                     <label *ngIf="order==='tendance' && desc">&darr;</label>
+                </li>
+                <li class="cursor-pointer" (click)="sortList('sexe')">
+                    {{'Sexe'|translate}}  
+                    <label *ngIf="order==='sexe' && !desc">&uarr;</label>
+                    <label *ngIf="order==='sexe' && desc">&darr;</label>
+                </li>
+                <li class="cursor-pointer" *ngIf="autorisation['LI_PRO_3']" (click)="sortList('age')"> 
+                    Age
+                    <label *ngIf="order==='age' && !desc">&uarr;</label>
+                    <label *ngIf="order==='age' && desc">&darr;</label>
+                </li>
+            </ul>
+        </div> -->
+
+        <!--sidebar avatar1-->
+        <md-progress-spinner  *ngIf="loadData" color="warn" mode="indeterminate"></md-progress-spinner>     
+        <div *ngIf="!loadData">
+            <div class="desc" *ngFor="let user of userLeft">
+                <div class="thumb">
+                    <span class="Tend">
+                        <a [routerLink]="['/home/profil', user.id]">
+                            <span class="pictUsers">
+                                <!-- <img src="assets/img/profil-default.png" *ngIf="!user.photo"  align=""  alt=""> -->
+                                <img src="{{user.defaultpdp}}" *ngIf="!user.photo" align="" alt="">
+                                <img src="{{baseUrl+user.photo.replace('file_uploaded/','file_uploaded/square_320_')}}" class="img-rounded" *ngIf="user.photo"
+                                    align="" alt="">
+                            </span>
+                            <!--<img class="tend-icone" *ngIf="user.type!='ne sait pas encore'" alt="" src="assets/img/tendance-{{user.type}}.png" width="22px" height="22px" align="" >-->
+                        </a>
+                    </span>
+                </div>
+                <div class="details">
+                    <p>
+                        <a routerLink="{{'/home/profil/' + user.id + '/0'}}">{{user.firstName}} {{user.lastName}}</a>
+                        <br>
+                        <span class="profl-old">{{user.age}} {{'ans'|translate}} </span>
+                        <br>
+                        <!--a retirer apres test-->
+                        <!-- <span class="profl-old">{{user.sexe}}</span><br>
+                                            <span class="profl-old">{{user.tendance}}</span><br> -->
+                        <!--a retirer apres test-->
+                        <span class="profl-from" *ngIf="user.ville">({{user.codepostal}})</span>
+                    </p>
+                </div>
+                <div class="desc-icone">
+                    <a routerLink="{{ '/home/profil/' + user.id + '/photos'  }}">
+                        <span class="pix-icone">
+                            <img src="assets/img/AppPhoto-white.png" align="">
+                            <label class="Nb-pix">{{user.nbPhotosPublic ? user.nbPhotosPublic : 0}}</label>
+                        </span>
+                    </a>
+                    <a (click)="goToTchat(user)">
+                        <span class="pix-dial" *ngIf="user.isConnected">
+                            <img src="assets/img/bulle-small@2xgreen.png" align="">
+                        </span>
+                        <span class="pix-dial" *ngIf="!user.isConnected">
+                            <img src="assets/img/enveloppe@2x-grey.png" align="">
+                        </span>
+                    </a>
+                    <!-- <span class="pix-stars" [hidden]="loading && identifiant==user.id"><img *ngIf=" user.favoris==false" src="assets/img/star-small.png" (click) = "favoris(user.id)"  align=""></span> -->
+                    <span *ngIf="autorisation['FAV_1']" class="pix-stars" [ngClass]="{'pix-stars-hide' : loading && identifiant==user.id }">
+                        <img *ngIf=" user.favoris==false" src="assets/img/star-small.png" (click)="favoris(user)" align="">
+                    </span>
+                    <span *ngIf="autorisation['FAV_1']" class="pix-stars" [ngClass]="{'pix-stars-hide' : loading && identifiant==user.id }">
+                        <img *ngIf=" user.favoris==true" src="assets/img/staron-small.png" (click)="deleteFavoris(user)" align="">
+                    </span>
+        
+                    <span class="loading-stars" *ngIf="loading && identifiant==user.id">
+                        <md-progress-spinner class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                    </span>
+                    <!--<span class="loading-stars" *ngIf="loading && identifiant==user.id" ><img src="assets/img/loading_apple.gif"></span>-->
+                </div>
+        
+            </div>
+        </div>
+       
+    <!-- sidebar pagination -->
+        <div class="paginateBlock">
+            <div  *ngIf="pager.pages && pager.pages.length && pager.pages.length !== 1" class="pagination clearfix">
+            <a  [ngClass]="{disabled:pager.currentPage === 1}" *ngIf="pager.currentPage > 1" (click)="setPage(pager.currentPage - 1)" ><img src="assets/img/left-arrow.png"  align=""></a>
+            <span  *ngFor="let page of pager.pages">
+            <a  [ngClass]="{active:pager.currentPage === page}" (click)="setPage(page)" >{{page}}</a></span>
+            <a  [ngClass]="{disabled:pager.currentPage === pager.totalPages}" *ngIf="pager.currentPage!==pager.totalPages" (click)="setPage(pager.currentPage + 1)"><img src="assets/img/right-arrow.png" align=""></a>
+            </div>
+        </div>
+
+    <!-- sidebar pagination END -->
+    <!--<div class="tab-aside-btn">
+        <div class="Round-btn"> <a href="#">{{'voir plus'|translate}}  </a></div>
+    </div>-->
+    </div>
+</aside>

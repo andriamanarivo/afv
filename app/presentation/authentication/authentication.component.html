@@ -1,0 +1,48 @@
+<div class = "container form authentification">
+	<div class="container_wrapper" *ngIf="!getloggedIn" >
+		<div class="logo">
+		  <img alt = "logo" src = "assets/img/logo/logo.png">
+		</div>
+		<p class="sloganLogo">{{'100 nuances de plaisirs' | translate}}</p>
+
+        <h1>
+            <span *ngIf="resetpasswordMessage && resetpasswordMessage.length >0" class = "info">{{resetpasswordMessage}}</span>
+            <span *ngIf="resetpasswordHasError && resetpasswordMessage && resetpasswordMessage.length >0"  class = "error">{{resetpasswordMessage}}</span>
+				<span *ngIf="errorMessage.length > 0" class = "error">{{errorMessage}}</span>
+        </h1>
+		<div class="form_body" [ngClass]="{'captcha': errorCount >=3}">
+			<form [formGroup]="loginForm" (ngSubmit)="login()">
+				<div class="input-field">
+					<md-input-container class="full-width">
+						<input style="text-transform: lowercase;" (blur)="emailToLowerCase()" (keyup)="uncapitalizeFirstLetter($event)"  mdInput #username id="email" placeholder="Email" class="" formControlName="email">
+						<control-messages #usernameMessage [controlName]="controlName['email']" [control]="loginForm.controls.email"></control-messages>
+					</md-input-container>
+					<div class = "clear_field">
+						<button class = "btn btn_clear" type="button" id="mailClear" #mailClear (click)="disableInputValidation($event,mailClear)">clear</button>
+					</div>
+				</div>
+				<div class="input-field">
+					<md-input-container class="full-width">
+						<input  mdInput #password id="password" placeholder="Mot de passe" type="password" class="" formControlName="password">
+						<control-messages [controlName]="controlName['password']" [control]="loginForm.controls.password"></control-messages>
+					</md-input-container>
+					<div class = "clear_field">
+						<button class = "btn btn_clear" type="button" id="passwordClear" #passwordClear (click)="disableInputValidation($event,passwordClear)">clear</button>
+					</div>
+				</div>
+				
+				<div class="input-field captcha" *ngIf="errorCount >=3 ">
+					<re-captcha site_key="{{captchaKey}}" (captchaResponse)="handleCorrectCaptcha($event)"></re-captcha>
+				</div>
+				 
+				<div class = "button_wrapper">
+					<button *ngIf="isValideCpatcha"  class="btn btn_connexion" [formGroup]="loginForm" type="submit" name="action">Connexion</button>
+					<button *ngIf="!getloggedIn" [routerLink]="['/splashcreen']" routerLinkActive="active" class="btn btn_cancel">{{'Annuler'|translate}}</button>
+				</div>
+				<div class = "password_forgotten">
+					<a href = "void()" [routerLink]="['./forgotpassword']" class="ForgotPassword" >{{'ForgotPassword'|translate}}</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

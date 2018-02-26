@@ -1,0 +1,173 @@
+<section class="content content-admin">
+    <div class="loading-admin" *ngIf="isLoading">
+        <app-loader [load]="isLoading"></app-loader>
+    </div>
+    <div class="card" *ngIf="!isLoading">
+        <div class="card-header">
+            <h2 class="card-title">Utilisateurs ({{length}})</h2>
+            <small class="card-subtitle">
+                Nombres de nouveaux utilisateurs à moderer : {{nbUserToModerate}}
+            </small>
+            <div class="formsearch">
+            <form action="" #userForm>
+                <div class="row">
+                    <div class="col-sm-1">
+                        <h3 class="card-block__title">Type:</h3>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group form-group--select">
+                            <div class="select">
+                                <select class="form-control" #userType (change)="onUserTypeChange($event, userType.value)">
+                                <option>Aucun</option>
+                                <option>(0)compte migré</option>
+                                <option>(1)compte créé</option>
+                                <option>(2)compte validé</option>
+                                <option>(3)compte suspendu</option>
+                            </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="select">
+                            <select  class="form-control" [(ngModel)]="itemSelected" name="moderation" (change)="moderationChangeSearch(itemSelected)">
+                                <option *ngFor="let statut of statusModeration" [value]="statut.id">{{statut.libelle}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="btn btn-success btn-block" (click)="listUsers(false,userForm)">Filtrer</button>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-success btn-block" (click)="listUsers(true,userForm)">Tout afficher</button>
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" placeholder="Recherche" (keyup)="recherchekeyup(recherche.value)" #recherche>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <i class="form-group__bar"></i>
+                            <button class="btn btn-secondary btn--icon-text btn-block" (click)="listUsers(false,userForm)">
+                            <!--<i class="zmdi zmdi-search"></i>-->
+                            Rechercher
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+        
+        <div class="card-block" style="overflow:auto">
+        <div class="row">
+            <p-growl [(value)]="msgs"></p-growl>            
+        </div>
+            <div id="tableListe">
+                <ng-table [config]="config" (tableChanged)="onChangeTable(config)" (cellClicked)="onCellClick($event)" [rows]="rows" [columns]="columns">
+
+                </ng-table>
+                <div *ngIf="getEmptyMessage().length !== 0">
+                    {{getEmptyMessage()}}
+                </div>
+            </div>
+        </div>
+        <div class="data-table__footer">
+            <div class="row">
+                <div class="col-sm-6">
+                    <pagination *ngIf="config && config.paging && length > 0" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+                                [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+                    </pagination>
+                </div>
+                <div class="col-sm-6">
+                    <div class="pagination justify-content-end">
+                        <label for="">Afficher par page :</label>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(20)">20</button>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(25)">25</button>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(50)">50</button>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(100)">100</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-block">
+                <alert type="danger" *ngIf="errorMessage.length>0">
+                    {{errorMessage}}
+                </alert>
+            </div>
+            <div class="card-block">
+                <alert type="{{ alertCssClass }}" *ngIf="informationMessage && informationMessage.length>0">
+                    {{informationMessage}}
+                </alert>
+            </div>
+        </div>
+    </div>
+</section>
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">{{titleModif}}</h4>
+        </div>
+
+
+        <div class="modal-body" >
+            <div class="form-group form-group--select">
+                <div class="select">
+                    <select class="form-control" [(ngModel)]="itemSelected" name="moderation" (change)="moderationChange(itemSelected)">
+                        <option *ngFor="let statut of statusModeration" [value]="statut.id">{{statut.libelle}}</option>
+                    </select>
+                </div>
+            </div>
+         </div>
+         <div class="modal-footer">
+             <div class="btn-group text-center">
+
+                 <div class="pull-left">
+
+                    <button type="submit" class="btn btn-danger" (click)=updateUserStatutModerisation()>Modifier</button>
+                    <button type="button" class="btn btn-secondary" (click)="onDeleteCancel()">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #rolesModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h4 class="modal-title pull-left">{{rolesTitle}}</h4>
+              </div>
+      
+              <div class="modal-body">
+                  <div class="form-group form-group--select" id="CheckRole">
+                      <!-- <div class="select">
+                          <select class="form-control" [(ngModel)]="roleSelected" name="moderation" (change)="roleChange(roleSelected)">
+                              <option *ngFor="let role of roles" [value]="role.id">{{role.libelle}}</option>
+                          </select>
+                      </div> -->
+                      <div class="loading" *ngIf="isLoadingModal">
+                          <app-loader [load]="isLoadingModal"></app-loader>
+                      </div>
+                      <ul *ngIf="!isLoadingModal" >
+                            <li *ngFor="let role of roles" [class.selected]="isSelected(role)" class="" 
+                                    (click)="onSelect(role)">
+                                {{ role}}
+                            </li>
+                      </ul>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                   <div class="btn-group text-center">
+      
+                       <div class="pull-left">
+                          <button type="submit" class="btn btn-danger" (click)=updateUserRole()>Modifier</button>
+                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <button type="button" class="btn btn-secondary" (click)="onRoleCancel()">Annuler</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>

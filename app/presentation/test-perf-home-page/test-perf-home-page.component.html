@@ -1,0 +1,24 @@
+<!-- <p>
+  <button (click)="login()">Login</button>
+  <button (click)="getCurrentUser()">getCurrentUser</button>
+  <button (click)="isSuspend()">isSuspend</button>
+  <button (click)="getListUserHomePage()">getListUserHomePage</button>
+  <button (click)="getSameCity()">getSameCity</button>
+  <button (click)="getNbVisiteurAndFavoris()">getNbVisiteurAndFavoris</button>
+  <button (click)="getForm()">getFormSearch</button>
+  <button (click)="getDefualtSearch()">getDefaultSearch</button>
+</p> -->
+<p style="color:white;">{{successMessage}}</p>
+<p style="margin-left: 40px;margin-top: 42px;">
+    <label style="color:white;">Email : </label><br/>
+    <input type="text" name="email" [(ngModel)]="email"/><br/>
+    <label style="color:white;">Statut : </label><br/>
+    <select [(ngModel)]="active" name="statut">
+        <option value="0">COMPTE MIGRE</option>
+        <option value="1">INSCRIPTION NON CONFIRMé</option>
+        <option value="2">Activé</option>
+    </select><br/>
+    <label style="color:white;">Premier connexion : </label>
+    <input type="checkbox" value="active" name="firstcnx"  [(ngModel)]="firstcnx"/><br/>    
+    <button (click)="updateStatutUser()">Valider</button>
+</p>

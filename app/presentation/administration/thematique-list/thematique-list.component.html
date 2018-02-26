@@ -1,0 +1,14 @@
+<section class="content">
+    <div class="card">
+       <div class="card-header">
+        <h2 class="card-title">Thématiques</h2>
+        <small class="card-subtitle">Liste des thématiques</small>
+      </div>
+        <div class="card-block" id="listTheme">
+            <ng2-smart-table [settings]="config" [source]="data"
+            (deleteConfirm)="onDeleteConfirm($event)" 
+            (createConfirm)="onCreateConfirm($event)"
+            (editConfirm)="onSaveConfirm($event)"></ng2-smart-table>
+        </div>
+    </div>
+</section>

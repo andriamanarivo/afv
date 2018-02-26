@@ -1,0 +1,116 @@
+<p-growl [(value)]="msgs"></p-growl>
+<section class="content" style="height:100%;">
+    <div class="loading-admin" *ngIf="isLoading">
+        <app-loader [load]="isLoading"></app-loader>
+    </div>
+
+    <div class="card" *ngIf="!isLoading">
+        <div class="card-header">
+            <h2 class="card-title">Textes ({{length}})</h2>
+            <div class="formsearch">
+                <form action="" #textForm>
+                    <div class="row">                                            
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" placeholder="Pseudo" #pseudo>
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" placeholder="Email" #email>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <i class="form-group__bar"></i>
+                                <button class="btn btn-secondary btn--icon-text btn-block" (click)="searchDescriptions(statutValue, pseudo.value, email.value)">
+                                    Rechercher
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button" class="btn btn-success btn-block" (click)="showAllDescriptions()">Tout afficher</button>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Trier par date de création : </label>
+                            <md-radio-group name="sort" [(ngModel)]="sortValue" (change)="sortByDate()">
+                                <md-radio-button value="1">Ascendant</md-radio-button>
+                                <md-radio-button value="0">Descendant</md-radio-button>
+                            </md-radio-group>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Statut : </label>
+                            <md-radio-group #statut name="statutValue" [(ngModel)]="statutValue"  (change)="searchDescriptions(statutValue, pseudo.value, email.value)">
+                                <md-radio-button value="1">Rejeté</md-radio-button>
+                                <md-radio-button value="0">Non rejété</md-radio-button>
+                            </md-radio-group>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card-block" style="overflow:auto">
+            <div id="tableListe">
+                <ng-table [config]="config" (tableChanged)="onChangeTable(config)" (cellClicked)="onCellClick($event)" [rows]="rows" [columns]="columns">
+                </ng-table>
+                <div>
+                    {{getEmptyMessage()}}
+                </div>
+            </div>
+        </div>
+
+        <div class="data-table__footer">
+            <div class="row">
+                <div class="col-sm-6">
+                    <pagination *ngIf="config && config.paging && length > 0" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+                        [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
+                        (numPages)="numPages = $event">
+                    </pagination>
+                </div>
+                <div class="col-sm-6">
+                    <div class="pagination justify-content-end">
+                        <label for="">Afficher par page :</label>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(20)">20</button>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(25)">25</button>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(50)">50</button>
+                        <button type="button" class="btn btn-success" (click)="changeItemsPerPage(100)">100</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</section>
+
+
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Modifier statut modération</h4>
+            </div>
+
+
+            <div class="modal-body">
+                <div class="form-group form-group--select">
+                    <div class="select" *ngIf="currentDescription">
+                        <md-radio-group name="moderation" [(ngModel)]="currentDescription.moderation">
+                            <md-radio-button value="1">Modéré</md-radio-button>
+                            <md-radio-button value="0">A modéré</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group text-center">
+
+                    <div class="pull-left">
+
+                        <button type="submit" class="btn btn-danger" >Valider</button>
+                        <button type="button" class="btn btn-secondary" >Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 

@@ -1,0 +1,121 @@
+<header #headerRef class="header black-bg">
+    <div class="content-left-head">
+        <div class="head-logo">
+            <!--logo start-->
+            <a (click)="goToHome()" class="logo">
+                <img alt="avatar" src="assets/img/logo/head-logo.png">
+            </a>
+            <span class="slogan-header-page">{{'100 nuances de plaisirs' | translate}}</span>
+        </div>
+    </div>
+    <!--logo end-->
+    <!-- main nav -->
+    <div class="container-fluid">
+        <ul class="mainnav">
+            <!--routerLinkActive="active"-->
+            <li [ngClass]="{active: getHash()}">
+                <a [ngClass]="{active: getHash()}"  routerLink="{{'/home/user'}}" id="LinkHome"> {{'accueil'|translate}} </a>
+            </li>
+            <li routerLinkActive="active">
+                <a routerLink="{{ '/home/messages'}}" routerLinkActive="active" 
+                    [ngClass]="{'loadingTchat': !isloadTchat, 'loadedTchat': isloadTchat}"  id="LinkMessage">
+                    {{'messages'|translate}}
+                    <span class="mainnav-info"  *ngIf="nbMessages !== 0" (outCount) ="refreshCountData($event)">{{nbMessages}}</span> 
+                </a> 
+            </li>
+            <li routerLinkActive="active">
+                <a routerLink="{{ '/home/visiteur'}}" routerLinkActive="active"  id="LinkVisit">  {{'visiteurs'|translate}}
+                <span *ngIf="nbVisiteur !== 0" class="mainnav-info">{{nbVisiteur}}</span> </a>
+                </li>
+            <li routerLinkActive="active" > 
+                <a routerLink="{{ '/home/favoris'}}" routerLinkActive="active"  id="LinkFav">
+                    {{'favoris'|translate}} 
+                    <span class="mainnav-info" *ngIf="nbFavoris !== 0">{{nbFavoris}}</span> 
+                </a> 
+            </li>
+            <li>
+                <div *ngIf="!router.url.endsWith('/messages')">
+                    <app-tchat [userDetailId]="userDetailId" 
+                        redirectionUrl = '' 
+                        [showTchat] = false
+                        [showConversation] = false>
+                    </app-tchat>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+    <!-- main nav end -->
+    
+    <!-- connect -->
+    <div class="head-right-conx">
+        <!-- <div>
+            <div class="row-language" *ngIf="uselanguage">
+                <div class="col-language col-language-select" *ngIf="!languageOptionOpen">
+                    <a (click)="popLanguage($event)">
+                        <img src="{{ uselanguage.logo }}" alt=""/>
+                    </a>
+                </div>
+                <div class="col-language col-language-li" *ngIf="languageOptionOpen">
+                    <ul>
+                        <li *ngFor="let language of langue" (click)="onSelectLangue(language)">
+                            <div class="col-language-img">
+                                <img src="{{ language.logo }}"  alt="{{language.value}}"/>
+                            </div>
+                        </li>
+                    </ul>                 
+                </div>
+            </div>
+        </div> -->
+        <div class="img-prof" *ngIf="userConnecte">
+            <div class="ProfilImage" (click)="goToProfil()">
+                <img *ngIf="userConnecte.photo" class="thumbImg"  src = "{{baseUrl+userConnecte.photo.replace('file_uploaded/','file_uploaded/square_320_')}}">
+                <img *ngIf="!userConnecte.photo" class="thumbImg"  src = "{{ userConnecte.defaultpdp }}">
+            </div>
+
+            <div class="log-avatar">
+                <img alt="log" src="assets/img/disco-button.png" (click)="logout()">
+            </div>
+        </div>
+        <div class="separator" *ngIf="userConnecte">
+
+            <div class="progress HeaderProgress">
+                <md-card>
+                    <md-card-content>
+                        <md-progress-bar  class="bar-progr"  [color]="Warn"  [mode]="mode"  [value]="profilPercent"  [bufferValue]="100">
+                        </md-progress-bar>
+                        <h2>{{profilPercent}}%</h2>
+                    </md-card-content>
+                </md-card>
+            </div>
+            <div class="prof-label">
+                <a id="linkProfil" (click)="popupAction()">
+                    <label id="pseudoLabel">{{userConnecte.pseudo}}</label>
+                    <!--<p id="ageLabel" class="prof-detl">{{userConnecte.age}}ans, {{userConnecte.ville}}</p>-->
+                </a>
+                <div class="row-menuProfil" *ngIf="showAction">
+                    <ul>
+                        <li (click)="popupAction()">
+                            <a routerLink="/home/modifProfil/0" > {{'myAccount'|translate}}  </a>
+                        </li>
+                        <li (click)="popupAction()">
+                            <a routerLink="/home/souscription" > {{'subscription'|translate}}</a>
+                        </li>
+                        <li (click)="popupAction()">
+                            <a routerLink="/home/modifProfil/1" >{{'settings'|translate}}</a>
+                        </li>
+                        <li (click)="popupAction()" *ngIf="roleUserConnecte">
+                            <a routerLink="/administration/utilisateurs" >{{'Administration'|translate}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+    <!-- connect end -->
+</header>

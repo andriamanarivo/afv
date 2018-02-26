@@ -1,0 +1,25 @@
+<div class="col-lg-10 main-chart">
+    <div class="title-param setting">
+        <a href="/#/home/modifProfil/1" class="back-link"></a>
+        <h2>{{'Gestion des notifications' | translate}}</h2>
+    </div>
+    <div class="tab_wrapper paramContent">
+        <div>&nbsp;</div>
+        <div class="listOptions">
+            <ul *ngIf="gestions">
+                <li *ngFor="let gestion of gestions">
+                    <span>{{gestion?.libelle}}</span>
+                    <div class="set-toggle">
+                        <md-radio-group>
+                            <label class="switch">
+                                <input type="checkbox" [(ngModel)]="gestion.isChecked"  name ="gestion.id" (click)="changeActive(gestion)">
+                                <div class="slider round"></div>
+                            </label>
+                        </md-radio-group>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>

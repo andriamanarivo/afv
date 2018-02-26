@@ -1,0 +1,31 @@
+export const SiteInit: any = {
+    'idSite': '',
+    'siteName': '',
+	'idThematique': '',
+	'uidThematique': '',
+    'color': [],
+    'roleDroit': [],
+    'section': {
+        'slogan': '',
+        'logo': null,
+        'description': '',
+        'telephoneClient': '',
+        'mailClient': '',
+        'telephoneAdmin': '',
+        'mailAdmin': '',
+        'telephoneModerateur': '',
+        'mailModerateur': '',
+        'mailSite': '',
+        'telephoneSite': '',
+        'sms': '',
+        'pointAge': '0',
+        'pointDistance': '0',
+        'pointRencontre': '0',
+        'pointPhotos': '0',
+        'pointTendance': '0',
+        'tempConfCompte': '0',
+        'tempDesactiveUser': '0',
+        'tempSuspensionUser': '0',
+        'tempInactiveUser': '0'
+        }
+};

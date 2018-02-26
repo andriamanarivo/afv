@@ -1,0 +1,25 @@
+//import { Utilisateur }       from './utilisateur';
+export const MockUtilisateur: any = {
+    "id": 106,
+    "email": "fkellaie@gmail.com",
+    "pseudo": "petasoa1",
+    "ville": "Paris",
+    "departement": null,
+    "description": null,
+    "dateNaissance": "1986-02-12 00:00:00",
+    "dateNaissanceC": null,
+    "age": "31",
+    "ageC": null,
+    "origine": null,
+    "experience": null,
+    "mobilite": null,
+    "disponibilite": null,
+    "isActive": 1,
+    "site": "siteD",
+    "vetes": "Femme",
+    "statut": "Célibataire",
+    "orientation": "Hétéro",
+    "situation": "Seul(e)",
+    "tendance": "X",
+    "recherche": "Rencontres réelles"
+}

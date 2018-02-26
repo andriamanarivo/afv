@@ -1,0 +1,51 @@
+<!--album public -->
+<ul class="pix-pr-pu" *ngIf="isPublic">
+    <li class="col-lg-2" *ngFor="let photo of photos; let i=index">
+        <span *ngIf="isMyProfil&&autorisation['PROFIL_4']" class="sup-photo" (click)="openModalImageDelete(photo.uri)">x</span>
+        <span *ngIf="isMyProfil&&autorisation['PROFIL_7']" class="add-photo" (click)="changerProfil(photo.uri)" title="Définir comme photo par défaut">
+            <img src="assets/img/add-profil.png"> </span>
+        <span (click)="open(i)" *ngIf="photo.profile" style="color:white;" title="Supprimer la photo" class="is-Profil">Profil</span>
+        <div class="img_wrapper" *ngIf="photo.uri">
+            <img (click)="open(i)" src="{{baseUrl+photo.uri.replace('file_uploaded/','file_uploaded/square_320_')}}" alt="image">
+        </div>
+    </li>
+    <li *ngIf="isMyProfil&&autorisation['PROFIL_3']">
+        <div class="add_photo modif">           
+            <div class="img_wrapper" [ngStyle]="getWidth()" *ngIf="!loading">
+                <label for="addfiles">
+                    <img src="assets/img/photo/add-reel.png">
+                </label>
+                <input id="addfiles" [accept]="accept" #myInput type="file" name="filename" (change)="fileEvent($event)">
+            </div>
+            <div class="img_wrapper Loader" *ngIf="loading">
+                <md-progress-spinner class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+            </div>
+        </div>
+        Ajouter une photo
+    </li>
+</ul>
+
+<!--album privé -->
+<ul class="pix-pr-pu" *ngIf="!isPublic">
+    <li class="col-lg-2" *ngFor="let photo of photos; let i=index">
+        <span *ngIf="isMyProfil && autorisation['PROFIL_9']" class="sup-photo" (click)="openModalImageDelete(photo.uri)">x</span>
+        <span (click)="open(i)" *ngIf="photo.profile" style="color:white;" title="Supprimer la photo" class="is-Profil">Profil</span>
+        <div class="img_wrapper" *ngIf="photo.uri">
+            <img (click)="open(i)" src="{{baseUrl+photo.uri.replace('file_uploaded/','file_uploaded/square_320_')}}" alt="image">
+        </div>
+    </li>
+    <li *ngIf="isMyProfil && autorisation['PROFIL_8'] || allowUpdatePhotoProfil">
+        <div class="add_photo modif">
+            <div class="img_wrapper" [ngStyle]="getWidth()" *ngIf="!loading">
+                <label for="addfiles">
+                    <img src="assets/img/photo/add-reel.png">
+                </label>
+                <input id="addfiles" [accept]="accept" #myInput type="file" name="filename" (change)="fileEvent($event)">                
+            </div>
+            <div class="img_wrapper Loader" *ngIf="loading">
+                <md-progress-spinner class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+            </div>
+        </div>
+        Ajouter une photo
+    </li>
+</ul>

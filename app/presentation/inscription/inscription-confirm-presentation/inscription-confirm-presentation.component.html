@@ -1,0 +1,59 @@
+<!--<p>
+  inscription-confirm-presentation works!
+</p>-->
+
+
+<div class = "container form check_item Validating">
+    <div class = "container_wrapper">	
+        <div class="section top" id="sct-one">
+            <div class="section_wrapper">
+                <div class="logo">
+                    <img alt = "logo" src = "assets/img/logo/logo.png">
+                </div>
+                <p class="slogan">{{'100 nuances de plaisirs' | translate}}</p>
+            </div>
+
+
+            <div class = "form_body">
+                <div *ngIf="informationMessage.length >0">{{informationMessage}}</div>
+                <div class = "error_message" *ngIf="errorMessage !== undefined && errorMessage !== null && errorMessage.length >0">{{errorMessage}}</div>
+                <div *ngIf="informationMessage.length ===0 && errorMessage.length ===0" class="messagesInscr">
+
+                        Bonjour  <span class="red-text"> {{ inscription.pseudo }}, </span><br/><br/>
+                        Vous venez de vous inscrire sur Domi.Com avec l'email <span class="red-text">{{ inscription.email }} </span><br/><br/>
+                        Un email vous a été envoyé pour terminer votre inscription, 
+                        cliquez sur le lien de confirmation d'inscription contenu dans l'email envoyé.<br/><br/>
+                        Si votre adresse email <span class="red-text">{{ inscription.email }} </span>n'est pas correcte ou si vous n'avez pas reçu le mail de confirmation d'inscription 
+                        (vérifiez dans votre dossier SPAM), ou saisissez une autre adresse email <br/> ci-dessous :
+                             
+
+                    <div class="input-table">
+                        <form [formGroup]="confirmForm">
+                            <div class="input-field">
+                                <div class="input-field">
+                                    <input style="text-transform: lowercase;" (blur)="verifyEmailIfExist()" (keyup)="uncapitalizeFirstLetter('email')" #email
+                                        mdInput placeholder="Email" formControlName="email">
+                                    <control-messages [controlName]="emailControlName" [control]="confirmForm.controls.email"></control-messages>
+                                </div>
+                                <div style="cursor: pointer;" class="btnSendmail" (click)="onSubmit()">
+                                    Valider votre email.
+                                </div>
+                                <div class="errorEmail">
+                                    {{emailError}}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+            					
+                </div>
+             
+
+            </div>
+               <div class = "button_wrapper" *ngIf="informationMessage.length ===0 && errorMessage.length ===0">				
+                    <button class = "btn btn_done" (click)="finalizeInscription()">Continuer</button>				
+                </div>
+                <div class = "button_wrapper" *ngIf="errorMessage.length > 0">
+                    <button routerLink="/inscription/compte" routerLinkActive="active"  class="btn btn_cancel">{{'annuler'|translate}}</button>				
+                </div>
+        </div>
+    </div>

@@ -1,0 +1,20 @@
+@import "../liste/liste.component.css";
+.load{
+    margin-top: 51px;
+    margin-left: 42%;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+.loading{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 20px;
+}
+a{
+    text-decoration: none;
+}

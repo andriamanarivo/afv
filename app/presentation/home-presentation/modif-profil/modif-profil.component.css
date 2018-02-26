@@ -1,0 +1,300 @@
+@import '../home-presentation.component.css';
+/*@import '../../../../assets/css/bootstrap.css';*/
+.user_profile {
+    padding-left: 30px;
+    width: -webkit-calc(100% - 335px);
+    width: -moz-calc(100% - 335px);
+    width: -ms-calc(100% - 335px);
+    width: -o-calc(100% - 335px);
+    width: calc(100% - 335px);
+    float: left;
+}
+.bouton_wrapper button,
+.editfield.disabled,
+.editfield{
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    width: 30px !important;
+    height: 30px !important;
+}
+.activeinput{
+    /* border: 1px solid !important;
+    height: 30px !important;
+    border-radius: 5px !important;
+    margin-top: 2px !important;
+    padding-left: 10px !important; */
+}
+.disableInput{
+    color: grey;
+}
+.editfield.disabled{
+    background: url('../../../../assets/img/edit.png' ) !important;
+    background-size: 30px !important;
+}
+.pen{
+    background: url('../../../../assets/img/edit.png' ) !important;
+    background-size: 30px !important;
+}
+.editfield{
+    background: url('../../../../assets/img/save.png' ) !important;
+    background-size: 25px !important;
+}
+/*
+.user_profile.admin-profil {
+    padding-left: 0;
+    width:100% !important;
+    float: none;
+}
+*/
+
+
+@media screen and (max-width: 1366px) {
+    .user_profile {
+        width: -webkit-calc(100% - 175px);
+        width: -moz-calc(100% - 175px);
+        width: calc(100% - 175px);
+    }
+}
+@media screen and (max-width: 1200px) {
+    .user_profile {
+        width: 100%;
+    }
+}
+.user_profile h2.mobil-3  {
+    height: 70px;
+    background: url('../../../../assets/img/favoris-on.png')
+    #000 no-repeat center 15px;
+}
+.user_profile h2.mobil-4  {
+    height: 70px;
+    background: url('../../../../assets/img/bulle-small@2x.png')
+     #000 no-repeat center 15px;
+}
+.mobile {
+    display: none;
+}
+
+/* screen responsive Profil */
+
+.user_profile .profile_top_wrapper .right .edit_container p.progress {
+    min-height: inherit !important;
+    padding: 35px 0 20px;
+    max-width: 215px;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+@media only screen and (max-width: 1024px){
+    .user_profile {
+        padding-left: 0 ;
+    }
+    .user_profile label {
+        display:none;
+    }
+    .user_profile .edit_container label,
+    .user_profile .edit_container label,
+    .user_profile .myProfil .add_photo label {
+        display:block !important;
+    }
+    .user_profile .mobile  {
+        padding-top: 40px;
+    }
+    .user_profile .mobile .img_wrapper{
+        margin: 10px 0;
+    }
+    .user_profile .mobile .user_name {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #000000;
+        text-align: center;
+        padding: 10px !important;
+        margin:0 !important;
+        z-index: 100;
+        min-height: 40px;
+        color: #ffffff;
+    }
+    .user_profile h2.mobil-4  {
+        height: 70px;
+        background: url('../../../../assets/img/bulle@2x.png')  #000 no-repeat center 15px;
+    }
+    .user_profile .mobile .user_name .linkBack {
+        width: 50px;
+        height: 50px;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: url("../../../../assets/img/arrow-l@2x.png") center center no-repeat ;
+        padding: 30px 20px;
+    }
+
+    .user_profile .mobile .text_wrapper {
+         width: 100%;
+         margin: 0 auto;
+         padding: 10px 0;
+     }
+    .user_profile .mobile .text_wrapper label {
+        display:block;
+        text-align: center;
+        color: #ffffff;
+        font-size: 18px;
+    }
+    .user_profile h2{
+        height: 55px;
+        background-size: 40px !important;
+    }
+    .user_profile h2.mobil-1 {
+        background: url('../../../../assets/img/resp/mobil-profil-avatar/avatar@2x.png') no-repeat center center;
+    }
+    .user_profile h2.mobil-2 {
+        background: url('../../../../assets/img/resp/mobil-profil-avatar/photo@2x.png') no-repeat center center;
+    }
+    .user_profile .myProfil h2.mobil-3 {
+        background: url('../../../../assets/img/resp/mobil-profil-avatar/setting@2x.png') no-repeat center center;
+    }
+    .mobile {
+        display: block;
+        margin: 0 auto;
+        padding: 30px 30px 15px;
+        text-align: center;
+        width: 100%;
+    }
+    .mobile .img_container .img_wrapper img.img-circle span.user_tendance img {
+        right: 252px;
+    }
+    .user_profile .left {
+        display:none;
+    }
+    .user_profile .profile_bottom_wrapper .right {
+        display: none;
+    }
+    .user_profile .mat-mobile {
+        background:#000!important;
+    }
+    .user_profile .mat-mobile > h2 {
+        /*border-right: 1px solid rgba(255, 255, 255, 0.18);*/
+        height: 60px!important;
+    }
+
+    .user_profile .user_tendance {
+        right: 0;
+    }
+    .user_profile .profile_top_wrapper .right .edit_container {
+        /*width:134%;*/
+    }
+    .user_profile .profile_bottom_wrapper .left ,
+    .user_profile .profile_bottom_wrapper .left label,
+    .user_profile .profile_bottom_wrapper .right label {
+        display: block;
+    }
+    .user_profile .tab_wrapper .desc-profl {
+        display: none;
+    }
+    .user_profile .photo_container li {
+        padding-top: 0 ;
+    }
+    .paramContent .listOptions li > span {
+        font-size: 18px;
+    }
+    .paramContent .listOptions li > span:first-child {
+        font-size: 21px;
+    }
+}
+
+@media screen and (max-width: 640px){
+    .user_profile .profile_bottom_wrapper .right,
+    .user_profile .profile_bottom_wrapper .left {
+       width: 100%;
+    }
+    .user_profile .myProfil .photo_container ul {
+        display:flex;
+        -webkit-display: flex;
+        display: flex;
+        width: 100%;
+        -webkit-align-content:flex-start;
+        align-content:flex-start;
+        -webkit-align-items: flex-start;
+        align-items: flex-start;
+        -webkit-justify-content: space-evenly;
+        justify-content:space-evenly;
+    }
+
+}
+/*Escape */
+/*
+.main-setting {
+    width: 100% !important;
+ }*/
+.myProfil  .main-setting .setting,
+#Param .main-setting .setting {
+    display: none !important;
+    opacity: 0;
+    height: 0;
+    visibility: hidden;
+}
+.main-chart {
+    width: 100% !important;
+    padding: 0 !important;
+}
+.main-chart #searchbar ,
+.main-chart .title-general ,
+.main-chart .title-general + .nav-content{ display: none !important;}
+
+
+/*Début ajustement retour general*/
+div.user_profile{
+	padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 15px !important;
+    width: calc(100% - 330px) !important; 
+}
+div.user_profile > .row{
+	margin: 0 !important;
+}
+@media screen and (max-width:1366px){   
+    div.user_profile{
+        width: calc(100% - 190px) !important;
+    }   
+}
+@media screen and (max-width:1200px){
+    div.user_profile{
+        width: 100% !important;
+        margin: 0 !important;
+    } 
+}
+@media screen and (max-width:430px){
+    .user_profile  .img_wrapper {
+    width: 100%;
+    /*height: 140px;*/
+}
+}
+@media screen and (max-width:340px){
+    .user_profile  .img_wrapper {
+    width: 100%;
+    height: 120px;
+}
+}
+@media screen and (max-width:340px){
+  .user_profile .img_container  .user_profile  .text_wrapper  {
+    position: relative;
+    max-width: 160px;
+}
+
+.user_profile  .img_container {
+    position: relative;
+     max-width: 160px; 
+}
+}
+
+.photo_container{
+    padding: 28px 22px;
+    display: inline-block;
+    width: 100%;
+}
+.photo_container li{
+    margin:0;
+}
+/*Fin ajustement retour general*/

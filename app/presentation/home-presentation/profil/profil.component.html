@@ -1,0 +1,437 @@
+<!--p>
+  profil works! modifiable
+</p-->
+<p-growl [(value)]="msgs"></p-growl>
+<div *ngIf="userSuspended" class="user_profile admin_profil gle_profil detail col-lg-10">
+   <div  class = "row suspended">
+        Cet utilisateur a été suspendu.
+   </div>jo
+</div>
+<div *ngIf="userNotfound" class="user_profile admin_profil gle_profil detail col-lg-10">
+    <div  class = "row suspended">
+        Utilisateur non trouvé.
+   </div>
+</div>
+<div *ngIf="!userSuspended" class = "user_profile admin_profil detail  gle_profil col-lg-10">
+<div class = "row">
+<div class = "tab_container">
+    <div class="mobile" *ngIf="userDetail">
+        <div class = "middle">
+            <h4 class = "user_name">
+                <a href="#" class="linkBack"></a>
+                {{userDetail.pseudo}}
+                <i class="user-status">
+                    <!-- <img src="assets/img/connect.png" align="" alt=""> -->
+                    <img src="assets/img/chat/user-{{ userStatus }}.png" align="" alt="{{ userStatus }}">
+                </i>
+            </h4>
+                <div class = "img_container">
+                    <!--img-->
+                    <div class = "img_wrapper">
+                        <img *ngIf="userDetail.pdp" class="" src = "{{baseUrl+userDetail.pdp}}">
+                        <img *ngIf="!userDetail.pdp" class="" src = "{{ userDetail.defaultpdp }}">
+                    </div>
+
+                </div>
+                <div class = "text_wrapper">
+                    <label><span class = "user_age">{{userDetail.age}} ans</span>,&nbsp;<span  class = "user_localisation">{{userDetail.ville}}<span *ngIf="userDetail.codepostal">&nbsp;({{userDetail.codepostal}})</span>,&nbsp;</span><span class = "user_orientation">{{userDetail.orientation}}</span></label>
+                </div>
+
+        </div>
+    </div>
+    <md-progress-spinner  *ngIf="loadData" color="warn" mode="indeterminate"></md-progress-spinner>
+    <!-- popup blacklist -->
+    <div class="MenuBtns tab_wrapper listOptions" *ngIf="showAction">
+        <div class="row-menuProfil" >
+            <ul>
+                <li  id="blacklisterLabel" (click)="openConfirmDialog()">
+                    <span *ngIf="isBlackListed" >{{'RetirerBlacklister' | translate}} </span>
+                    <span *ngIf="!isBlackListed">{{'Blacklister' | translate}} </span>
+                    <span></span>
+                    <a  class="pointer"></a>
+                </li>
+                <li id="reportLabel" (click)="openReportabusDialog()">
+                    <span>{{'Reporter Abus' | translate}} </span>
+                    <span></span>
+                    <a   class="pointer"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <md-tab-group *ngIf="!loadData" [selectedIndex]="activeTab" (selectChange)="selectTab($event)">     
+    <md-tab >
+        <ng-template md-tab-label>
+            <div class="mat-mobile" id="linkPopup" (click)="cancelClick($event)">
+                <h2 class="mobil-0" >   </h2>
+            </div>
+        </ng-template>
+    </md-tab>
+    <md-tab>
+        <ng-template md-tab-label>
+            <div class="mat-mobile">
+                <h2 class="mobil-1"> 
+                    <!-- <label>{{'description'|translate}}  </label>  -->
+                    <label>{{ userDetail.pseudo }}</label>
+                </h2>
+            </div>
+        </ng-template>
+        <!--; let i = index-->
+        <div class = "tab_wrapper" *ngIf="userDetail" >
+        <div class = "profile_top">
+            <div class = "profile_top_wrapper">
+                <div class = "left">
+                    <div class = "img_container">
+                        <!--img-->
+                        <div class = "img_wrapper">
+                            <img *ngIf="userDetail.pdp" class="" src = "{{baseUrl+userDetail.pdp}}">
+                            <img *ngIf="!userDetail.pdp" class="" src = "{{userDetail.defaultpdp}}">
+                        </div>								
+                    </div>
+                    <div class="text_wrapper">
+                        <label class="user_name firstName">{{userDetail.pseudo}}<!-- - default:  {{userDetail.defaultpdp}}--><span *ngIf="userDetail.age">,  {{userDetail.age}} ans</span></label>
+                        <label><span *ngIf="userDetail.vsetes">{{userDetail.vsetes}}</span><span *ngIf="userDetail.vetes">{{userDetail.vetes}}</span>
+                            <span class="user_orientation"> {{userDetail.statut}}, {{userDetail.orientation}}</span></label>
+
+                        <label class="infosuser">
+                          <span  class = "user_localisation">
+                                {{userDetail.ville}}
+                            <span *ngIf="userDetail.codepostal">&nbsp;({{userDetail.codepostal}})</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div class = "right">
+                    <div class = "edit_container">
+                        <!--<p class = "progress">
+                            <label>profil completé à <span class = "progress_value">80%</span></label>
+                            <progress id="avancement_profile" value="80" max="100"></progress>
+                        </p>-->
+                        <div class = "text_area_wrapper">
+                            <div class = "item">
+                                <label>{{'A propos de moi'|translate}} :</label>
+                                
+                                <textarea readonly="true"> {{userDetail.libelleDescription}}
+                                </textarea>
+                            </div>
+                            <div class = "item">
+                                <label>{{'Ce que je recherche'|translate}}:</label>
+                                <textarea readonly="true">{{userDetail.recherche}}
+                                </textarea>
+                            </div>
+                            <!-- *ngIf="autorisation['FAV_1']" -->
+                            <div class="bouton_wrapper" >
+                                <div (click)="addFavoris(userDetail)">
+                                    <span *ngIf="userDetail.isFavoris===false" class="pix-stars" [ngClass]="{'pix-stars-hide' : loading }">
+                                        <img  src="assets/img/star-small.png"  align="">
+                                    </span>
+                                </div>
+                                <div (click)="deleteFavoris(userDetail)">
+                                    <span *ngIf="userDetail.isFavoris===true" class="pix-stars" [ngClass]="{'pix-stars-hide' : loading }">
+                                        <img  src="assets/img/staron-small.png"  align="">
+                                    </span>
+                                </div>
+                                <span class="loading-stars" *ngIf="loading">
+                                    <md-progress-spinner class="loader-margin-action" color="warn" mode="indeterminate"></md-progress-spinner>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="public-photo-block" *ngIf="allowPublic" >
+                      <div class = "right">
+                    <div class = "edit_container" *ngIf="nbAllPhoto!==0">
+                        <div class="T-carsl">
+                            <span class="T-left">{{'Mes nouvelles photos publiques'|translate}}</span>
+                            <span class="T-right">
+                                <img  src="assets/img/AppPhoto-white.png"  width="35" alt="Photo Privés">&nbsp;
+                                <span class="numb-photo">{{photosPub.length}}</span>
+                            </span></div>
+                        <div class="clearfix"></div>
+                        <div class="dbm-gal">
+                            <app-album [isDescription]=true  [photos]="photosPub"  [isMyProfil]=false></app-album>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class = "profile_bottom viewonly">
+            <div class = "profile_bottom_wrapper">
+                <div class = "left">
+                    <div class = "edit_container">
+                     <h3>{{'J’en dis plus sur moi'|translate}}</h3>
+                        <ul class = "editable_list">
+                            <li>
+                                <div class = "item">
+                                    <label>{{'Statut'|translate}} : </label>
+                                    <div class = "item_content">
+                                        <input type="text" readonly="true" value="{{userDetail.statut}}" id="statut">
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class = "item">
+                                    <label>{{'Orientation'|translate}} : </label>
+                                    <div class = "item_content">
+                                        <input type="text"  value="{{userDetail.orientation}}" readonly="true" id="orientation">
+                                    </div>
+                                </div>
+                            </li>
+                            <!--<li>
+                                <div class = "item">
+                                    <label>{{'Situation'|translate}}</label>
+                                    <div class = "item_content">
+                                        <input type="text"  readonly="true" value="{{userDetail.situation}}" id="situation">
+                                    </div>
+                                </div>
+                            </li>-->
+                            <li>
+                                <div class = "item">
+                                    <label>{{'Apparence'|translate}} : </label>
+                                    <div class = "item_content">
+                                        <input type="text" readonly="true" value="{{userDetail.apparence}}" id="apparence">
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class = "item">
+                                    <label>{{'Origine ethnique'|translate}} : </label>
+                                    <div class = "item_content">
+                                        <input type="text" *ngIf="userDetail.origine" readonly="true" value="{{userDetail.origine.libelle}}" id="origine">
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class = "edit_container">
+                    <h3>{{'Mes tendances et pratiques'|translate}}</h3>
+                        <ul class = "editable_list">
+                            <li>
+                                <div class = "item">
+                                    <label>{{'Tendance'|translate}} : </label>
+                                    <div class = "item_content">
+                                        <input type="text" readonly="true"  value="{{userDetail.tendance}}" id="tendance">
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class = "item">
+                                    <label>{{'Expérience'|translate}} : </label>
+                                    <div class = "item_content">
+                                        <input type="text" readonly="true"  value="{{userDetail.experience}}" id="experience">
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class = "item">
+                                    <label>{{'Pratiques'|translate}} : </label>
+                                    <div class = "item_content">
+                                        <input title='{{userDetail.pratique}}' type="text" readonly="true" value="{{userDetail.pratique}}" id="pratiques">
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class = "edit_container">
+                    <h3>{{'Mes préférences'|translate}}</h3>
+                        <ul class = "editable_list">
+                            <li>
+                                <div class = "item">
+                                    <label>{{'Mobilité'|translate}} : </label>
+                                    <div class = "item_content">
+                                        <input type="text"  value="{{userDetail.situation}}" readonly="true" id="mobilite">
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class = "item">
+                                    <label>{{'Disponibilité'|translate}} : </label>
+                                    <div class = "item_content">
+                                        <input type="text" readonly="true" *ngIf="userDetail.disponibilite"  value="{{userDetail.disponibilite.libelle}}" id="disponibilite">
+                                    </div>
+
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+          
+            </div>
+        </div>
+</div>
+</md-tab>
+<!--photo public -->
+<md-tab>
+    <ng-template md-tab-label>
+        <div class="mat-mobile">
+            <h2 class="mobil-2" (click)="showPublic()" > <label >({{nbPhotoPub}}) </label></h2>
+        </div>
+    </ng-template>
+        <div class = "tab_wrapper">
+            <div class = "listItems  noItems" *ngIf="!allowPublic" >
+                <span class="no-fav text-center">{{nonAutorise()}}</span>
+            </div>
+            <div class = "listItems  noItems" *ngIf=" nbPhotoPub === 0" >
+                <span class="no-fav text-center"> {{publicPhotoIsEmpty()}}</span>
+            </div>
+            <div class = "photo_container" *ngIf="allowPublic">
+                <div>
+                    <app-album   [photos]="photosPub" [isMyProfil]=false></app-album>
+                </div>
+            </div>
+        </div>
+</md-tab>
+
+<!--photo privé-->
+<md-tab>
+    <ng-template md-tab-label>
+        <div class="mat-mobile">
+            <h2 class="mobil-5" (click)="showPrive()"> <label >({{nbPhotoPriv}}) </label></h2>
+        </div>
+    </ng-template>
+    <div class = "tab_wrapper">
+
+        <div class = "listItems noItems" *ngIf="!allowPrive && nbPhotoPriv !== 0" >
+                <span class="no-fav text-center">Vous n'avez pas de privileges pour regarder</span>
+        </div>
+        <div class = "listItems noItems" *ngIf="nbPhotoPriv === 0" >
+                <span class="no-fav text-center">Cette personne n'a pas de photos privées</span>
+        </div>
+        <div class = "photo_container" *ngIf="allowPrive">
+            <div>
+                <app-album  [photos]="photosPriv"  [isMyProfil]=false></app-album>
+            </div>
+        </div>
+    </div>
+</md-tab>
+
+
+    <!--favorie-->
+    <md-tab>
+        <ng-template md-tab-label class="fav-comm">
+            <div class="mat-mobile">
+                <h2 class="mobil-3">
+                    <label>
+                        <!-- <div class = "profil_img"><img src = "assets/img/favoris-on.png" alt = "image"></div> -->
+                    </label>
+                </h2>
+            </div>
+        </ng-template>
+        <div class = "favoris_container">
+            <p class = "fil_arriane" *ngIf="(favoris &&favoris.length > 0)">
+                <label>
+                    <a href = "#">{{'Favoris'|translate}} </a>&nbsp;
+                    <!--<span class ="separator"> > </span> -->
+                    <!--<a href = "#">{{'Public'|translate}}</a>-->
+                    <span class = "number" *ngIf="nbFavoris"> ({{nbFavoris}}) </span>
+                </label>
+            </p>
+
+            <div class="listItems">
+               <span *ngIf="totalItems === 0" class="no-fav text-center">{{getEmptyFavoris()}}</span>
+               <md-progress-spinner  *ngIf="load" color="warn" mode="indeterminate"></md-progress-spinner>                
+               <div class="gridBlocks" *ngFor="let home of allItems">
+                    <app-user-card [user]="home"></app-user-card>                   
+                </div>            
+                <div class="CT-pag-nav">
+                    <div *ngIf="pager.pages && pager.pages.length  && pager.pages.length !== 1" class="pagination clearfix">
+                        <a *ngIf="pager.currentPage > 1" [ngClass]="{disabled:pager.currentPage === 1}" (click)="setPage(pager.currentPage - 1, uid)">
+                            <img src="assets/img/left-arrow-blk.png" align="">
+                        </a>
+                        <span *ngFor="let page of pager.pages">
+                            <a [ngClass]="{active:pager.currentPage === page}" (click)="setPage(page, uid)">{{page}}</a>
+                        </span>
+                        <a *ngIf="pager.currentPage!==pager.totalPages" [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="setPage(pager.currentPage + 1, uid)">
+                            <img src="assets/img/right-arrow-blk.png" align="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </md-tab>
+
+
+    <!--chat-->
+    <md-tab>
+        <ng-template md-tab-label class="fav-comm">
+            <div class="mat-mobile">
+                <h2  class="mobil-4">
+                    <label>
+                        <!-- <div class = "img_wrapper"> <img src = "assets/img/bulle-small@2x.png" alt = "image"></div> -->
+                    </label>
+                </h2>
+
+                 <!--<h2 *ngIf="allowTchat" class="mobil-4">
+                    <label>
+                         <div class = "img_wrapper"> <img src = "assets/img/bulle-small@2x.png" alt = "image"></div> 
+                    </label>
+                </h2>
+                <h2 *ngIf="!allowTchat" class="mobil-4 chatisdeisabled">
+                    <label>
+                         <div class = "img_wrapper"> <img src = "assets/img/bulle-small@2x.png" alt = "image"></div> 
+                    </label>
+                </h2>             -->
+            </div>
+        </ng-template>
+        <div class = "tchat_container">
+            <div *ngIf="!allowTchat" class="chatisdeisabled">
+                {{tchatErrorMesage}}
+            </div>
+            <app-chat *ngIf="allowTchat" (selectContactEvent)="onContactSelected($event)">
+
+            </app-chat>
+            <!-- <p class = "fil_arriane">
+                <label>
+                    <a href = "#">{{'messages'|translate}} </a>
+                </label>
+            </p> -->
+            <!-- <ul>
+                <li class = "col-lg-2">
+                    <div class = "img_wrapper">
+                        <img src = "assets/img/photo/photo.png" alt = "image">
+                    </div>
+                </li>
+                <li class = "col-lg-2">
+                    <div class = "img_wrapper">
+                        <img src = "assets/img/photo/photo.png" alt = "image">
+                    </div>
+                </li>
+                <li class = "col-lg-2">
+                    <div class = "img_wrapper">
+                        <img src = "assets/img/photo/photo.png" alt = "image">
+                    </div>
+                </li>
+                <li class = "col-lg-2">
+                    <div class = "img_wrapper">
+                        <img src = "assets/img/photo/photo.png" alt = "image">
+                    </div>
+                </li>
+                <li class = "col-lg-2">
+                    <div class = "img_wrapper">
+                        <img src = "assets/img/photo/photo.png" alt = "image">
+                    </div>
+                </li>
+                <li class = "col-lg-2">
+                    <div class = "img_wrapper">
+                        <img src = "assets/img/photo/photo.png" alt = "image">
+                    </div>
+                </li>
+                <li class = "col-lg-2">
+                    <div class = "img_wrapper">
+                        <img src = "assets/img/photo/photo.png" alt = "image">
+                    </div>
+                </li>
+                <li class = "col-lg-2">
+                    <div class = "img_wrapper">
+                        <img src = "assets/img/photo/photo.png" alt = "image">
+                    </div>
+                </li>
+            </ul>-->
+        </div>
+    </md-tab>
+
+</md-tab-group>
+
+</div>
+</div>

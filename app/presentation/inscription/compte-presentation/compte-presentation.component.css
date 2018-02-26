@@ -1,0 +1,195 @@
+@import '../../../../styles.css';
+
+.error-sub{
+        /*border: 1px solid red;*/
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+@media screen and (max-width: 920px) {
+	.error-sub{
+		margin-bottom: 0;
+	}
+}
+
+.dateerror{
+    text-align: right;
+    font-size: 16px;
+    color: #ff0101;
+    position: relative;
+    top: 10px;
+    display: block;
+    line-height: 0;
+    font-style: italic;
+}
+
+.error-label{
+    color: red; text-align: left;
+}
+
+.mailpseudoerror{
+	top: -10px;
+	line-height: inherit;
+}
+
+.checkbox_type,
+.logo{
+	position: relative;
+}
+.checkbox_type{
+	display: inline-block;
+}
+/*.logo img{
+	width: 35%;
+}*/
+.form{
+    font-size: 20px;	
+}
+.form_body{
+	padding-top: 15%;
+	/*max-width: 560px;*/
+}
+.form .container_wrapper{
+	/*max-width: 550px;*/
+}
+
+button.btn{
+	width: 100%;
+    font-size: 19px;
+    color: #fff;
+    background-color: transparent !important;
+    border: none;
+    cursor: pointer;
+    padding: 13px 0 12px;
+    border-radius: 5px;
+}
+button.btn.btn_connexion{
+	background-color: #0e0e0e !important;
+    font-size: 23px;
+    margin-bottom: 0;
+	padding: 15px 0 ;
+}
+
+.mat-checkbox-checkmark-path{
+	stroke: #000 !important;
+}
+.input-field.checkbox_type>div{
+	float: left;
+}
+.input-field.checkbox_type .right{
+	width: 85%;
+	text-align: left;
+	font-size: 16px;
+    line-height: 21px;
+}
+.input-field.checkbox_type .right label {
+	font-size: 18px;
+	line-height:22px;
+}
+.input-field.checkbox_type .left{
+	width: 15%;
+	text-align: left;
+}
+.input-field.checkbox_type .right a,
+.input-field.checkbox_type .right{
+	color: rgba(255, 255, 255, 0.5);
+}
+.input-field.checkbox_type .left a{
+	text-decoration: underline;
+}
+.button_wrapper{
+	display: inline-block;
+	width: 100%;
+	padding-top: 7%;
+}
+span.error{
+	padding: 20px 0  10px;
+    color: red;
+    display: inline-block;
+	font-size: 14px;
+	width: 100%;
+	font-style: italic;
+}
+span.error{
+	position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+}
+.input-field .mat-input-infix{
+	/*margin-top: -20px;*/
+}
+
+
+/* date of birth style */
+.input-field label.Dobth {
+	width: 100%;
+    text-align: left;
+    margin-bottom: 40px !important;
+    float: left;
+	position: relative;
+    top: 20px;
+	font-weight: 300;
+}
+.label-underline {
+	width:100%;
+	text-decoration: underline;
+	border-bottom: 1px solid #838080;
+    line-height: 37px;
+    position: relative;
+    bottom: -19px;
+}
+
+
+/* date of birth style end */
+@media only screen and (max-width: 1440px){
+	.form{
+		font-size: 15px;
+	}
+	.form_body{
+		padding-top: 8%;
+	}
+	.input-field.checkbox_type .right{
+		font-size: 18px;
+		line-height: 18px;
+	}
+	button.btn{
+		padding: 12px 0  0 ;
+		font-size: 19px;
+	}
+
+	/*.button_wrapper{*/
+		/*padding-top: 2%;*/
+	/*}*/
+	/*.logo img{
+		width: 20%;
+	}*/
+	.mat-input-infix control-messages,
+	.mat-input-invalid control-messages{
+		font-size: 19px;
+		top: 10px;
+		font-style: italic;
+	}
+	span.error{
+		font-size: 14px;
+		padding: 0 ;
+		bottom: -14px;
+	}	
+}
+@media screen and (max-width:640px) {
+
+	.input-field label.Dobth {
+		position: relative;
+		top: 15px;
+	}
+	.input-field.checkbox_type .right label {
+		font-size: 13px;
+		line-height:18px;
+	}
+	button.btn,
+	button.btn.btn_connexion{
+		font-size: 16px;
+		padding: 10px 0;
+	}
+}

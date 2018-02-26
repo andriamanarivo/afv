@@ -1,0 +1,31 @@
+<section class="content"  style="height:100%;">
+
+    <form [formGroup]='form'>
+        <div class="back-link-block">
+            <span class="gotolist" (click)="goToList()"> Revenir à la liste
+                <i class="zmdi zmdi-arrow-right"></i>
+            </span>
+        </div>
+        <div class="formsearch">
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <label class="labelleInput text-center center-block">Largeur : </label>
+                    <input class="form-control"  type="number" formControlName="width" name="width" />
+                </div>
+                <div class="col-sm-2">
+                    <label class="labelleInput text-center center-block">Hauteur : </label>
+                    <input class="form-control"  type="number" formControlName="height" name="height" />
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-secondary btn-block btn--icon-text"  (click)='crop()'>Cropper</button>
+                    <button class="btn btn-secondary btn-block btn--icon-text"  (click)='confirmSave()'>Valider</button>
+                </div>
+            </div>
+        </div>
+    </form>     
+    <div class="img-container">
+        <img id='img'  src='{{baseUrl + urlimg}}'>
+        <!-- <img id='img'  src="assets/img/logo-visa-elec.png"> -->
+    </div>
+</section>

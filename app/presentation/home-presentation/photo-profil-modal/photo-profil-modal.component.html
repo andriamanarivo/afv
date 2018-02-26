@@ -1,0 +1,18 @@
+<p-growl [(value)]="msgs"></p-growl>
+<div class="modal-content FirstPict">
+    <div class="modal-header header">
+      <h5 class="modal-title">{{'updatephotoprofil' | translate}}</h5>
+    </div>
+    <div class="modal-body">  
+        <!-- allowUpdatePhotoProfil : permettre l'ajout de photo de profilau premier connexion même si pas d'authorisation -->
+        <app-album                                 
+            (onFileEvent)="fileEvent($event)" 
+            [isMyProfil]=true
+            [allowUpdatePhotoProfil]=true
+            widthImgWraper=24%                    
+            [loading]="loading"></app-album>
+    </div>
+     <div class="modal-footer">    
+         <span class="error">{{errorMessage}}</span>
+    </div> 
+  </div>

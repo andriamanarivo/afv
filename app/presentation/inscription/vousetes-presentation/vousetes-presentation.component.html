@@ -1,0 +1,30 @@
+
+<div  id="content" #content class = "container form check_item" [style.height.px]="100">
+	<div class = "container_wrapper">
+		<div class="logo">
+		  <img alt = "logo" src = "assets/img/logo/logo_small.png">
+		</div>
+		<p class="sloganLogo">{{'100 nuances de plaisirs' | translate}}</p>
+		<div class="form_body">
+			<h1>
+				{{title}}
+				<span *ngIf="submitted" class = "error">{{errorMessage}}</span>
+			</h1>
+			<ul class="item_list TwooColumnList">
+				<li *ngFor="let itemve of getVousEtes()" [class.selected]="itemve === selectedVe" class="" (click)="onSelect(itemve)">
+					{{itemve.label}}
+				</li>
+			</ul>
+						
+			<div class = "button_wrapper">				
+				<div class = "left">
+					<button class = "btn btn_cancel" routerLink="/splashcreen" routerLinkActive="active">Cancel</button>
+				</div>
+				<div class = "right">
+					<!--<button class = "btn btn_done" [disabled]="selectedVe == null" [routerLink]="['/inscription/statut']" routerLinkActive="active">Done</button>-->
+					<button class = "btn btn_done" (click)="onSubmit()">Done</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

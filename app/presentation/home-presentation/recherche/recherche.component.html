@@ -1,0 +1,427 @@
+
+<div class="col-lg-10 main-chart" >
+    <div id="searchbar">
+    <form action="" class="formulaire" >
+    <div class="scroldown" >
+
+        <input type="checkbox" id="RadioSearch" class="InputMobileSearch">
+        <label for="RadioSearch" class="IconMobileSearch">x</label>
+        <input class="{{pseudoNome}}" type="text" id="searchInputField" (keydown)="handleKeyDown($event, option)" [mdAutocomplete]="auto"  [formControl]="myControl"  aria-label="Number"   placeholder="Rechercher un pseudo"/>
+        <span class="scroldown-mobile"><img [src]="iconeDown"  align="" (click)="showContent()"></span>
+        <input type="checkbox" id="DefaultSIcons" class="IconMobileSearchDefault">
+        <label for="DefaultSIcons" class=""></label>
+        <div class="DefaultSeach cursorpointer">
+            <span [ngClass]="{'active': showListSearch}"  id="selectedsearch" (click)="showListSearch=!showListSearch;"> {{recherche && recherche.uidSearch && recherche.uidSearch.length !== 0 ? recherche.uidSearch : ('Mes recherches' | translate)}}</span>
+            <ul *ngIf="showListSearch" class="btn-group" id="listsearch">
+                <li *ngIf="recherches && recherches.length === 0">{{'pasderecherche' | translate}}</li>
+                <li  *ngFor="let recherche of recherches">
+                    <span  (click)="changeRecherche(recherche)">{{recherche.uidSearch}}</span>
+                    <button *ngIf="!deletingSearch || searchToRemove?.uidSearch !== recherche.uidSearch" id="deletebutton" (click)="confirmRemoveSearch(recherche)">
+                        <i id="deleteicon" class="material-icons">delete</i>
+                    </button> 
+                    <md-progress-spinner *ngIf="deletingSearch  && searchToRemove?.uidSearch === recherche.uidSearch" class="loaderdelete" color="warn" mode="indeterminate"></md-progress-spinner>
+                </li>
+            </ul>
+        </div>
+
+    <md-autocomplete #auto="mdAutocomplete" placeholder="">
+    <md-option *ngFor="let option of filteredOptions | async" [value]="option" (onSelectionChange)="autocompleteSelected($event, option)" >
+    {{ option }}
+    </md-option>
+    </md-autocomplete>
+    <span class="scroldown-desktop"><img [src]="iconeDown"  align="" (click)="showContent()"></span>
+    <div [class]="classeContent">
+    <div class = "search_body"  #content>
+           <div class="search-field-line" *ngIf="autorisation['RE_PRO_1']"> 
+                <div class="search-field">
+                    <div class="label-search-option">
+                        <label class="name-search">Sexe</label>
+                    </div>
+                    <div class="search-select">                                           
+                        <md-select id="search-option-select"  placeholder="Sexe"   [(ngModel)]="data.sexe" name="sexe">
+                        <md-option *ngFor="let sexe of sexes" [value]="sexe.uidVousEtes">
+                        {{sexe.libelle}}
+                        </md-option>
+                        </md-select>
+                    </div>
+                </div>
+           </div>
+           <div class="search-field-line" *ngIf="autorisation['RE_PRO_3']">
+                <div class="search-field">
+                    <div class="label-search-option">
+                        <label class="name-search">&Acirc;ge</label>
+                    </div>
+                    <div class="search-select Mobile-Fill">
+                        <div class="select-bi-lft">
+                            <md-select id="search-option-select" placeholder="Age" [(ngModel)]="data.ageMin" name="ageMin">
+                            <md-option *ngFor="let age of ages" [value]="age">
+                            {{age}}
+                            </md-option>
+                            </md-select>
+                        </div>
+                        <span class="label-span-search-opt"> à </span>
+                        <div class="select-bi-rgt">
+                            <md-select id="search-option-select" placeholder="Age" [(ngModel)]="data.ageMax" name="ageMax">
+                            <md-option *ngFor="let age of ages" [value]="age">
+                            {{age}}
+                            </md-option>
+                            </md-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="search-field-line">
+                <div class="search-field">
+                    <div class="label-search-option">
+                        <label class="name-search">Type de rencontre</label>
+                    </div>
+                    <div class="search-select">
+                        <md-select id="search-option-select" placeholder="Rencontre" [(ngModel)]="data.rencontre" name="rencontre">
+                        <md-option *ngFor="let rencontre of rencontres" [value]="rencontre.uidRencontre">
+                        {{rencontre.libelle}}
+                        </md-option>
+                        </md-select>
+                    </div>
+                </div>
+            </div>
+            <div class="search-field-line" *ngIf="autorisation['RE_PRO_9']">
+                    <div class="search-field">
+                        <div class="label-search-option localisation">
+                            <label class="name-search">Localisation</label>
+                        </div>
+                        <div class="search-select-slid-desktop">
+                                <span class="pull-left">{{rangeValues[0]}} km </span>   <p-slider [(ngModel)]="rangeValues"  [step]="50" [range]="true" name ="test" max="3000"></p-slider>   <span class="pull-right">{{rangeValues[1]}} km</span>
+                        </div>
+
+                    </div>
+            </div>
+
+    <div *ngIf="plusFiltre" class="plusOption">
+                    <div class="search-field-line" *ngIf="autorisation['RE_PRO_4']">
+                        <div class="search-field">
+                            <div class="label-search-option">
+                                <label class="name-search">Tendances</label>
+                            </div>
+                            <div class="search-select">
+                                <md-select id="search-option-select" placeholder="Tendances" [(ngModel)]="data.tendances" name="tendances">
+                                <md-option *ngFor="let tendance of tendances" [value]="tendance.uidTendance">
+                                {{tendance.libelle}}
+                                </md-option>
+                                </md-select>
+                            </div>
+                        </div>
+                    </div>
+                 
+                        <div class="search-field-lg-desktop search-field-line" *ngIf="autorisation['RE_PRO_6']">
+                            <div class="search-field">
+                                <div class="label-search-option">
+                                    <label class="name-search">Pratiques</label>
+                                </div>
+                            <div class="search-select-full">
+                                <div class="search-select-int">
+                                    <div class="search-select">
+                                        <md-select id="search-option-select" class="full" placeholder="Pratique" [(ngModel)]="data.pratiques[0]" name="pratique1">
+                                        <md-option *ngFor="let pratique of pratiques" [value]="pratique.uidPratique">
+                                        {{pratique.libelle}}
+                                        </md-option>
+                                        </md-select>
+                                    </div>
+                                    <div class="search-select">
+                                        <md-select id="search-option-select" class="full" placeholder="Pratique" [(ngModel)]="data.pratiques[1]" name="pratique2">
+                                        <md-option *ngFor="let pratique of pratiques" [value]="pratique.uidPratique">
+                                        {{pratique.libelle}}
+                                        </md-option>
+                                        </md-select>
+                                    </div>
+                                </div>
+                                <div class="search-select-int">
+                                    <div class="search-select">
+                                        <md-select id="search-option-select" class="full" placeholder="pratique" [(ngModel)]="data.pratiques[2]" name="pratique3">
+                                        <md-option *ngFor="let pratique of pratiques" [value]="pratique.uidPratique">
+                                        {{pratique.libelle}}
+                                        </md-option>
+                                        </md-select>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+    
+                        <div class="search-field-lg-mobile search-field-line" *ngIf="autorisation['RE_PRO_6']">
+                            <div class="search-field">
+                                <div class="label-search-option">
+                                    <label class="name-search">Pratiques</label>
+                                    <span class="scroldown-mob"><img src="assets/img/arrow.png"  align=""></span>
+                                </div>
+                                <div class="search-select-full">
+                                    <div class="search-select-int">
+                                        <div class="search-select">
+                                            <md-select id="search-option-select" class="full" placeholder="Pratique" [(ngModel)]="data.pratiques[0]" name="pratique1">
+                                                <md-option *ngFor="let pratique of pratiques" [value]="pratique.uidPratique">
+                                                    {{pratique.libelle}}
+                                                </md-option>
+                                            </md-select>
+                                        </div>
+                                        <div class="search-select">
+                                            <md-select id="search-option-select" class="full" placeholder="Pratique" [(ngModel)]="data.pratiques[1]" name="pratique2">
+                                                <md-option *ngFor="let pratique of pratiques" [value]="pratique.uidPratique">
+                                                    {{pratique.libelle}}
+                                                </md-option>
+                                            </md-select>
+                                        </div>
+                                    </div>
+                                    <div class="search-select-int">
+                                        <div class="search-select">
+                                            <md-select id="search-option-select" class="full" placeholder="Pratique" [(ngModel)]="data.pratiques[2]" name="pratique3">
+                                                <md-option *ngFor="let pratique of pratiques" [value]="pratique.uidPratique">
+                                                    {{pratique.libelle}}
+                                                </md-option>
+                                            </md-select>
+                                        </div>
+    
+                                        <div class="select-full-lft TextAreaFill">
+                                            <md-input-container>
+                                                <textarea mdInput placeholder="Autres, à préciser"  ></textarea>
+                                            </md-input-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="search-field-line connexionstat">
+                            <div class="desk" *ngIf="autorisation['RE_PRO_7']">
+                                <div class="label-search-option">
+                                        <label class="name-search">Statut de connexion</label>
+                                </div>
+                                <div class="search-radios search-select-int CheckLikeRadioGroupe">
+                                        <div class="select-full-rgt select-full-radio CheckLikeRadio">
+                                            <md-checkbox name="enligne" (change)="statutConnexionChange('enligne')" [(ngModel)]="enLigne"> En ligne</md-checkbox>
+                                            <md-checkbox name="horsligne" (change)="statutConnexionChange('horsligne')" [(ngModel)]="horsLigne" > Hors ligne</md-checkbox>                                            
+                                        </div>
+    
+                                </div>
+                            </div>
+                            <!--<div class="field-mob">
+                                <div class="label-search-option">
+                                    <label class="name-search-mob">Statut de connexion</label>
+                                </div>
+                                <div class="search-select">
+                                    <div class="btn-center-slide">
+                                    <md-radio-group>
+                                        <label class="example-margin" value="primary">
+                                            On
+                                        </label>
+                                        <label class="switch">
+                                            <input type="checkbox" [checked]="!data.isConnected" (change)="onChangeCheck($event,'connect')"  name = "connect">
+                                            <div class="slider round"></div>
+                                        </label>
+                                        <label class="example-margin" value="accent">
+                                            Off
+                                        </label>
+                                    </md-radio-group>
+                                    </div>
+                                </div>
+                            </div>-->
+                        </div>
+                        
+                        <div class="search-field-line" *ngIf="autorisation['RE_PRO_8']">
+                            <div class="desk">
+                                <div class="label-search-option">
+                                        <label class="name-search">Uniquement avec photo</label>
+                                </div>
+                                <div class="search-radios search-select-int CheckRadio">
+                                        <div class="select-full-radio">
+                                            <md-radio-group  [(ngModel)]="data.avecPhoto" name="withPhoto">
+                                            <md-radio-button *ngFor="let photo of photos" [value]="photo.value" [ngClass]="photo.classe">
+                                            {{photo.viewValue}}
+                                            </md-radio-button>
+                                            </md-radio-group>
+                                        </div>
+                                    </div>
+                            </div>
+                           <!-- <div class="field-mob">
+                                <div class="label-search-option">
+                                    <label class="name-search-mob">Uniquement avec photo</label>
+                                </div>
+                                <div class="search-select">
+                                    <div class="btn-center-slide">
+                                        <md-radio-group>
+                                        <label class="example-margin" value="true">
+                                            Oui
+                                        </label>
+                                        <label class="switch">
+                                            <input type="checkbox" [checked]="!data.avecPhoto" (change)="onChangeCheck($event,'withPhoto')"  name = "withPhoto">
+                                            <div class="slider round"></div>
+                                        </label>
+                                        <label class="example-margin" value="false">
+                                            Non
+                                        </label>
+                                    </md-radio-group>
+                                    </div>
+                                </div>
+                            </div>-->
+                        </div>
+                        <!-- <div class="search-field-line">
+                            <div class="desk">
+                                <div class="label-search-option">
+                                        <label class="name-search">Recherche par défaut</label>
+                                </div>
+                                <div class="search-select WidthInit">
+                                    <div class="search-select-int">
+                                        <div class="select-full-rgt select-full-radio CheckLikeRadio">
+                                            <md-checkbox [(ngModel)]="data.isDefault" name="isDefault" ></md-checkbox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field-mob">
+                                <div class="label-search-option">
+                                    <label class="name-search-mob">Recherche par défaut</label>
+                                </div>
+                                <div class="search-select">
+                                    <div class="btn-center-slide">
+                                        <md-radio-group>
+                                            <label class="example-margin" value="primary"></label>
+                                            <label class="switch">
+                                                <input type="checkbox" [checked]="!data.isDefault" (change)="onChangeCheck($event,'isDefault')"  name="isDefault" >
+                                                <div class="slider round"></div>
+                                            </label>
+                                            <label class="example-margin" value="accent"></label>
+                                        </md-radio-group>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="search-field-line" *ngIf="autorisation['RE_PRO_12']">
+                            <div class="desk FullOne">
+                                <div class="label-search-option">
+                                    <label class="name-search">Enregistrer cette recherche </label>
+                                </div>
+                                <div class="search-select-full save-search">
+                                    <div class="search-select-int ">
+                                        <div class="select-full-lft TextAreaFill">
+                                            <md-input-container>
+                                                <textarea  maxlength="255" mdInput placeholder="Nom de la recherche" [(ngModel)]="data.uidSearch"  name="nom"></textarea>
+                                                <!--recherche non enregistré-->
+                                                <span *ngIf="data.isDefault" (click)="updateDefaultSearch()" class="DefaultSearch-ok cursorpointer">
+                                                    <i class="material-icons">turned_in</i>
+                                                    <i class="material-icons">check</i>
+                                                </span>
+                                                <!--recherche non enregistré-->
+                                                <span *ngIf="!data.isDefault" (click)="updateDefaultSearch()"  class="DefaultSearch-ok Not cursorpointer">
+                                                    <i class="material-icons">turned_in_not</i>
+                                                </span>
+                                            </md-input-container>
+                                        </div>
+    
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="field-mob FullOne">
+                                <div class="label-search-option ">
+                                    <label class="name-search-mob" > Enregistrer cette recherche </label>
+                                </div>
+                                <div class="search-select TextAreaFill">
+                                    <md-input-container>
+                                        <textarea mdInput placeholder="Nom de la recherche" [(ngModel)]="data.uidSearch"  name="nom"></textarea>
+                                        &lt;!&ndash;recherche non enregistré&ndash;&gt;
+                                        <span *ngIf="data.isDefault" (click)="updateDefaultSearch()" class="DefaultSearch-ok cursorpointer">
+                                                    <i class="material-icons">turned_in</i>
+                                                    <i class="material-icons">check</i>
+                                                </span>
+                                        &lt;!&ndash;recherche non enregistré&ndash;&gt;
+                                        <span *ngIf="!data.isDefault" (click)="updateDefaultSearch()"  class="DefaultSearch-ok Not cursorpointer">
+                                                <i class="material-icons">turned_in_not</i>
+                                                </span>
+                                    </md-input-container>
+                                </div>
+                            </div>-->
+                        </div>
+    </div> <!-- fin +de filtre  -->
+                        <div class="search-field-end">
+
+                                    <div class="btn-center">
+                                        <a *ngIf="autorisation['RE_PRO_12']" class="btnLinkSearch bg-orange" md-raised-button (click) ="addSearch()" >Enregistrer</a>
+                                        <a class="btnLinkSearch" md-raised-b utton (click) ="reset()">Réinitialiser</a>
+                                        <a class="btnLinkSearch" md-raised-button (click) ="changeFiltre()"> {{filtreLabel}} </a>
+                                        <a class="btnLinkSearch bg-green" md-raised-button (click) ="find(1,1)">Rechercher</a>
+                                    </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+        </form>
+        <div class="btn-group Mobile Triage">
+            <md-select id="aside-select"   [(ngModel)]="trie" name="trie" (ngModelChange)="changeTrie()">
+                <md-option *ngFor="let x of tries" [value]="x.value">
+                    {{x.viewValue}}
+                </md-option>
+            </md-select>
+        </div>
+    </div>
+        <div class="wrapperMain">
+    <div class="col-lg-10 title-general">
+        <h4> <span class="red"> {{titreRechercheDefault|translate}}  :</span> {{defaultSearchText}} </h4>
+
+        <div class="btn-group Mobile DefaultSearch">
+        <md-select id="aside-select" placeholder="Recherche" [(ngModel)]="recherche" name="recherche" (ngModelChange)="changeRecherche()">
+            <md-option *ngFor="let recherche of recherches" [value]="recherche">
+                {{recherche.uidSearch}}
+            </md-option>
+        </md-select>
+    </div>
+    </div>
+    <!-- NAV CONTENT MIDDLE -->
+    <div class="nav-content Mobile">
+            <div (click)="grilleMode = true" [ngClass]="{'current': grilleMode, 'notcurrent': !grilleMode}" class="mod-nav GridingList">
+                <span class="cursorpointer" (click)="changeList('grille')">{{'Vue grille'|translate}}</span>
+                <div class="btn-group open">
+                    <a (click)="changeList('grille')"><img src="assets/img/grilleWhite.png"  align=""></a>
+                </div>
+            </div>
+            <div (click)="grilleMode = false" [ngClass]="{'current': !grilleMode, 'notcurrent': grilleMode}" class="mod-nav ListingList">
+                <span class="cursorpointer" (click)="changeList('liste')">{{'Vue liste'|translate}}</span>
+                <div class="btn-group open">
+                    <a (click)="changeList('liste')"><img src="assets/img/listeWhite.png"  align=""></a>
+                </div>
+            </div>
+    
+    </div>
+    
+    <div class="nav-content Desktop">
+        <div class="col col-md-4 col-sm-4 col-xs-12 mb">
+            <div class="mod-nav">
+                <span>{{'trier par'|translate}}</span>
+                <div class="btn-group">
+                    <md-select id="aside-select"   [(ngModel)]="trie" name="trie" (ngModelChange)="changeTrie()">
+                    <md-option *ngFor="let x of tries" [value]="x.value">
+                    {{x.viewValue}}
+                    </md-option>
+                    </md-select>
+                </div>
+            </div>
+        </div>
+        <div class="col col-md-4 col-sm-4 col-xs-6 mb">
+            <div (click)="grilleMode = true" [ngClass]="{'current': grilleMode, 'notcurrent': !grilleMode}" class="mod-nav GridingList">
+                <span class="cursorpointer" (click)="changeList('grille')">{{'affichage par grille'|translate}}</span>
+                <div class="btn-group open">
+                    <a (click)="changeList('grille')"><img src="assets/img/grille.png"  align=""></a>
+                </div>
+            </div>
+        </div>
+        <div class="col col-md-4 col-sm-4 col-xs-6 mb">
+            <div (click)="grilleMode = false" [ngClass]="{'current': !grilleMode, 'notcurrent': grilleMode}" class="mod-nav ListingList">
+                <span class="cursorpointer" (click)="changeList('liste')">{{'affichage par liste'|translate}}</span>
+                <div class="btn-group open">
+                    <a (click)="changeList('liste')"><img src="assets/img/liste.png"  align=""></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-main-users [modeList]='!grille' (onDefaultSearchParamsLoad)="initRechercheEvent($event)"  [dataSend]="dataSend">    </app-main-users>
+    
+    <!-- <app-liste *ngIf="!grille" [dataSend]="dataSend" >    </app-liste> -->
+</div>
+</div>

@@ -1,0 +1,225 @@
+@import '../../../../styles.css';
+
+p, span{
+    font-size: 17px;
+    text-align: left;
+    /*	color: rgba(255, 255, 255, 0.5);	*/
+    color: #fff;	
+    line-height: 33px;
+    /*padding: 0  32px;*/
+}
+
+form{
+    padding: 36px 0  20px;
+}
+.errorEmail{
+    font-size: 16px;
+    color: #ff0101;
+    font-style: italic;
+    padding: 16px;
+}
+.ng-invalid control-messages div{
+    text-align: right;
+    color: #ff0101;
+    font-size: 14px;
+    padding-top: 6px;
+}
+.error_message{
+    padding-bottom: 50px;
+}
+.ng-invalid input{
+    border: 1px solid #ff0101;
+}
+form input{
+    background: #fff;
+    color: #000;
+    padding: 14px;
+    border-radius: 10px;
+}
+.ContactForm.form.check_item .form_body,
+.form.check_item .form_body{
+    background-color: #000000;
+    padding: 27px 39px;
+    margin-top: 13px;
+    max-width: 680px !important;
+    border-radius: 10px;
+    background-color: #000000;
+    margin-top: 56px;
+    display: inline-block;
+    width: 100%;
+}
+
+.ContactForm.form.check_item .form_body {
+    max-width: 480px !important;
+    padding: 20px !important;
+    margin: 10px 0 !important;
+}
+.ContactForm.form.check_item .form_body .messagesInscr,
+.ContactForm.form.check_item .form_body .input-table.container ,
+.ContactForm.form.check_item .form_body .input-table.container form ,
+.ContactForm.form.check_item .form_body .input-table.container form .input-field{
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    max-width: inherit;
+    display: block;
+}
+.ContactForm.form.check_item .form_body .input-table.container  span {
+    display: block;
+    margin: 0 !important;
+}
+.ContactForm.form.check_item .form_body .input-table.container input,
+.ContactForm.form.check_item .form_body .input-table.container textarea {
+    width: 100% !important;
+}
+.ContactForm.form.check_item .form_body .input-table .button_wrapper {
+    text-align: center !important;
+    margin: 10px 0 0;
+}
+.ContactForm.form.check_item .form_body .input-table .button_wrapper button {
+    display: inline-block;
+    max-width: 160px;
+    padding: 15px 20px;
+    height: auto;
+    margin:0 3px 5px!important;
+    font-size: 16px;
+}
+
+.form.check_item .button_wrapper{
+    border-top: none !important;
+}
+.form .container_wrapper{
+    max-width: 631px;
+}
+.btnSendmail {
+    font-size: 18px;
+
+}
+.check_item .btn{
+    width: auto;
+    height: auto;
+    font-size: 25px;
+    color: #ffffff;
+    /*background-color: #020202 !important;	*/
+    background-color: #000 !important;
+    border-radius: 10px;
+    padding: 10px 45px;
+    margin:0 auto 20px;
+    display: inline-block;
+}
+
+@media only screen and (max-width: 1440px){
+    p{
+        padding: 0  5px;
+        font-size: 19px;
+        line-height: 24px;
+    }
+}
+.mail-sent{
+    display:block;
+}
+@media only screen and (max-width: 768px){
+    .messagesInscr p,
+    .messagesInscr span {
+        font-size: 18px;
+        line-height: 20px;
+        margin: 0;
+        padding: 0 0 10px;
+    }
+    .messagesInscr br {
+        margin: 0 !important;
+        padding: 0 !important;
+        height: 5px !important;
+        line-height: 0 !important;
+        content: '';
+        display: block;
+    }
+    .mail-sent{
+        font-size: 18px;
+        font-weight: 400;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    .check_item .btn{
+        font-size: 20px;
+
+    }
+}
+.red-text{
+    color:#8B0000;
+}
+p.slogan{
+    text-align: center;
+    margin-bottom:10px;
+    margin-top:14px;
+    display:block;
+}
+.check_item .button_wrapper .btn{
+    margin-top:30px
+}
+.check_item  .logo img{
+    max-width:300px !important;
+}
+
+.input-table{
+    display:inline-block;
+    width:auto;
+    vertical-align: top;
+}
+
+.input-table form {
+    padding: 0 !important;
+    width:100%;
+
+}
+.input-table .input-field .input-field{
+    display:table-cell;
+    width:50%;
+    position:static !important;
+}
+.input-table .input-field .input-field input{
+    background:#333333;
+    padding: 0 5px;
+    width: 190px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 18px;
+    height:32px;
+
+}
+.input-table .input-field .btnSendmail{
+    display: table-cell;
+    vertical-align: middle;
+    color: #fff;
+    text-decoration: underline;
+    padding: 0 5px;
+    font-size: 18px;
+}
+.input-table .input-field control-messages{
+        position: absolute;
+    top: 75px;
+    display: block;
+    width: 80%;
+    text-align: center;
+}
+
+@media only screen and (max-width: 480px){
+    .messagesInscr p,
+    .messagesInscr span {
+        font-size: 14px;
+    }
+    .check_item .btn,
+    .mail-sent{
+        font-size: 16px;
+    }
+    .input-table .input-field .input-field{
+        display:block;
+        width:auto;
+    }
+}
+.messagesInscr{
+    margin-top:20px;
+    font-size:16px !important;
+    line-height: 22px !important;
+    padding: 10px !important;
+}

@@ -1,0 +1,130 @@
+  // Import Bootstrap and App variables and mixins
+@import "../scss/inner-imports";
+
+
+// Header Base
+.header {
+  position: fixed;
+  width: 100%;
+  height: $header-height;
+  background-color: $custom-red;
+  box-shadow: $header-shadow;
+  color: $white;
+  padding: 0 2rem;
+  z-index: $header-z-index;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-flex-flow: column wrap;
+  flex-flow: column wrap;
+  -webkit-justify-content: center;
+  justify-content: center;
+  @include clearfix();
+  .link ,
+  .logo {
+    display: block;
+    width: 150px;
+    text-align: center;
+    font-size: 12px;
+    color: $white;
+
+  }
+  .logo {
+    align-self: flex-start;
+    img {
+      width: auto;
+      height: 55px;
+      margin: 0 auto 5px;
+    }
+  }
+  .link {
+    align-self: flex-end;
+    i {
+      color: $white !important;
+      font-size: 14px;
+      vertical-align: middle;
+    }
+  }
+
+}
+
+
+// Logo
+.header__logo {
+  & > h1 {
+    line-height: 100%;
+    font-size: 1.3rem;
+    font-weight: normal;
+    margin: 0;
+
+    & > a {
+      color: $white;
+    }
+  }
+}
+
+
+// Header Nav
+.header__nav {
+  list-style: none;
+  margin: 0 0 0 auto;
+  padding: 0;
+
+  & > li {
+    display: inline-block;
+    vertical-align: middle;
+
+    & > a {
+      display: block;
+      color: $white;
+      border-radius: 2px;
+      text-align: center;
+      line-height: 100%;
+      @include transition(background-color 300ms);
+
+      &:hover {
+        background-color: rgba($black, 0.07);
+      }
+
+      &:not(.header__nav__text) {
+        padding: 0.5rem 0.15rem;
+        min-width: 50px;
+
+        & > i {
+          font-size: 1.65rem;
+          line-height: 100%;
+        }
+      }
+      
+    }
+
+    @include media-breakpoint-down(xs) {
+      position: static;
+
+      .dropdown-menu {
+        left: 20px;
+        width: calc(100% - 40px);
+        top: $header-height - 1;
+      }
+    }
+  }
+}
+
+// Profile menu
+.header__nav__profile {
+  & > img {
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba($white, 0.3);
+    cursor: pointer;
+    margin-left: 10px;
+    @include size(35px, 35px);
+    @include transition(box-shadow 300ms);
+  }
+
+  &:hover {
+    & > img {
+      box-shadow: 0 0 0 3px rgba($white, 0.6);
+    }
+  }
+}  

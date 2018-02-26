@@ -1,0 +1,16 @@
+.loading-admin {
+  width:auto;
+  height:auto;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+
+.content-admin {
+  background-color: #f3f3f3;
+  height: auto;
+  overflow-y: auto;
+}
+
+
+  

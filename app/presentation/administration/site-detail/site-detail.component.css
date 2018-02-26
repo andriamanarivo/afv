@@ -1,0 +1,13 @@
+@import '../administration.component.css';
+.color-pick-viewer {
+    width: 25px;
+    height: 25px;
+}
+.head{
+    margin-top: 15px;
+}
+.content-admin .back-link-block{
+    text-align: right;
+}
+
+/*site_detail*/

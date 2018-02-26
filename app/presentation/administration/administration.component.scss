@@ -1,0 +1,82 @@
+ @import './admin-styles.scss';
+ .content-admin md-progress-spinner{
+   margin: 0 auto !important;
+ }
+ .adminWrapper {
+   position: relative;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   height: 100vh;
+   background: $body-bg;
+ }
+table {
+  border: 1px solid $btn-secondary-border;
+  margin: 10px 0 25px;
+  thead {
+    th,
+    td {
+      padding:10px 5px !important;
+      background: transparentize($red, 0.4);
+      color: $white;
+      a {
+        color: $white !important;
+      }
+      .ng2-smart-th  {
+        padding: 0 5px!important;
+      }
+    }
+    .ng2-smart-filters {
+      .ng2-smart-th,
+      th,
+      td {
+        padding: 0 5px!important;
+      }
+    }
+  }
+  th,
+  td {
+    padding: 5px !important;
+    font-size: 14px !important;
+    border: 1px solid $btn-secondary-border;
+    input[type=text] {
+      background: $white !important;
+      margin: 5px  0 ;
+    }
+    a {
+      color: $red !important;
+      background: transparentize($black, 0.9);
+      display: inline-block;
+      padding: 5px;
+      border-radius: 3px;
+      text-decoration: none;
+      text-align: center;
+      margin: 3px;
+    }
+  }
+}
+
+.pagination {
+  li {
+    span,
+    a {
+      background-color: $red !important;
+      border-color: $red !important;
+      color: $white !important;
+      line-height: 20px;
+      margin: 3px !important;
+    }
+    &.active {
+      a {
+        @include opacity(0.6);
+      }
+    }
+  }
+  button {
+    margin: 3px !important;
+  }
+  label {
+    padding-top: 10px;
+  }
+}
